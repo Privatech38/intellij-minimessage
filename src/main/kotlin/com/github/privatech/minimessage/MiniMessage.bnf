@@ -1,0 +1,14 @@
+{
+    parserClass="com.github.privatech.minimessage.parser.MiniMessageParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="MiniMessage"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.github.privatech.minimessage.psi"
+    psiImplPackage="com.github.privatech.minimessage.psi.impl"
+
+    elementTypeHolderClass="com.github.privatech.minimessage.psi.MiniMessageTypes"
+    elementTypeClass="com.github.privatech.minimessage.psi.MiniMessageElementType"
+    tokenTypeClass="com.github.privatech.minimessage.psi.MiniMessageTokenType"
+}
