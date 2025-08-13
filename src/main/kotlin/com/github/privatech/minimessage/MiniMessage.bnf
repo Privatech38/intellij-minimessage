@@ -19,15 +19,17 @@
         SLASH="/"
         ESCAPE="\\"
 
-//        text="regexp:(</?[!?#]?[a-zA-Z0-9_-]*[\u0000-\uFFFF]*>)"
+        plainText="[^<]*"
         string="regexp:\"[\u0000-\uFFFF(\\\")]*\"|'[\u0000-\uFFFF(\\')]*'"
         tagName="regexp:[!?#]?[a-zA-Z0-9_-]*"
     ]
 }
 
-root ::= tag
+root ::= content
 
-tag ::= tagStart text? tagEnd? | autoClosedTag
+content ::= plainText tag content? | plainText
+
+tag ::= tagStart content* tagEnd? | autoClosedTag
 
 autoClosedTag ::= LT tagName tagArgument? SLASH GT
 tagStart ::= LT tagName tagArgument? GT
