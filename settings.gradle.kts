@@ -1,1 +1,1 @@
-rootProject.name = "minimessage-injector"
+rootProject.name = "intellij-minimessage"
