@@ -11,4 +11,27 @@
     elementTypeHolderClass="com.github.privatech.minimessage.psi.MiniMessageTypes"
     elementTypeClass="com.github.privatech.minimessage.psi.MiniMessageElementType"
     tokenTypeClass="com.github.privatech.minimessage.psi.MiniMessageTokenType"
+
+    tokens=[
+        COLON=":"
+        LT="<"
+        GT=">"
+        SLASH="/"
+        ESCAPE="\\"
+
+//        text="regexp:(</?[!?#]?[a-zA-Z0-9_-]*[\u0000-\uFFFF]*>)"
+        string="regexp:\"[\u0000-\uFFFF(\\\")]*\"|'[\u0000-\uFFFF(\\')]*'"
+        tagName="regexp:[!?#]?[a-zA-Z0-9_-]*"
+    ]
 }
+
+root ::= tag
+
+tag ::= tagStart text? tagEnd? | autoClosedTag
+
+autoClosedTag ::= LT tagName tagArgument? SLASH GT
+tagStart ::= LT tagName tagArgument? GT
+tagEnd ::= LT SLASH tagName GT
+
+tagArgument ::= COLON argumentType tagArgument?
+argumentType ::= string | tagName
