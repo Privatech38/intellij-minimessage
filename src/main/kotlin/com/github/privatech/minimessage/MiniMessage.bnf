@@ -1,3 +1,4 @@
+//noinspection BnfSuspiciousTokenForFile
 {
     parserClass="com.github.privatech.minimessage.parser.MiniMessageParser"
 
@@ -23,27 +24,27 @@
         SECTION="§"
 
         word="regexp:[^a-zA-Z0-9_\-<>]*"
-        space="regexp:\s*"
-        legacyColorCode="regexp:[0-9a-fk-or] "
+        space='regexp:\s+'
+        legacyColorCode="regexp:[0-9a-fk-or]"
         tagName="regexp:[!?#]?[a-zA-Z0-9_-]*"
         string="regexp:\"[\u0000-\uFFFF(\\\")]*\"|'[\u0000-\uFFFF(\\')]*'"
     ]
 }
 
-root ::= content *
+root ::= (fakeTag | legacyFormattingCode | tag | plainText) *
 
 plainText ::= tagName | word | legacyColorCode | space
 
-content ::= fakeTag | emptyTag | legacyFormattingCode | tag | plainText
+fakeTag ::= emptyTag | ESCAPE LT | LT+ space | LT+ tagName tagArgument? GT root tagClosing?
 
-tag ::= autoClosedTag | tagStart content * tagEnd?
+tag ::= autoClosedTag | tagOpening root tagClosing?
 
-emptyTag ::= LT GT
+emptyTag      ::= LT GT
 autoClosedTag ::= LT tagName tagArgument? SLASH GT
-tagStart ::= LT tagName tagArgument? GT
-tagEnd ::= LT SLASH tagName GT
+tagOpening    ::= LT tagName tagArgument? GT
+tagClosing    ::= LT SLASH tagName GT {pin=2}
 
-tagArgument ::= COLON argumentType tagArgument?
+tagArgument ::= COLON argumentType tagArgument? {pin=1}
 argumentType ::= string | tagName
 
-legacyFormattingCode ::= SECTION legacyColorCode space
+legacyFormattingCode ::= !ESCAPE SECTION legacyColorCode
