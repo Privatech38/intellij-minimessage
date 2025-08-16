@@ -12,28 +12,38 @@
     elementTypeClass="com.github.privatech.minimessage.psi.MiniMessageElementType"
     tokenTypeClass="com.github.privatech.minimessage.psi.MiniMessageTokenType"
 
+    parserUtilClass="com.github.privatech.minimessage.parser.MiniMessageParserUtil"
+
     tokens=[
         COLON=":"
         LT="<"
         GT=">"
         SLASH="/"
         ESCAPE="\\"
+        SECTION="§"
 
-        plainText="[^<]*"
-        string="regexp:\"[\u0000-\uFFFF(\\\")]*\"|'[\u0000-\uFFFF(\\')]*'"
+        word="regexp:[^a-zA-Z0-9_\-<>]*"
+        space="regexp:\s*"
+        legacyColorCode="regexp:[0-9a-fk-or] "
         tagName="regexp:[!?#]?[a-zA-Z0-9_-]*"
+        string="regexp:\"[\u0000-\uFFFF(\\\")]*\"|'[\u0000-\uFFFF(\\')]*'"
     ]
 }
 
-root ::= content
+root ::= content *
 
-content ::= plainText tag content? | plainText
+plainText ::= tagName | word | legacyColorCode | space
 
-tag ::= tagStart content* tagEnd? | autoClosedTag
+content ::= fakeTag | emptyTag | legacyFormattingCode | tag | plainText
 
+tag ::= autoClosedTag | tagStart content * tagEnd?
+
+emptyTag ::= LT GT
 autoClosedTag ::= LT tagName tagArgument? SLASH GT
 tagStart ::= LT tagName tagArgument? GT
 tagEnd ::= LT SLASH tagName GT
 
 tagArgument ::= COLON argumentType tagArgument?
 argumentType ::= string | tagName
+
+legacyFormattingCode ::= SECTION legacyColorCode space
