@@ -20,10 +20,10 @@
         LT="<"
         GT=">"
         SLASH="/"
-        ESCAPE="\\"
+        ESCAPE='\'
         SECTION="§"
 
-        word="regexp:[^a-zA-Z0-9_\-<>]*"
+        word="regexp:[^a-zA-Z0-9_\-\\<>&&\S]*"
         space='regexp:\s+'
         legacyColorCode="regexp:[0-9a-fk-or]"
         tagName="regexp:[!?#]?[a-zA-Z0-9_-]*"
@@ -31,11 +31,11 @@
     ]
 }
 
-root ::= (fakeTag | legacyFormattingCode | tag | plainText) *
+root ::= (possibleTag | legacyFormattingCode | tag | plainText) *
 
 plainText ::= tagName | word | legacyColorCode | space
 
-fakeTag ::= emptyTag | ESCAPE LT | LT+ space | LT+ tagName tagArgument? GT root tagClosing?
+possibleTag ::= ESCAPE LT? | emptyTag | LT+ space | LT+ tagName tagArgument? GT root tagClosing?
 
 tag ::= autoClosedTag | tagOpening root tagClosing?
 
