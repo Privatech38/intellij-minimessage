@@ -58,35 +58,33 @@ class MiniMessageLexer() : Lexer() {
             .flatMap { it.toList() }.toSet()
     }
 
+    private fun setSingleCharTokenType(type: IElementType) {
+        tokenType = type
+        bufferIndex++
+        tokenEndIndex = bufferIndex
+    }
+
     override fun advance() {
         tokenStartIndex = bufferIndex
         when (state) {
             0 -> { // Plain text state
                 when (getCurrentChar()) {
                     '\\' -> {
-                        tokenType = MiniMessageTypes.ESCAPE
-                        bufferIndex++
-                        tokenEndIndex = bufferIndex
+                        setSingleCharTokenType(MiniMessageTypes.ESCAPE)
                         return
                     }
                     '§' -> {
-                        tokenType = MiniMessageTypes.SECTION
-                        bufferIndex++
-                        tokenEndIndex = bufferIndex
+                        setSingleCharTokenType(MiniMessageTypes.SECTION)
                         state = 3
                         return
                     }
                     '<' -> {
-                        tokenType = MiniMessageTypes.LT
-                        bufferIndex++
-                        tokenEndIndex = bufferIndex
+                        setSingleCharTokenType(MiniMessageTypes.LT)
                         state = 1
                         return
                     }
                     '>' -> {
-                        tokenType = MiniMessageTypes.GT
-                        bufferIndex++
-                        tokenEndIndex = bufferIndex
+                        setSingleCharTokenType(MiniMessageTypes.GT)
                         return
                     }
                 }
