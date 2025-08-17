@@ -39,5 +39,7 @@
                   fieldName="INSTANCE"
                   language="MiniMessage"
                   extensions="minimessage"/>
+        <lang.parserDefinition language="MiniMessage"
+                                implementationClass="com.github.privatech.minimessage.MiniMessageParserDefinition"/>
     </extensions>
 </idea-plugin>
