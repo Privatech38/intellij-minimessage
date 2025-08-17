@@ -34,6 +34,10 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
+        <fileType name="MiniMessage"
+                  implementationClass="com.github.privatech.minimessage.MiniMessageFileType"
+                  fieldName="INSTANCE"
+                  language="MiniMessage"
+                  extensions="minimessage"/>
     </extensions>
 </idea-plugin>
