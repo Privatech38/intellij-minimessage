@@ -130,16 +130,14 @@ class MiniMessageLexer() : Lexer() {
                     while (bufferIndex < bufferEndOffset && !getCurrentChar().isWhitespace()) {
                         bufferIndex++
                     }
+                    tokenType = MiniMessageTypes.ARGUMENT
+                    tokenEndIndex = bufferIndex
                 }
-                tokenType = MiniMessageTypes.ARGUMENT
-                tokenEndIndex = bufferIndex
                 state = 1 // return to tag state after processing argument
             }
             3 -> { // Color code state
                 if (getCurrentChar() in LEGACY_COLOR_CODES) {
-                    tokenType = MiniMessageTypes.LEGACY_FORMATTING_CODE
-                    bufferIndex++
-                    tokenEndIndex = bufferIndex
+                    setSingleCharTokenType(MiniMessageTypes.LEGACY_COLOR_CODE)
                 } else {
                     state = 0
                 }
