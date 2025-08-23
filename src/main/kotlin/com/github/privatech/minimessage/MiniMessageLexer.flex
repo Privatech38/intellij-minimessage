@@ -1,4 +1,4 @@
-package com.github.privatech.minimessage.language;
+package com.github.privatech.minimessage;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
