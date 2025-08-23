@@ -23,35 +23,46 @@ import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 %unicode
 
 EOL=\R
-WHITE_SPACE=\s+
+WhiteSpace=\s+
 
-TagName=[]
+PlainText=[^<]*
+TagName=[!?#]?[a-z0-9_-]*
 
-%state TAG, ARGUMENT, STRING
+%state TAG, ARGUMENT, STRING_DOUBLE, STRING_SINGLE
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}           { return WHITE_SPACE; }
-
-  ":"                     { return COLON; }
-  "<"                     { yybegin(TAG); return LT; }
-  ">"                     { return GT; }
-  "/"                     { return SLASH; }
-  "\\"                    { return ESCAPE; }
-  "§"                     { return SECTION; }
-  "PLAIN_TEXT"            { return PLAIN_TEXT; }
-  "TAG_NAME"              { return TAG_NAME; }
-  "STRING"                { return STRING; }
-  "ARGUMENT"              { return ARGUMENT; }
-  "LEGACY_COLOR_CODE"     { return LEGACY_COLOR_CODE; }
-
-
+    {WhiteSpace}           { return WHITE_SPACE; }
+    "<"                     { yybegin(TAG); return LT; }
+    "\\"                    { return ESCAPE; }
+    "§"                     { return SECTION; }
+    {PlainText}             { return PLAIN_TEXT; }
 }
 
 <TAG> {
-    {WHITE_SPACE}         { return WHITE_SPACE; }
+    {WhiteSpace}         { return WHITE_SPACE; }
     {TagName}             { return TAG_NAME; }
 
+    "/"                   { return SLASH; }
+    ":"                   { yybegin(ARGUMENT); return COLON; }
+    ">"                   { yybegin(YYINITIAL); return GT; }
+}
+
+<ARGUMENT> {
+    \'                    { yybegin(STRING_SINGLE); return STRING; }
+    \"                    { yybegin(STRING_DOUBLE); return STRING; }
+}
+
+<STRING_DOUBLE> {
+    \"                    { yybegin(TAG); return STRING; }
+    \\\"                  { /* Escaped quote, ignore */ }
+    [^\"\n\r]+            { /* Consume string content */ }
+}
+
+<STRING_SINGLE> {
+    \'                    { yybegin(TAG); return STRING; }
+    \\\'                  { /* Escaped quote, ignore */ }
+    [^'\n\r]+             { /* Consume string content */ }
 }
 
 [^] { return BAD_CHARACTER; }
