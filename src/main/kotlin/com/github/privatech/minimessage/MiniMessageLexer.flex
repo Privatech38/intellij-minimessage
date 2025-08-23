@@ -10,13 +10,13 @@ import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 %%
 
 %{
-  public _MiniMessageLexer() {
+  public MiniMessageLexer() {
     this((java.io.Reader)null);
   }
 %}
 
 %public
-%class _MiniMessageLexer
+%class MiniMessageLexer
 %implements FlexLexer
 %function advance
 %type IElementType
