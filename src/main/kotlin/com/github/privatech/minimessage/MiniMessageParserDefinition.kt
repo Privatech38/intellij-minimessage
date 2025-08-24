@@ -1,6 +1,5 @@
 package com.github.privatech.minimessage
 
-import com.github.privatech.minimessage.lexer.MiniMessageLexer
 import com.github.privatech.minimessage.parser.MiniMessageParser
 import com.github.privatech.minimessage.psi.MiniMessageFile
 import com.github.privatech.minimessage.psi.MiniMessageTypes
@@ -23,7 +22,7 @@ class MiniMessageParserDefinition() : ParserDefinition {
     }
 
     override fun createLexer(p0: Project?): Lexer {
-        return MiniMessageLexer()
+        return MiniMessageLexerAdapter()
     }
 
     override fun createParser(p0: Project?): PsiParser {
