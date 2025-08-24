@@ -32,15 +32,15 @@ TagName=[!?#]?[a-z0-9_-]*
 
 %%
 <YYINITIAL> {
-    {WhiteSpace}           { return WHITE_SPACE; }
-    "<"                     { yybegin(TAG); return LT; }
-    "\\"                    { return ESCAPE; }
-    "§"                     { return SECTION; }
-    {PlainText}             { return PLAIN_TEXT; }
+    {WhiteSpace}          { return WHITE_SPACE; }
+    "<"                   { yybegin(TAG); return LT; }
+    "\\"                  { return ESCAPE; }
+    "§"                   { return SECTION; }
+    {PlainText}           { return PLAIN_TEXT; }
 }
 
 <TAG> {
-    {WhiteSpace}         { return WHITE_SPACE; }
+    {WhiteSpace}          { return WHITE_SPACE; }
     {TagName}             { return TAG_NAME; }
 
     "/"                   { return SLASH; }
