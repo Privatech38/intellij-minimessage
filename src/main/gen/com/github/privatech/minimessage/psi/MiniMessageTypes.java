@@ -13,7 +13,6 @@ public interface MiniMessageTypes {
   IElementType CONTENT = new MiniMessageElementType("CONTENT");
   IElementType EMPTY_TAG = new MiniMessageElementType("EMPTY_TAG");
   IElementType LEGACY_FORMATTING_CODE = new MiniMessageElementType("LEGACY_FORMATTING_CODE");
-  IElementType POSSIBLE_TAG = new MiniMessageElementType("POSSIBLE_TAG");
   IElementType TAG = new MiniMessageElementType("TAG");
   IElementType TAG_ARGUMENT = new MiniMessageElementType("TAG_ARGUMENT");
   IElementType TAG_CLOSING = new MiniMessageElementType("TAG_CLOSING");
@@ -49,9 +48,6 @@ public interface MiniMessageTypes {
       }
       else if (type == LEGACY_FORMATTING_CODE) {
         return new MiniMessageLegacyFormattingCodeImpl(node);
-      }
-      else if (type == POSSIBLE_TAG) {
-        return new MiniMessagePossibleTagImpl(node);
       }
       else if (type == TAG) {
         return new MiniMessageTagImpl(node);

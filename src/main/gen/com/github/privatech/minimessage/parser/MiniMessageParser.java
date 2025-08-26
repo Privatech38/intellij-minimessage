@@ -86,7 +86,7 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (possibleTag | legacyFormattingCode | tag | PLAIN_TEXT) *
+  // (possibleTag | legacyFormattingCode | PLAIN_TEXT) *
   public static boolean content(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "content")) return false;
     Marker m = enter_section_(b, l, _NONE_, CONTENT, "<content>");
@@ -99,13 +99,12 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // possibleTag | legacyFormattingCode | tag | PLAIN_TEXT
+  // possibleTag | legacyFormattingCode | PLAIN_TEXT
   private static boolean content_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "content_0")) return false;
     boolean r;
     r = possibleTag(b, l + 1);
     if (!r) r = legacyFormattingCode(b, l + 1);
-    if (!r) r = tag(b, l + 1);
     if (!r) r = consumeToken(b, PLAIN_TEXT);
     return r;
   }
@@ -163,16 +162,16 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
-  public static boolean possibleTag(PsiBuilder b, int l) {
+  static boolean possibleTag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "possibleTag")) return false;
-    if (!nextTokenIs(b, "<possible tag>", ESCAPE, LT)) return false;
+    if (!nextTokenIs(b, "", ESCAPE, LT)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, POSSIBLE_TAG, "<possible tag>");
+    Marker m = enter_section_(b);
     r = possibleTag_0(b, l + 1);
     if (!r) r = emptyTag(b, l + 1);
     if (!r) r = possibleTag_2(b, l + 1);
     if (!r) r = tag(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
