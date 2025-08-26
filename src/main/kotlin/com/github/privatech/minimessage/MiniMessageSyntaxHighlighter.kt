@@ -5,11 +5,10 @@ import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
-import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
-import com.intellij.psi.tree.IElementType
-
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey
+import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.TokenType
+import com.intellij.psi.tree.IElementType
 
 class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
@@ -30,7 +29,7 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey?> {
         return when (tokenType) {
-            MiniMessageTypes.TAG_NAME -> TAG_KEYS
+            MiniMessageTypes.TAG_NAME, MiniMessageTypes.LT, MiniMessageTypes.GT, MiniMessageTypes.SLASH, MiniMessageTypes.COLON -> TAG_KEYS
             MiniMessageTypes.STRING -> STRING_KEYS
             MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
