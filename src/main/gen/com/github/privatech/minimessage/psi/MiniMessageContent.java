@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface MiniMessageContent extends PsiElement {
 
   @NotNull
-  List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList();
+  List<MiniMessageEmptyTag> getEmptyTagList();
 
   @NotNull
-  List<MiniMessagePossibleTag> getPossibleTagList();
+  List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList();
 
   @NotNull
   List<MiniMessageTag> getTagList();

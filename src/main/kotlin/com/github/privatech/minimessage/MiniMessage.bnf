@@ -33,9 +33,9 @@
 
 root ::= content
 
-content ::= (possibleTag | legacyFormattingCode | tag | PLAIN_TEXT) *
+content ::= (possibleTag | legacyFormattingCode | PLAIN_TEXT) *
 
-possibleTag ::= ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
+private possibleTag ::= ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
 
 tag ::= autoClosedTag | tagOpening content tagClosing?
 

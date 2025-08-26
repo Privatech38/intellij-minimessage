@@ -29,14 +29,14 @@ public class MiniMessageContentImpl extends ASTWrapperPsiElement implements Mini
 
   @Override
   @NotNull
-  public List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageLegacyFormattingCode.class);
+  public List<MiniMessageEmptyTag> getEmptyTagList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageEmptyTag.class);
   }
 
   @Override
   @NotNull
-  public List<MiniMessagePossibleTag> getPossibleTagList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessagePossibleTag.class);
+  public List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageLegacyFormattingCode.class);
   }
 
   @Override
