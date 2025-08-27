@@ -585,12 +585,12 @@ public class MiniMessageLexer implements FlexLexer {
           // fall through
           case 27: break;
           case 12:
-            { yybegin(STRING_DOUBLE); return STRING;
+            { yybegin(STRING_DOUBLE);
             }
           // fall through
           case 28: break;
           case 13:
-            { yybegin(STRING_SINGLE); return STRING;
+            { yybegin(STRING_SINGLE);
             }
           // fall through
           case 29: break;

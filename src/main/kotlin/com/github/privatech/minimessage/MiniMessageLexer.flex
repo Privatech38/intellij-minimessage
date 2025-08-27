@@ -50,8 +50,8 @@ Argument=[^\'\":>]+
 }
 
 <ARGUMENT_STATE> {
-    \'                    { yybegin(STRING_SINGLE); return STRING; }
-    \"                    { yybegin(STRING_DOUBLE); return STRING; }
+    \'                    { yybegin(STRING_SINGLE); }
+    \"                    { yybegin(STRING_DOUBLE); }
     {Argument}            { yybegin(TAG); return ARGUMENT; }
 }
 
