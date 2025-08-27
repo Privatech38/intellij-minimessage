@@ -8,7 +8,6 @@ import com.github.privatech.minimessage.psi.impl.*;
 
 public interface MiniMessageTypes {
 
-  IElementType ARGUMENT_TYPE = new MiniMessageElementType("ARGUMENT_TYPE");
   IElementType AUTO_CLOSED_TAG = new MiniMessageElementType("AUTO_CLOSED_TAG");
   IElementType CONTENT = new MiniMessageElementType("CONTENT");
   IElementType EMPTY_TAG = new MiniMessageElementType("EMPTY_TAG");
@@ -34,10 +33,7 @@ public interface MiniMessageTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ARGUMENT_TYPE) {
-        return new MiniMessageArgumentTypeImpl(node);
-      }
-      else if (type == AUTO_CLOSED_TAG) {
+      if (type == AUTO_CLOSED_TAG) {
         return new MiniMessageAutoClosedTagImpl(node);
       }
       else if (type == CONTENT) {

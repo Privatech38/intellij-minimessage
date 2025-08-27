@@ -45,6 +45,6 @@ tagOpening    ::= LT+ TAG_NAME tagArgument? GT
 tagClosing    ::= LT+ SLASH TAG_NAME GT {pin=2}
 
 tagArgument ::= COLON argumentType tagArgument? {pin=1}
-argumentType ::= STRING | ARGUMENT
+private argumentType ::= STRING | ARGUMENT
 
 legacyFormattingCode ::= !ESCAPE SECTION LEGACY_COLOR_CODE

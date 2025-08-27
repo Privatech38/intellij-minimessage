@@ -29,14 +29,20 @@ public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public MiniMessageArgumentType getArgumentType() {
-    return findChildByClass(MiniMessageArgumentType.class);
+  public MiniMessageTagArgument getTagArgument() {
+    return findChildByClass(MiniMessageTagArgument.class);
   }
 
   @Override
   @Nullable
-  public MiniMessageTagArgument getTagArgument() {
-    return findChildByClass(MiniMessageTagArgument.class);
+  public PsiElement getArgument() {
+    return findChildByType(ARGUMENT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
 }
