@@ -15,7 +15,7 @@ class MiniMessageColorSettingsPage : ColorSettingsPage {
         AttributesDescriptor("Tag", MiniMessageSyntaxHighlighter.TAG),
         AttributesDescriptor("Tag//String", MiniMessageSyntaxHighlighter.STRING),
         AttributesDescriptor("Tag//Argument", MiniMessageSyntaxHighlighter.ARGUMENT),
-        AttributesDescriptor("Bad Character", MiniMessageSyntaxHighlighter.BAD_CHARACTER)
+        AttributesDescriptor("Bad character", MiniMessageSyntaxHighlighter.BAD_CHARACTER)
     )
 
     override fun getIcon(): Icon? {
