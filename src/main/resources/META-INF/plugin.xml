@@ -43,5 +43,6 @@
                                 implementationClass="com.github.privatech.minimessage.MiniMessageParserDefinition"/>
         <lang.syntaxHighlighterFactory language="MiniMessage"
                                        implementationClass="com.github.privatech.minimessage.MiniMessageSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="com.github.privatech.minimessage.MiniMessageColorSettingsPage"/>
     </extensions>
 </idea-plugin>
