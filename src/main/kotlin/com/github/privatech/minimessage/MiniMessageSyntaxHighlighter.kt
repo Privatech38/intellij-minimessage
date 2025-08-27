@@ -14,7 +14,11 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
     companion object {
         @JvmField
-        val TAG: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_TAG", XmlHighlighterColors.HTML_TAG_NAME)
+        val TAG: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_TAG", XmlHighlighterColors.HTML_TAG)
+        @JvmField
+        val TAG_NAME: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_TAG_NAME", XmlHighlighterColors.HTML_TAG_NAME)
+        @JvmField
+        val CUSTOM_TAG_NAME: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_CUSTOM_TAG_NAME", XmlHighlighterColors.HTML_CUSTOM_TAG_NAME)
         @JvmField
         val STRING: TextAttributesKey =
             createTextAttributesKey("MINIMESSAGE_STRING", XmlHighlighterColors.HTML_ATTRIBUTE_VALUE)
@@ -30,6 +34,8 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
         @JvmField
         val TAG_KEYS: Array<TextAttributesKey> = arrayOf(TAG)
         @JvmField
+        val TAG_NAME_KEYS: Array<TextAttributesKey> = arrayOf(TAG_NAME)
+        @JvmField
         val STRING_KEYS: Array<TextAttributesKey> = arrayOf(STRING)
         @JvmField
         val ARGUMENT_KEYS: Array<TextAttributesKey> = arrayOf(ARGUMENT)
@@ -43,7 +49,8 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey?> {
         return when (tokenType) {
-            MiniMessageTypes.TAG_NAME, MiniMessageTypes.SLASH, MiniMessageTypes.COLON -> TAG_KEYS
+            MiniMessageTypes.COLON, MiniMessageTypes.SLASH -> TAG_KEYS
+            MiniMessageTypes.TAG_NAME -> TAG_NAME_KEYS
             MiniMessageTypes.STRING -> STRING_KEYS
             MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS

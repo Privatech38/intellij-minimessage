@@ -13,6 +13,8 @@ class MiniMessageColorSettingsPage : ColorSettingsPage {
 
     val DESCRIPTORS: Array<AttributesDescriptor> = arrayOf(
         AttributesDescriptor("Tag", MiniMessageSyntaxHighlighter.TAG),
+        AttributesDescriptor("Tag//Name", MiniMessageSyntaxHighlighter.TAG_NAME),
+        AttributesDescriptor("Tag//Custom name", MiniMessageSyntaxHighlighter.CUSTOM_TAG_NAME),
         AttributesDescriptor("Tag//String", MiniMessageSyntaxHighlighter.STRING),
         AttributesDescriptor("Tag//Argument", MiniMessageSyntaxHighlighter.ARGUMENT),
         AttributesDescriptor("Bad character", MiniMessageSyntaxHighlighter.BAD_CHARACTER)
