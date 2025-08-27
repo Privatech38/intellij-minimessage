@@ -29,7 +29,7 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey?> {
         return when (tokenType) {
-            MiniMessageTypes.TAG_NAME, MiniMessageTypes.LT, MiniMessageTypes.GT, MiniMessageTypes.SLASH, MiniMessageTypes.COLON -> TAG_KEYS
+            MiniMessageTypes.TAG_NAME, MiniMessageTypes.SLASH, MiniMessageTypes.COLON -> TAG_KEYS
             MiniMessageTypes.STRING -> STRING_KEYS
             MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
