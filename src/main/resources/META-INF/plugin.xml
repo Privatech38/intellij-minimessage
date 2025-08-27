@@ -41,5 +41,7 @@
                   extensions="minimessage"/>
         <lang.parserDefinition language="MiniMessage"
                                 implementationClass="com.github.privatech.minimessage.MiniMessageParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="MiniMessage"
+                                       implementationClass="com.github.privatech.minimessage.MiniMessageSyntaxHighlighterFactory"/>
     </extensions>
 </idea-plugin>

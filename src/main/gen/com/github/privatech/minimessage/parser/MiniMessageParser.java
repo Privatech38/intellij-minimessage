@@ -37,14 +37,12 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // STRING | ARGUMENT
-  public static boolean argumentType(PsiBuilder b, int l) {
+  static boolean argumentType(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "argumentType")) return false;
-    if (!nextTokenIs(b, "<argument type>", ARGUMENT, STRING)) return false;
+    if (!nextTokenIs(b, "", ARGUMENT, STRING)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ARGUMENT_TYPE, "<argument type>");
     r = consumeToken(b, STRING);
     if (!r) r = consumeToken(b, ARGUMENT);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

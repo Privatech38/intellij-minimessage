@@ -27,8 +27,9 @@ WhiteSpace=\s+
 
 PlainText=[^<]*
 TagName=[!?#]?[a-z0-9_-]*
+Argument=[^\'\":>]+
 
-%state TAG, ARGUMENT, STRING_DOUBLE, STRING_SINGLE
+%state TAG, ARGUMENT_STATE, STRING_DOUBLE, STRING_SINGLE
 
 %%
 <YYINITIAL> {
@@ -44,13 +45,14 @@ TagName=[!?#]?[a-z0-9_-]*
     {TagName}             { return TAG_NAME; }
 
     "/"                   { return SLASH; }
-    ":"                   { yybegin(ARGUMENT); return COLON; }
+    ":"                   { yybegin(ARGUMENT_STATE); return COLON; }
     ">"                   { yybegin(YYINITIAL); return GT; }
 }
 
-<ARGUMENT> {
+<ARGUMENT_STATE> {
     \'                    { yybegin(STRING_SINGLE); return STRING; }
     \"                    { yybegin(STRING_DOUBLE); return STRING; }
+    {Argument}            { yybegin(TAG); return ARGUMENT; }
 }
 
 <STRING_DOUBLE> {

@@ -8,9 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface MiniMessageTagArgument extends PsiElement {
 
   @Nullable
-  MiniMessageArgumentType getArgumentType();
+  MiniMessageTagArgument getTagArgument();
 
   @Nullable
-  MiniMessageTagArgument getTagArgument();
+  PsiElement getArgument();
+
+  @Nullable
+  PsiElement getString();
 
 }

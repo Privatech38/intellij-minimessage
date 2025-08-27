@@ -22,7 +22,7 @@ public class MiniMessageLexer implements FlexLexer {
   /** lexical states */
   public static final int YYINITIAL = 0;
   public static final int TAG = 2;
-  public static final int ARGUMENT = 4;
+  public static final int ARGUMENT_STATE = 4;
   public static final int STRING_DOUBLE = 6;
   public static final int STRING_SINGLE = 8;
 
@@ -104,10 +104,10 @@ public class MiniMessageLexer implements FlexLexer {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\1\1\2\3\0\1\1\1\3\1\4\1\5\1\6"+
     "\1\7\1\3\1\2\1\10\1\11\1\12\1\13\1\14"+
-    "\1\15\1\16\3\15\1\17";
+    "\1\15\1\16\1\17\3\16\1\20";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[24];
+    int [] result = new int[25];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -134,10 +134,11 @@ public class MiniMessageLexer implements FlexLexer {
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\15\0\32\0\47\0\64\0\101\0\116\0\133"+
     "\0\101\0\101\0\133\0\150\0\165\0\133\0\133\0\133"+
-    "\0\133\0\133\0\202\0\133\0\217\0\234\0\251\0\133";
+    "\0\202\0\133\0\133\0\217\0\133\0\234\0\251\0\266"+
+    "\0\133";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[24];
+    int [] result = new int[25];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -162,15 +163,17 @@ public class MiniMessageLexer implements FlexLexer {
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\6\2\7\6\6\1\10\1\6\1\11\1\12\1\13"+
     "\2\14\1\15\2\13\1\15\1\16\1\17\1\13\1\20"+
-    "\6\13\1\21\1\22\7\13\2\23\1\13\1\23\1\24"+
-    "\6\23\1\25\1\23\2\26\1\13\2\26\1\24\5\26"+
-    "\1\27\1\26\11\6\1\0\4\6\2\7\6\6\1\0"+
-    "\3\6\16\0\2\14\20\0\1\15\6\0\2\23\1\0"+
-    "\1\23\1\0\12\23\1\0\1\23\1\30\10\23\2\26"+
-    "\1\0\2\26\1\0\11\26\1\0\2\26\1\30\7\26";
+    "\2\13\4\21\1\22\1\23\2\21\1\13\1\21\1\13"+
+    "\2\21\2\24\1\13\1\24\1\25\6\24\1\26\1\24"+
+    "\2\27\1\13\2\27\1\25\5\27\1\30\1\27\11\6"+
+    "\1\0\4\6\2\7\6\6\1\0\3\6\16\0\2\14"+
+    "\20\0\1\15\6\0\4\21\2\0\2\21\1\0\1\21"+
+    "\1\0\2\21\2\24\1\0\1\24\1\0\12\24\1\0"+
+    "\1\24\1\31\10\24\2\27\1\0\2\27\1\0\11\27"+
+    "\1\0\2\27\1\31\7\27";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[182];
+    int [] result = new int[195];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -208,11 +211,11 @@ public class MiniMessageLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\1\3\0\2\1\1\11\2\1\1\11\2\1\5\11"+
-    "\1\1\1\11\3\1\1\11";
+    "\2\1\3\0\2\1\1\11\2\1\1\11\2\1\3\11"+
+    "\1\1\2\11\1\1\1\11\3\1\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[24];
+    int [] result = new int[25];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -530,77 +533,82 @@ public class MiniMessageLexer implements FlexLexer {
             { return PLAIN_TEXT;
             }
           // fall through
-          case 16: break;
+          case 17: break;
           case 2:
             { return TAG_NAME;
             }
           // fall through
-          case 17: break;
+          case 18: break;
           case 3:
             { return WHITE_SPACE;
             }
           // fall through
-          case 18: break;
+          case 19: break;
           case 4:
             { yybegin(TAG); return LT;
             }
           // fall through
-          case 19: break;
+          case 20: break;
           case 5:
             { return ESCAPE;
             }
           // fall through
-          case 20: break;
+          case 21: break;
           case 6:
             { return SECTION;
             }
           // fall through
-          case 21: break;
+          case 22: break;
           case 7:
             { return BAD_CHARACTER;
             }
           // fall through
-          case 22: break;
+          case 23: break;
           case 8:
             { return SLASH;
             }
           // fall through
-          case 23: break;
+          case 24: break;
           case 9:
-            { yybegin(ARGUMENT); return COLON;
+            { yybegin(ARGUMENT_STATE); return COLON;
             }
           // fall through
-          case 24: break;
+          case 25: break;
           case 10:
             { yybegin(YYINITIAL); return GT;
             }
           // fall through
-          case 25: break;
-          case 11:
-            { yybegin(STRING_DOUBLE); return STRING;
-            }
-          // fall through
           case 26: break;
-          case 12:
-            { yybegin(STRING_SINGLE); return STRING;
+          case 11:
+            { yybegin(TAG); return ARGUMENT;
             }
           // fall through
           case 27: break;
-          case 13:
-            { /* Consume string content */
+          case 12:
+            { yybegin(STRING_DOUBLE); return STRING;
             }
           // fall through
           case 28: break;
-          case 14:
-            { yybegin(TAG); return STRING;
+          case 13:
+            { yybegin(STRING_SINGLE); return STRING;
             }
           // fall through
           case 29: break;
-          case 15:
-            { /* Escaped quote, ignore */
+          case 14:
+            { /* Consume string content */
             }
           // fall through
           case 30: break;
+          case 15:
+            { yybegin(TAG); return STRING;
+            }
+          // fall through
+          case 31: break;
+          case 16:
+            { /* Escaped quote, ignore */
+            }
+          // fall through
+          case 32: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
