@@ -9,7 +9,6 @@ import com.github.privatech.minimessage.psi.impl.*;
 public interface MiniMessageTypes {
 
   IElementType AUTO_CLOSED_TAG = new MiniMessageElementType("AUTO_CLOSED_TAG");
-  IElementType CONTENT = new MiniMessageElementType("CONTENT");
   IElementType EMPTY_TAG = new MiniMessageElementType("EMPTY_TAG");
   IElementType LEGACY_FORMATTING_CODE = new MiniMessageElementType("LEGACY_FORMATTING_CODE");
   IElementType TAG = new MiniMessageElementType("TAG");
@@ -35,9 +34,6 @@ public interface MiniMessageTypes {
       IElementType type = node.getElementType();
       if (type == AUTO_CLOSED_TAG) {
         return new MiniMessageAutoClosedTagImpl(node);
-      }
-      else if (type == CONTENT) {
-        return new MiniMessageContentImpl(node);
       }
       else if (type == EMPTY_TAG) {
         return new MiniMessageEmptyTagImpl(node);

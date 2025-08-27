@@ -33,7 +33,7 @@
 
 root ::= content
 
-content ::= (possibleTag | legacyFormattingCode | PLAIN_TEXT) *
+private content ::= (possibleTag | legacyFormattingCode | PLAIN_TEXT) *
 
 private possibleTag ::= ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
 

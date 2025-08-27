@@ -10,8 +10,14 @@ public interface MiniMessageTag extends PsiElement {
   @Nullable
   MiniMessageAutoClosedTag getAutoClosedTag();
 
-  @Nullable
-  MiniMessageContent getContent();
+  @NotNull
+  List<MiniMessageEmptyTag> getEmptyTagList();
+
+  @NotNull
+  List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList();
+
+  @NotNull
+  List<MiniMessageTag> getTagList();
 
   @Nullable
   MiniMessageTagClosing getTagClosing();

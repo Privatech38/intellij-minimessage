@@ -34,9 +34,21 @@ public class MiniMessageTagImpl extends ASTWrapperPsiElement implements MiniMess
   }
 
   @Override
-  @Nullable
-  public MiniMessageContent getContent() {
-    return findChildByClass(MiniMessageContent.class);
+  @NotNull
+  public List<MiniMessageEmptyTag> getEmptyTagList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageEmptyTag.class);
+  }
+
+  @Override
+  @NotNull
+  public List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageLegacyFormattingCode.class);
+  }
+
+  @Override
+  @NotNull
+  public List<MiniMessageTag> getTagList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageTag.class);
   }
 
   @Override

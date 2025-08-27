@@ -85,15 +85,13 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (possibleTag | legacyFormattingCode | PLAIN_TEXT) *
-  public static boolean content(PsiBuilder b, int l) {
+  static boolean content(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "content")) return false;
-    Marker m = enter_section_(b, l, _NONE_, CONTENT, "<content>");
     while (true) {
       int c = current_position_(b);
       if (!content_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "content", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
     return true;
   }
 

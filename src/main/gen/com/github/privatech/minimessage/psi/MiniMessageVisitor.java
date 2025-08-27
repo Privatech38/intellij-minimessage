@@ -11,10 +11,6 @@ public class MiniMessageVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitContent(@NotNull MiniMessageContent o) {
-    visitPsiElement(o);
-  }
-
   public void visitEmptyTag(@NotNull MiniMessageEmptyTag o) {
     visitPsiElement(o);
   }
