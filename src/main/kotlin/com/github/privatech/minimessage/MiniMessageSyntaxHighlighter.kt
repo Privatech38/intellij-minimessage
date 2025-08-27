@@ -4,6 +4,7 @@ import com.github.privatech.minimessage.psi.MiniMessageTypes
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
+import com.intellij.openapi.editor.XmlHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
@@ -12,16 +13,30 @@ import com.intellij.psi.tree.IElementType
 
 class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
-    val TAG: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_TAG", DefaultLanguageHighlighterColors.KEYWORD)
-    val STRING: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_STRING", DefaultLanguageHighlighterColors.STRING)
-    val ARGUMENT: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_ARGUMENT", DefaultLanguageHighlighterColors.MARKUP_ATTRIBUTE)
-    val BAD_CHARACTER: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
+    companion object {
+        @JvmField
+        val TAG: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_TAG", XmlHighlighterColors.XML_TAG)
+        @JvmField
+        val STRING: TextAttributesKey =
+            createTextAttributesKey("MINIMESSAGE_STRING", DefaultLanguageHighlighterColors.STRING)
+        @JvmField
+        val ARGUMENT: TextAttributesKey =
+            createTextAttributesKey("MINIMESSAGE_ARGUMENT", XmlHighlighterColors.XML_ATTRIBUTE_NAME)
+        @JvmField
+        val BAD_CHARACTER: TextAttributesKey =
+            createTextAttributesKey("MINIMESSAGE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
 
-    val BAD_CHAR_KEYS: Array<TextAttributesKey> = arrayOf(BAD_CHARACTER)
-    val TAG_KEYS: Array<TextAttributesKey> = arrayOf(TAG)
-    val STRING_KEYS: Array<TextAttributesKey> = arrayOf(STRING)
-    val ARGUMENT_KEYS: Array<TextAttributesKey> = arrayOf(ARGUMENT)
-    val EMPTY_KEYS: Array<TextAttributesKey> = emptyArray()
+        @JvmField
+        val BAD_CHAR_KEYS: Array<TextAttributesKey> = arrayOf(BAD_CHARACTER)
+        @JvmField
+        val TAG_KEYS: Array<TextAttributesKey> = arrayOf(TAG)
+        @JvmField
+        val STRING_KEYS: Array<TextAttributesKey> = arrayOf(STRING)
+        @JvmField
+        val ARGUMENT_KEYS: Array<TextAttributesKey> = arrayOf(ARGUMENT)
+        @JvmField
+        val EMPTY_KEYS: Array<TextAttributesKey> = emptyArray()
+    }
 
     override fun getHighlightingLexer(): Lexer {
         return MiniMessageLexerAdapter()
