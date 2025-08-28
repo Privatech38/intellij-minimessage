@@ -25,7 +25,8 @@ import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 EOL=\R
 WhiteSpace=\s+
 
-PlainText=[^<]*
+PlainText=[^<§]* | §[^0-9a-fk-or]
+LegacyFormattingCode=§[0-9a-fk-or]
 TagName=[!?#]?[a-z0-9_-]*
 Argument=[^\'\":>]+
 
@@ -36,14 +37,13 @@ Argument=[^\'\":>]+
     {WhiteSpace}          { return WHITE_SPACE; }
     "<"                   { yybegin(TAG); return LT; }
     "\\"                  { return ESCAPE; }
-    "§"                   { return SECTION; }
+    {LegacyFormattingCode} { return LEGACY_FORMATTING_CODE; }
     {PlainText}           { return PLAIN_TEXT; }
 }
 
 <TAG> {
     {WhiteSpace}          { return WHITE_SPACE; }
     {TagName}             { return TAG_NAME; }
-
     "/"                   { return SLASH; }
     ":"                   { yybegin(ARGUMENT_STATE); return COLON; }
     ">"                   { yybegin(YYINITIAL); return GT; }

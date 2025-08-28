@@ -10,7 +10,6 @@ public interface MiniMessageTypes {
 
   IElementType AUTO_CLOSED_TAG = new MiniMessageElementType("AUTO_CLOSED_TAG");
   IElementType EMPTY_TAG = new MiniMessageElementType("EMPTY_TAG");
-  IElementType LEGACY_FORMATTING_CODE = new MiniMessageElementType("LEGACY_FORMATTING_CODE");
   IElementType TAG = new MiniMessageElementType("TAG");
   IElementType TAG_ARGUMENT = new MiniMessageElementType("TAG_ARGUMENT");
   IElementType TAG_CLOSING = new MiniMessageElementType("TAG_CLOSING");
@@ -20,10 +19,9 @@ public interface MiniMessageTypes {
   IElementType COLON = new MiniMessageTokenType(":");
   IElementType ESCAPE = new MiniMessageTokenType("\\");
   IElementType GT = new MiniMessageTokenType(">");
-  IElementType LEGACY_COLOR_CODE = new MiniMessageTokenType("LEGACY_COLOR_CODE");
+  IElementType LEGACY_FORMATTING_CODE = new MiniMessageTokenType("LEGACY_FORMATTING_CODE");
   IElementType LT = new MiniMessageTokenType("<");
   IElementType PLAIN_TEXT = new MiniMessageTokenType("PLAIN_TEXT");
-  IElementType SECTION = new MiniMessageTokenType("§");
   IElementType SLASH = new MiniMessageTokenType("/");
   IElementType STRING = new MiniMessageTokenType("STRING");
   IElementType TAG_NAME = new MiniMessageTokenType("TAG_NAME");
@@ -37,9 +35,6 @@ public interface MiniMessageTypes {
       }
       else if (type == EMPTY_TAG) {
         return new MiniMessageEmptyTagImpl(node);
-      }
-      else if (type == LEGACY_FORMATTING_CODE) {
-        return new MiniMessageLegacyFormattingCodeImpl(node);
       }
       else if (type == TAG) {
         return new MiniMessageTagImpl(node);

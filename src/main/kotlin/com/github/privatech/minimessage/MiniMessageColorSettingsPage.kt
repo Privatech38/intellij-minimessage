@@ -12,12 +12,14 @@ import javax.swing.Icon
 class MiniMessageColorSettingsPage : ColorSettingsPage {
 
     val DESCRIPTORS: Array<AttributesDescriptor> = arrayOf(
+        AttributesDescriptor("Plain text", MiniMessageSyntaxHighlighter.PLAIN_TEXT),
         AttributesDescriptor("Tag", MiniMessageSyntaxHighlighter.TAG),
         AttributesDescriptor("Tag//Name", MiniMessageSyntaxHighlighter.TAG_NAME),
         AttributesDescriptor("Tag//Custom name", MiniMessageSyntaxHighlighter.CUSTOM_TAG_NAME),
         AttributesDescriptor("Tag//String", MiniMessageSyntaxHighlighter.STRING),
         AttributesDescriptor("Tag//Argument", MiniMessageSyntaxHighlighter.ARGUMENT),
-        AttributesDescriptor("Bad character", MiniMessageSyntaxHighlighter.BAD_CHARACTER)
+        AttributesDescriptor("Bad character", MiniMessageSyntaxHighlighter.BAD_CHARACTER),
+        AttributesDescriptor("Legacy format", MiniMessageSyntaxHighlighter.LEGACY_FORMAT)
     )
 
     override fun getIcon(): Icon? {
@@ -32,6 +34,7 @@ class MiniMessageColorSettingsPage : ColorSettingsPage {
         return """
             <red>This is red</red>
             <hover:show_text:'Hello!'>Hover over me!</hover>
+            §a§llegacy §rformatted text
         """.trimIndent()
     }
 

@@ -84,7 +84,7 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (possibleTag | legacyFormattingCode | PLAIN_TEXT) *
+  // (possibleTag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
   static boolean content(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "content")) return false;
     while (true) {
@@ -95,12 +95,12 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // possibleTag | legacyFormattingCode | PLAIN_TEXT
+  // possibleTag | LEGACY_FORMATTING_CODE | PLAIN_TEXT
   private static boolean content_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "content_0")) return false;
     boolean r;
     r = possibleTag(b, l + 1);
-    if (!r) r = legacyFormattingCode(b, l + 1);
+    if (!r) r = consumeToken(b, LEGACY_FORMATTING_CODE);
     if (!r) r = consumeToken(b, PLAIN_TEXT);
     return r;
   }
@@ -130,29 +130,6 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "emptyTag_0", c)) break;
     }
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !ESCAPE SECTION LEGACY_COLOR_CODE
-  public static boolean legacyFormattingCode(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "legacyFormattingCode")) return false;
-    if (!nextTokenIs(b, SECTION)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = legacyFormattingCode_0(b, l + 1);
-    r = r && consumeTokens(b, 0, SECTION, LEGACY_COLOR_CODE);
-    exit_section_(b, m, LEGACY_FORMATTING_CODE, r);
-    return r;
-  }
-
-  // !ESCAPE
-  private static boolean legacyFormattingCode_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "legacyFormattingCode_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !consumeToken(b, ESCAPE);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

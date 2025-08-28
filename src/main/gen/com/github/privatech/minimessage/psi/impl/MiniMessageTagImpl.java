@@ -41,12 +41,6 @@ public class MiniMessageTagImpl extends ASTWrapperPsiElement implements MiniMess
 
   @Override
   @NotNull
-  public List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageLegacyFormattingCode.class);
-  }
-
-  @Override
-  @NotNull
   public List<MiniMessageTag> getTagList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageTag.class);
   }

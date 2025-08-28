@@ -19,21 +19,20 @@
         GT=">"
         SLASH="/"
         ESCAPE='\'
-        SECTION="§"
 
         // Custom tokens
         PLAIN_TEXT
         TAG_NAME
         ARGUMENT
         STRING
-        LEGACY_COLOR_CODE
+        LEGACY_FORMATTING_CODE
         WHITE_SPACE
     ]
 }
 
 root ::= content
 
-private content ::= (possibleTag | legacyFormattingCode | PLAIN_TEXT) *
+private content ::= (possibleTag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
 
 private possibleTag ::= ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
 
@@ -46,5 +45,3 @@ tagClosing    ::= LT+ SLASH TAG_NAME GT {pin=2}
 
 tagArgument ::= COLON argumentType tagArgument? {pin=1}
 private argumentType ::= STRING | ARGUMENT
-
-legacyFormattingCode ::= !ESCAPE SECTION LEGACY_COLOR_CODE

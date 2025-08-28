@@ -14,9 +14,6 @@ public interface MiniMessageTag extends PsiElement {
   List<MiniMessageEmptyTag> getEmptyTagList();
 
   @NotNull
-  List<MiniMessageLegacyFormattingCode> getLegacyFormattingCodeList();
-
-  @NotNull
   List<MiniMessageTag> getTagList();
 
   @Nullable

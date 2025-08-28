@@ -14,6 +14,11 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
     companion object {
         @JvmField
+        val PLAIN_TEXT: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_PLAIN_TEXT", HighlighterColors.TEXT)
+        @JvmField
+        val LEGACY_FORMAT: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_LEGACY_FORMAT",
+            XmlHighlighterColors.HTML_ENTITY_REFERENCE)
+        @JvmField
         val TAG: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_TAG", XmlHighlighterColors.HTML_TAG)
         @JvmField
         val TAG_NAME: TextAttributesKey = createTextAttributesKey("MINIMESSAGE_TAG_NAME", XmlHighlighterColors.HTML_TAG_NAME)
@@ -32,13 +37,17 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
         @JvmField
         val BAD_CHAR_KEYS: Array<TextAttributesKey> = arrayOf(BAD_CHARACTER)
         @JvmField
+        val PLAIN_TEXT_KEYS: Array<TextAttributesKey> = arrayOf(PLAIN_TEXT)
+        @JvmField
+        val LEGACY_FORMAT_KEYS: Array<TextAttributesKey> = arrayOf(LEGACY_FORMAT)
+        @JvmField
         val TAG_KEYS: Array<TextAttributesKey> = arrayOf(TAG)
         @JvmField
-        val TAG_NAME_KEYS: Array<TextAttributesKey> = arrayOf(TAG_NAME)
+        val TAG_NAME_KEYS: Array<TextAttributesKey> = arrayOf(TAG, TAG_NAME)
         @JvmField
-        val STRING_KEYS: Array<TextAttributesKey> = arrayOf(STRING)
+        val STRING_KEYS: Array<TextAttributesKey> = arrayOf(TAG, STRING)
         @JvmField
-        val ARGUMENT_KEYS: Array<TextAttributesKey> = arrayOf(ARGUMENT)
+        val ARGUMENT_KEYS: Array<TextAttributesKey> = arrayOf(TAG, ARGUMENT)
         @JvmField
         val EMPTY_KEYS: Array<TextAttributesKey> = emptyArray()
     }
@@ -49,10 +58,12 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey?> {
         return when (tokenType) {
+            MiniMessageTypes.PLAIN_TEXT -> PLAIN_TEXT_KEYS
+            MiniMessageTypes.LEGACY_FORMATTING_CODE -> LEGACY_FORMAT_KEYS
             MiniMessageTypes.COLON, MiniMessageTypes.SLASH, MiniMessageTypes.LT, MiniMessageTypes.GT -> TAG_KEYS
-            MiniMessageTypes.TAG_NAME -> arrayOf(TAG, TAG_NAME)
-            MiniMessageTypes.STRING -> arrayOf(TAG, STRING)
-            MiniMessageTypes.ARGUMENT -> arrayOf(TAG, ARGUMENT)
+            MiniMessageTypes.TAG_NAME -> TAG_NAME_KEYS
+            MiniMessageTypes.STRING -> STRING_KEYS
+            MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
             else -> EMPTY_KEYS
         }

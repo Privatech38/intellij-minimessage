@@ -72,10 +72,11 @@ public class MiniMessageLexer implements FlexLexer {
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\1\1\1\2\2\1\1\2\22\0\1\1\1\3"+
     "\1\4\1\3\3\0\1\5\5\0\1\6\1\0\1\7"+
-    "\12\6\1\10\1\0\1\11\1\0\1\12\1\3\34\0"+
-    "\1\13\2\0\1\6\1\0\32\6\12\0\1\1\32\0"+
-    "\1\1\6\0\1\14\u01d8\0\1\1\177\0\13\1\35\0"+
-    "\2\1\5\0\1\1\57\0\1\1\240\0\1\1\377\0";
+    "\12\10\1\11\1\0\1\12\1\0\1\13\1\3\34\0"+
+    "\1\14\2\0\1\6\1\0\6\10\4\6\5\10\2\6"+
+    "\1\10\10\6\12\0\1\1\32\0\1\1\6\0\1\15"+
+    "\u01d8\0\1\1\177\0\13\1\35\0\2\1\5\0\1\1"+
+    "\57\0\1\1\240\0\1\1\377\0";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1280];
@@ -102,12 +103,12 @@ public class MiniMessageLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\1\1\2\3\0\1\1\1\3\1\4\1\5\1\6"+
-    "\1\7\1\3\1\2\1\10\1\11\1\12\1\13\1\14"+
-    "\1\15\1\16\1\17\3\16\1\20";
+    "\1\1\1\2\3\0\1\1\1\3\1\4\1\5\2\6"+
+    "\1\3\1\2\1\7\1\10\1\11\1\12\1\13\1\14"+
+    "\1\15\1\16\3\15\1\1\1\17\1\20";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[25];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -132,13 +133,13 @@ public class MiniMessageLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\15\0\32\0\47\0\64\0\101\0\116\0\133"+
-    "\0\101\0\101\0\133\0\150\0\165\0\133\0\133\0\133"+
-    "\0\202\0\133\0\133\0\217\0\133\0\234\0\251\0\266"+
-    "\0\133";
+    "\0\0\0\16\0\34\0\52\0\70\0\106\0\124\0\142"+
+    "\0\106\0\160\0\142\0\176\0\214\0\142\0\142\0\142"+
+    "\0\232\0\142\0\142\0\250\0\142\0\266\0\304\0\322"+
+    "\0\142\0\142\0\142";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[25];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -161,19 +162,20 @@ public class MiniMessageLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\6\2\7\6\6\1\10\1\6\1\11\1\12\1\13"+
-    "\2\14\1\15\2\13\1\15\1\16\1\17\1\13\1\20"+
-    "\2\13\4\21\1\22\1\23\2\21\1\13\1\21\1\13"+
-    "\2\21\2\24\1\13\1\24\1\25\6\24\1\26\1\24"+
-    "\2\27\1\13\2\27\1\25\5\27\1\30\1\27\11\6"+
-    "\1\0\4\6\2\7\6\6\1\0\3\6\16\0\2\14"+
-    "\20\0\1\15\6\0\4\21\2\0\2\21\1\0\1\21"+
-    "\1\0\2\21\2\24\1\0\1\24\1\0\12\24\1\0"+
-    "\1\24\1\31\10\24\2\27\1\0\2\27\1\0\11\27"+
-    "\1\0\2\27\1\31\7\27";
+    "\1\6\2\7\7\6\1\10\1\6\1\11\1\12\1\13"+
+    "\2\14\1\15\2\13\1\15\1\16\1\15\1\17\1\13"+
+    "\1\20\2\13\4\21\1\22\1\23\3\21\1\13\1\21"+
+    "\1\13\2\21\2\24\1\13\1\24\1\25\7\24\1\26"+
+    "\1\24\2\27\1\13\2\27\1\25\6\27\1\30\1\27"+
+    "\12\6\1\0\2\6\1\0\1\6\2\7\7\6\1\0"+
+    "\2\6\17\0\10\31\1\32\5\31\1\0\2\14\21\0"+
+    "\1\15\1\0\1\15\5\0\4\21\2\0\3\21\1\0"+
+    "\1\21\1\0\2\21\2\24\1\0\1\24\1\0\13\24"+
+    "\1\0\1\24\1\33\11\24\2\27\1\0\2\27\1\0"+
+    "\12\27\1\0\2\27\1\33\10\27";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[195];
+    int [] result = new int[224];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -212,10 +214,10 @@ public class MiniMessageLexer implements FlexLexer {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\2\1\3\0\2\1\1\11\2\1\1\11\2\1\3\11"+
-    "\1\1\2\11\1\1\1\11\3\1\1\11";
+    "\1\1\2\11\1\1\1\11\3\1\3\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[25];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -555,52 +557,52 @@ public class MiniMessageLexer implements FlexLexer {
           // fall through
           case 21: break;
           case 6:
-            { return SECTION;
+            { return BAD_CHARACTER;
             }
           // fall through
           case 22: break;
           case 7:
-            { return BAD_CHARACTER;
+            { return SLASH;
             }
           // fall through
           case 23: break;
           case 8:
-            { return SLASH;
+            { yybegin(ARGUMENT_STATE); return COLON;
             }
           // fall through
           case 24: break;
           case 9:
-            { yybegin(ARGUMENT_STATE); return COLON;
+            { yybegin(YYINITIAL); return GT;
             }
           // fall through
           case 25: break;
           case 10:
-            { yybegin(YYINITIAL); return GT;
+            { yybegin(TAG); return ARGUMENT;
             }
           // fall through
           case 26: break;
           case 11:
-            { yybegin(TAG); return ARGUMENT;
+            { yybegin(STRING_DOUBLE);
             }
           // fall through
           case 27: break;
           case 12:
-            { yybegin(STRING_DOUBLE);
+            { yybegin(STRING_SINGLE);
             }
           // fall through
           case 28: break;
           case 13:
-            { yybegin(STRING_SINGLE);
+            { /* Consume string content */
             }
           // fall through
           case 29: break;
           case 14:
-            { /* Consume string content */
+            { yybegin(TAG); return STRING;
             }
           // fall through
           case 30: break;
           case 15:
-            { yybegin(TAG); return STRING;
+            { return LEGACY_FORMATTING_CODE;
             }
           // fall through
           case 31: break;
