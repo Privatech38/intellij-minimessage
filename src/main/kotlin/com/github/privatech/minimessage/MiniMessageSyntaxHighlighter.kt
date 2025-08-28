@@ -49,10 +49,10 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey?> {
         return when (tokenType) {
-            MiniMessageTypes.COLON, MiniMessageTypes.SLASH -> TAG_KEYS
-            MiniMessageTypes.TAG_NAME -> TAG_NAME_KEYS
-            MiniMessageTypes.STRING -> STRING_KEYS
-            MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
+            MiniMessageTypes.COLON, MiniMessageTypes.SLASH, MiniMessageTypes.LT, MiniMessageTypes.GT -> TAG_KEYS
+            MiniMessageTypes.TAG_NAME -> arrayOf(TAG, TAG_NAME)
+            MiniMessageTypes.STRING -> arrayOf(TAG, STRING)
+            MiniMessageTypes.ARGUMENT -> arrayOf(TAG, ARGUMENT)
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
             else -> EMPTY_KEYS
         }
