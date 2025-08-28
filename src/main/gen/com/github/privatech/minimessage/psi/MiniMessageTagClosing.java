@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface MiniMessageTagClosing extends PsiElement {
 
   @Nullable
+  PsiElement getCustomTagName();
+
+  @Nullable
   PsiElement getTagName();
 
 }

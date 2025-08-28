@@ -10,7 +10,10 @@ public interface MiniMessageAutoClosedTag extends PsiElement {
   @Nullable
   MiniMessageTagArgument getTagArgument();
 
-  @NotNull
+  @Nullable
+  PsiElement getCustomTagName();
+
+  @Nullable
   PsiElement getTagName();
 
 }

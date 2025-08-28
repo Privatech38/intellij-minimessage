@@ -25,9 +25,18 @@ import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 EOL=\R
 WhiteSpace=\s+
 
-PlainText=[^<§]* | §[^0-9a-fk-or]
+PlainText=[^<§]*|§[^0-9a-fk-or]
 LegacyFormattingCode=§[0-9a-fk-or]
-TagName=[!?#]?[a-z0-9_-]*
+// Known tag names from MiniMessage
+ColorTag=black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|grey|dark_gray|dark_grey|blue|green|aqua|red|light_purple|yellow|white|color|colour|c|shadow|#[0-9a-fA-F]{6}
+DecorationTag=bold|b|italic|i|em|underlined|u|strikethrough|st|obfuscated|obf|reset
+InteractiveTag=click|hover|key
+TranslatableTag=lang|tr|translate|lang_or|tr_or|translate_or
+InsertTag=insertion
+GradientTag=gradient|rainbow|transition
+MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
+
+CustomTagName=[!?#]?[a-z0-9_-]+
 Argument=[^\'\":>]+
 
 %state TAG, ARGUMENT_STATE, STRING_DOUBLE, STRING_SINGLE
@@ -43,7 +52,9 @@ Argument=[^\'\":>]+
 
 <TAG> {
     {WhiteSpace}          { return WHITE_SPACE; }
-    {TagName}             { return TAG_NAME; }
+    {ColorTag} | {DecorationTag} | {InteractiveTag} | {TranslatableTag} | {InsertTag} | {GradientTag} | {MiscTag}
+                          { return TAG_NAME; }
+    {CustomTagName}       { return CUSTOM_TAG_NAME; }
     "/"                   { return SLASH; }
     ":"                   { yybegin(ARGUMENT_STATE); return COLON; }
     ">"                   { yybegin(YYINITIAL); return GT; }

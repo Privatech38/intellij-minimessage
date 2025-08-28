@@ -17,6 +17,7 @@ public interface MiniMessageTypes {
 
   IElementType ARGUMENT = new MiniMessageTokenType("ARGUMENT");
   IElementType COLON = new MiniMessageTokenType(":");
+  IElementType CUSTOM_TAG_NAME = new MiniMessageTokenType("CUSTOM_TAG_NAME");
   IElementType ESCAPE = new MiniMessageTokenType("\\");
   IElementType GT = new MiniMessageTokenType(">");
   IElementType LEGACY_FORMATTING_CODE = new MiniMessageTokenType("LEGACY_FORMATTING_CODE");

@@ -23,6 +23,7 @@
         // Custom tokens
         PLAIN_TEXT
         TAG_NAME
+        CUSTOM_TAG_NAME
         ARGUMENT
         STRING
         LEGACY_FORMATTING_CODE
@@ -39,9 +40,11 @@ private possibleTag ::= ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
 tag ::= autoClosedTag | tagOpening content tagClosing?
 
 emptyTag      ::= LT+ GT
-autoClosedTag ::= LT+ TAG_NAME tagArgument? SLASH GT
-tagOpening    ::= LT+ TAG_NAME tagArgument? GT
-tagClosing    ::= LT+ SLASH TAG_NAME GT {pin=2}
+autoClosedTag ::= LT+ tagName tagArgument? SLASH GT
+tagOpening    ::= LT+ tagName tagArgument? GT
+tagClosing    ::= LT+ SLASH tagName GT {pin=2}
+
+private tagName ::= TAG_NAME | CUSTOM_TAG_NAME
 
 tagArgument ::= COLON argumentType tagArgument? {pin=1}
 private argumentType ::= STRING | ARGUMENT

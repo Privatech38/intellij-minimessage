@@ -47,14 +47,14 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LT+ TAG_NAME tagArgument? SLASH GT
+  // LT+ tagName tagArgument? SLASH GT
   public static boolean autoClosedTag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "autoClosedTag")) return false;
     if (!nextTokenIs(b, LT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = autoClosedTag_0(b, l + 1);
-    r = r && consumeToken(b, TAG_NAME);
+    r = r && tagName(b, l + 1);
     r = r && autoClosedTag_2(b, l + 1);
     r = r && consumeTokens(b, 0, SLASH, GT);
     exit_section_(b, m, AUTO_CLOSED_TAG, r);
@@ -253,15 +253,17 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LT+ SLASH TAG_NAME GT
+  // LT+ SLASH tagName GT
   public static boolean tagClosing(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tagClosing")) return false;
     if (!nextTokenIs(b, LT)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, TAG_CLOSING, null);
     r = tagClosing_0(b, l + 1);
-    r = r && consumeTokens(b, 1, SLASH, TAG_NAME, GT);
+    r = r && consumeToken(b, SLASH);
     p = r; // pin = 2
+    r = r && report_error_(b, tagName(b, l + 1));
+    r = p && consumeToken(b, GT) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
@@ -282,14 +284,25 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LT+ TAG_NAME tagArgument? GT
+  // TAG_NAME | CUSTOM_TAG_NAME
+  static boolean tagName(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tagName")) return false;
+    if (!nextTokenIs(b, "", CUSTOM_TAG_NAME, TAG_NAME)) return false;
+    boolean r;
+    r = consumeToken(b, TAG_NAME);
+    if (!r) r = consumeToken(b, CUSTOM_TAG_NAME);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // LT+ tagName tagArgument? GT
   public static boolean tagOpening(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tagOpening")) return false;
     if (!nextTokenIs(b, LT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = tagOpening_0(b, l + 1);
-    r = r && consumeToken(b, TAG_NAME);
+    r = r && tagName(b, l + 1);
     r = r && tagOpening_2(b, l + 1);
     r = r && consumeToken(b, GT);
     exit_section_(b, m, TAG_OPENING, r);

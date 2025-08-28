@@ -29,6 +29,12 @@ public class MiniMessageTagClosingImpl extends ASTWrapperPsiElement implements M
 
   @Override
   @Nullable
+  public PsiElement getCustomTagName() {
+    return findChildByType(CUSTOM_TAG_NAME);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getTagName() {
     return findChildByType(TAG_NAME);
   }

@@ -34,6 +34,7 @@ class MiniMessageColorSettingsPage : ColorSettingsPage {
         return """
             <red>This is red</red>
             <hover:show_text:'Hello!'>Hover over me!</hover>
+            My name is <name>.
             §a§llegacy §rformatted text
         """.trimIndent()
     }

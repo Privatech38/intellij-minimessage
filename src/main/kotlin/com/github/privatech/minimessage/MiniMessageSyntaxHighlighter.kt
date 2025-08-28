@@ -45,6 +45,8 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
         @JvmField
         val TAG_NAME_KEYS: Array<TextAttributesKey> = arrayOf(TAG, TAG_NAME)
         @JvmField
+        val CUSTOM_TAG_NAME_KEYS: Array<TextAttributesKey> = arrayOf(TAG, CUSTOM_TAG_NAME)
+        @JvmField
         val STRING_KEYS: Array<TextAttributesKey> = arrayOf(TAG, STRING)
         @JvmField
         val ARGUMENT_KEYS: Array<TextAttributesKey> = arrayOf(TAG, ARGUMENT)
@@ -62,6 +64,7 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
             MiniMessageTypes.LEGACY_FORMATTING_CODE -> LEGACY_FORMAT_KEYS
             MiniMessageTypes.COLON, MiniMessageTypes.SLASH, MiniMessageTypes.LT, MiniMessageTypes.GT -> TAG_KEYS
             MiniMessageTypes.TAG_NAME -> TAG_NAME_KEYS
+            MiniMessageTypes.CUSTOM_TAG_NAME -> CUSTOM_TAG_NAME_KEYS
             MiniMessageTypes.STRING -> STRING_KEYS
             MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
