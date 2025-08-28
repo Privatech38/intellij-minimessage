@@ -45,5 +45,9 @@
         <lang.syntaxHighlighterFactory language="MiniMessage"
                                        implementationClass="com.github.privatech.minimessage.MiniMessageSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="com.github.privatech.minimessage.MiniMessageColorSettingsPage"/>
+        <annotator language="MiniMessage"
+                     implementationClass="com.github.privatech.minimessage.annotator.MiniMessageSyntaxColorAnnotator"/>
+        <annotator language="MiniMessage"
+                        implementationClass="com.github.privatech.minimessage.annotator.MiniMessageSemanticsAnnotator"/>
     </extensions>
 </idea-plugin>
