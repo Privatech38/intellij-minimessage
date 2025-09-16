@@ -32,9 +32,7 @@
 
 root ::= content
 
-private content ::= (possible_tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
-
-private possible_tag ::= ESCAPE LT | LT WHITE_SPACE | tag
+private content ::= (tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
 
 private tag ::= self_closing_tag | opening_tag | closing_tag
 
