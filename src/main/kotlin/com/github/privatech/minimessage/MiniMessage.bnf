@@ -34,11 +34,10 @@ root ::= content
 
 private content ::= (possible_tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
 
-private possible_tag ::= ESCAPE LT | empty_tag | LT WHITE_SPACE | tag
+private possible_tag ::= ESCAPE LT | LT WHITE_SPACE | tag
 
 private tag ::= self_closing_tag | opening_tag | closing_tag
 
-empty_tag      ::= LT GT
 self_closing_tag ::= LT tag_name tag_argument? SLASH GT
 opening_tag    ::= LT tag_name tag_argument? GT
 closing_tag    ::= LT SLASH tag_name GT { pin=2 }

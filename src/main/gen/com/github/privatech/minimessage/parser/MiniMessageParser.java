@@ -84,18 +84,6 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LT GT
-  public static boolean empty_tag(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "empty_tag")) return false;
-    if (!nextTokenIs(b, LT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, LT, GT);
-    exit_section_(b, m, EMPTY_TAG, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // LT tag_name tag_argument? GT
   public static boolean opening_tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "opening_tag")) return false;
@@ -118,14 +106,13 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ESCAPE LT | empty_tag | LT WHITE_SPACE | tag
+  // ESCAPE LT | LT WHITE_SPACE | tag
   static boolean possible_tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "possible_tag")) return false;
     if (!nextTokenIs(b, "", ESCAPE, LT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = parseTokens(b, 0, ESCAPE, LT);
-    if (!r) r = empty_tag(b, l + 1);
     if (!r) r = parseTokens(b, 0, LT, WHITE_SPACE);
     if (!r) r = tag(b, l + 1);
     exit_section_(b, m, null, r);
