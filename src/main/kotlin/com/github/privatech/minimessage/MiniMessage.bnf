@@ -1,4 +1,3 @@
-//noinspection BnfSuspiciousTokenForFile
 {
     parserClass="com.github.privatech.minimessage.parser.MiniMessageParser"
 
@@ -37,7 +36,7 @@ private content ::= (possibleTag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
 
 private possibleTag ::= ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
 
-tag ::= autoClosedTag | tagOpening content tagClosing?
+private tag ::= autoClosedTag | tagOpening | tagClosing
 
 emptyTag      ::= LT+ GT
 autoClosedTag ::= LT+ tagName tagArgument? SLASH GT

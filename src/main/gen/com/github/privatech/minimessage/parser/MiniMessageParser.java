@@ -199,35 +199,15 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // autoClosedTag | tagOpening content tagClosing?
-  public static boolean tag(PsiBuilder b, int l) {
+  // autoClosedTag | tagOpening | tagClosing
+  static boolean tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tag")) return false;
     if (!nextTokenIs(b, LT)) return false;
     boolean r;
-    Marker m = enter_section_(b);
     r = autoClosedTag(b, l + 1);
-    if (!r) r = tag_1(b, l + 1);
-    exit_section_(b, m, TAG, r);
+    if (!r) r = tagOpening(b, l + 1);
+    if (!r) r = tagClosing(b, l + 1);
     return r;
-  }
-
-  // tagOpening content tagClosing?
-  private static boolean tag_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tag_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = tagOpening(b, l + 1);
-    r = r && content(b, l + 1);
-    r = r && tag_1_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // tagClosing?
-  private static boolean tag_1_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tag_1_2")) return false;
-    tagClosing(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */
