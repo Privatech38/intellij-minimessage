@@ -11,14 +11,14 @@ import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.privatech.minimessage.psi.*;
 
-public class MiniMessageTagClosingImpl extends ASTWrapperPsiElement implements MiniMessageTagClosing {
+public class MiniMessageClosingTagImpl extends ASTWrapperPsiElement implements MiniMessageClosingTag {
 
-  public MiniMessageTagClosingImpl(@NotNull ASTNode node) {
+  public MiniMessageClosingTagImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MiniMessageVisitor visitor) {
-    visitor.visitTagClosing(this);
+    visitor.visitClosingTag(this);
   }
 
   @Override

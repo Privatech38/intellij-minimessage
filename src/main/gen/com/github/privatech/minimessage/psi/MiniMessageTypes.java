@@ -8,11 +8,11 @@ import com.github.privatech.minimessage.psi.impl.*;
 
 public interface MiniMessageTypes {
 
-  IElementType AUTO_CLOSED_TAG = new MiniMessageElementType("AUTO_CLOSED_TAG");
+  IElementType CLOSING_TAG = new MiniMessageElementType("CLOSING_TAG");
   IElementType EMPTY_TAG = new MiniMessageElementType("EMPTY_TAG");
+  IElementType OPENING_TAG = new MiniMessageElementType("OPENING_TAG");
+  IElementType SELF_CLOSING_TAG = new MiniMessageElementType("SELF_CLOSING_TAG");
   IElementType TAG_ARGUMENT = new MiniMessageElementType("TAG_ARGUMENT");
-  IElementType TAG_CLOSING = new MiniMessageElementType("TAG_CLOSING");
-  IElementType TAG_OPENING = new MiniMessageElementType("TAG_OPENING");
 
   IElementType ARGUMENT = new MiniMessageTokenType("ARGUMENT");
   IElementType COLON = new MiniMessageTokenType(":");
@@ -30,20 +30,20 @@ public interface MiniMessageTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == AUTO_CLOSED_TAG) {
-        return new MiniMessageAutoClosedTagImpl(node);
+      if (type == CLOSING_TAG) {
+        return new MiniMessageClosingTagImpl(node);
       }
       else if (type == EMPTY_TAG) {
         return new MiniMessageEmptyTagImpl(node);
       }
+      else if (type == OPENING_TAG) {
+        return new MiniMessageOpeningTagImpl(node);
+      }
+      else if (type == SELF_CLOSING_TAG) {
+        return new MiniMessageSelfClosingTagImpl(node);
+      }
       else if (type == TAG_ARGUMENT) {
         return new MiniMessageTagArgumentImpl(node);
-      }
-      else if (type == TAG_CLOSING) {
-        return new MiniMessageTagClosingImpl(node);
-      }
-      else if (type == TAG_OPENING) {
-        return new MiniMessageTagOpeningImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

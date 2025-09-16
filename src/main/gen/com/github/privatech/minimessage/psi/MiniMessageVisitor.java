@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public class MiniMessageVisitor extends PsiElementVisitor {
 
-  public void visitAutoClosedTag(@NotNull MiniMessageAutoClosedTag o) {
+  public void visitClosingTag(@NotNull MiniMessageClosingTag o) {
     visitPsiElement(o);
   }
 
@@ -15,15 +15,15 @@ public class MiniMessageVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitOpeningTag(@NotNull MiniMessageOpeningTag o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSelfClosingTag(@NotNull MiniMessageSelfClosingTag o) {
+    visitPsiElement(o);
+  }
+
   public void visitTagArgument(@NotNull MiniMessageTagArgument o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTagClosing(@NotNull MiniMessageTagClosing o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTagOpening(@NotNull MiniMessageTagOpening o) {
     visitPsiElement(o);
   }
 

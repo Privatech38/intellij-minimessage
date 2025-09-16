@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface MiniMessageTagClosing extends PsiElement {
+public interface MiniMessageClosingTag extends PsiElement {
 
   @Nullable
   PsiElement getCustomTagName();

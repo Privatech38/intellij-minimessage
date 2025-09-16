@@ -32,18 +32,20 @@
 
 root ::= content
 
-private content ::= (possibleTag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
+private content ::= (possible_tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
 
-private possibleTag ::= ESCAPE LT? | emptyTag | LT+ WHITE_SPACE | tag
+private possible_tag ::= ESCAPE LT? | empty_tag | LT+ WHITE_SPACE | tag
 
-private tag ::= autoClosedTag | tagOpening | tagClosing
+private tag ::= self_closing_tag | opening_tag | closing_tag
 
-emptyTag      ::= LT+ GT
-autoClosedTag ::= LT+ tagName tagArgument? SLASH GT
-tagOpening    ::= LT+ tagName tagArgument? GT
-tagClosing    ::= LT+ SLASH tagName GT {pin=2}
+empty_tag      ::= LT GT { recoverWhile=tag_recovery }
+self_closing_tag ::= LT tag_name tag_argument? SLASH GT { recoverWhile=tag_recovery }
+opening_tag    ::= LT tag_name tag_argument? GT { recoverWhile=tag_recovery }
+closing_tag    ::= LT SLASH tag_name GT { pin=2 recoverWhile=tag_recovery }
 
-private tagName ::= TAG_NAME | CUSTOM_TAG_NAME
+private tag_recovery ::= !LT
 
-tagArgument ::= COLON argumentType tagArgument? {pin=1}
-private argumentType ::= STRING | ARGUMENT
+private tag_name ::= TAG_NAME | CUSTOM_TAG_NAME
+
+tag_argument ::= COLON argument_type tag_argument? { pin=1 }
+private argument_type ::= STRING | ARGUMENT
