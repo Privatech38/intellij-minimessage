@@ -58,6 +58,7 @@ Argument=[^\'\":>]+
     "/"                   { return SLASH; }
     ":"                   { yybegin(ARGUMENT_STATE); return COLON; }
     ">"                   { yybegin(YYINITIAL); return GT; }
+    "<"                   { return LT; }
 }
 
 <ARGUMENT_STATE> {

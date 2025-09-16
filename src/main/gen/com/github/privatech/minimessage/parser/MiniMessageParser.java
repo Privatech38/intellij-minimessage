@@ -50,13 +50,14 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   // LT SLASH tag_name GT
   public static boolean closing_tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "closing_tag")) return false;
+    if (!nextTokenIs(b, LT)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, CLOSING_TAG, "<closing tag>");
+    Marker m = enter_section_(b, l, _NONE_, CLOSING_TAG, null);
     r = consumeTokens(b, 2, LT, SLASH);
     p = r; // pin = 2
     r = r && report_error_(b, tag_name(b, l + 1));
     r = p && consumeToken(b, GT) && r;
-    exit_section_(b, l, m, r, p, MiniMessageParser::tag_recovery);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
@@ -86,10 +87,11 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   // LT GT
   public static boolean empty_tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "empty_tag")) return false;
+    if (!nextTokenIs(b, LT)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, EMPTY_TAG, "<empty tag>");
+    Marker m = enter_section_(b);
     r = consumeTokens(b, 0, LT, GT);
-    exit_section_(b, l, m, r, false, MiniMessageParser::tag_recovery);
+    exit_section_(b, m, EMPTY_TAG, r);
     return r;
   }
 
@@ -97,13 +99,14 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   // LT tag_name tag_argument? GT
   public static boolean opening_tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "opening_tag")) return false;
+    if (!nextTokenIs(b, LT)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, OPENING_TAG, "<opening tag>");
+    Marker m = enter_section_(b);
     r = consumeToken(b, LT);
     r = r && tag_name(b, l + 1);
     r = r && opening_tag_2(b, l + 1);
     r = r && consumeToken(b, GT);
-    exit_section_(b, l, m, r, false, MiniMessageParser::tag_recovery);
+    exit_section_(b, m, OPENING_TAG, r);
     return r;
   }
 
@@ -115,60 +118,16 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ESCAPE LT? | empty_tag | LT+ WHITE_SPACE | tag
+  // ESCAPE LT | empty_tag | LT WHITE_SPACE | tag
   static boolean possible_tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "possible_tag")) return false;
     if (!nextTokenIs(b, "", ESCAPE, LT)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = possible_tag_0(b, l + 1);
+    r = parseTokens(b, 0, ESCAPE, LT);
     if (!r) r = empty_tag(b, l + 1);
-    if (!r) r = possible_tag_2(b, l + 1);
+    if (!r) r = parseTokens(b, 0, LT, WHITE_SPACE);
     if (!r) r = tag(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ESCAPE LT?
-  private static boolean possible_tag_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "possible_tag_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ESCAPE);
-    r = r && possible_tag_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // LT?
-  private static boolean possible_tag_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "possible_tag_0_1")) return false;
-    consumeToken(b, LT);
-    return true;
-  }
-
-  // LT+ WHITE_SPACE
-  private static boolean possible_tag_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "possible_tag_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = possible_tag_2_0(b, l + 1);
-    r = r && consumeToken(b, WHITE_SPACE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // LT+
-  private static boolean possible_tag_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "possible_tag_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LT);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, LT)) break;
-      if (!empty_element_parsed_guard_(b, "possible_tag_2_0", c)) break;
-    }
     exit_section_(b, m, null, r);
     return r;
   }
@@ -183,13 +142,14 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   // LT tag_name tag_argument? SLASH GT
   public static boolean self_closing_tag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "self_closing_tag")) return false;
+    if (!nextTokenIs(b, LT)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, SELF_CLOSING_TAG, "<self closing tag>");
+    Marker m = enter_section_(b);
     r = consumeToken(b, LT);
     r = r && tag_name(b, l + 1);
     r = r && self_closing_tag_2(b, l + 1);
     r = r && consumeTokens(b, 0, SLASH, GT);
-    exit_section_(b, l, m, r, false, MiniMessageParser::tag_recovery);
+    exit_section_(b, m, SELF_CLOSING_TAG, r);
     return r;
   }
 
@@ -206,11 +166,9 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "tag")) return false;
     if (!nextTokenIs(b, LT)) return false;
     boolean r;
-    Marker m = enter_section_(b);
     r = self_closing_tag(b, l + 1);
     if (!r) r = opening_tag(b, l + 1);
     if (!r) r = closing_tag(b, l + 1);
-    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -244,17 +202,6 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
     boolean r;
     r = consumeToken(b, TAG_NAME);
     if (!r) r = consumeToken(b, CUSTOM_TAG_NAME);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !LT
-  static boolean tag_recovery(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tag_recovery")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !consumeToken(b, LT);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
