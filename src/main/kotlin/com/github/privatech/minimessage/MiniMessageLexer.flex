@@ -27,6 +27,7 @@ WhiteSpace=\s+
 
 PlainText=[^<§]*|§[^0-9a-fk-or]
 PlaintLT=<+(\s+|[^/#?!a-z0-9_\-<]|>)
+MultipleLT=<+
 LegacyFormattingCode=§[0-9a-fk-or]
 // Known tag names from MiniMessage
 ColorTag=black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|grey|dark_gray|dark_grey|blue|green|aqua|red|light_purple|yellow|white|color|colour|c|shadow|#[0-9a-fA-F]{6}
@@ -47,6 +48,7 @@ Argument=[^\'\":>]+
     {WhiteSpace}          { return WHITE_SPACE; }
     {PlaintLT}            { return PLAIN_TEXT; }
     "<"                   { yybegin(TAG); return LT; }
+    {MultipleLT}          { yypushback(1); return PLAIN_TEXT; }
     "\\"                  { return ESCAPE; }
     {LegacyFormattingCode} { return LEGACY_FORMATTING_CODE; }
     {PlainText}           { return PLAIN_TEXT; }

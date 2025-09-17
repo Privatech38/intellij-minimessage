@@ -109,8 +109,8 @@ public class MiniMessageLexer implements FlexLexer {
     "\1\1\4\0\1\1\1\2\1\3\1\4\2\5\1\2"+
     "\2\5\1\6\1\7\1\10\1\11\1\12\1\6\2\13"+
     "\5\6\1\13\10\6\1\13\2\6\1\14\1\15\1\16"+
-    "\1\17\1\20\3\17\2\1\1\0\1\21\1\6\1\0"+
-    "\3\6\1\13\24\6\2\13\3\6\1\22\1\6\1\0"+
+    "\1\17\1\20\3\17\2\1\1\21\1\22\1\6\1\0"+
+    "\3\6\1\13\24\6\2\13\3\6\1\23\1\6\1\0"+
     "\16\6\1\13\4\6\1\13\10\6\1\0\10\6\1\13"+
     "\12\6\1\0\15\6\1\0\12\6\1\13\20\6";
 
@@ -393,9 +393,9 @@ public class MiniMessageLexer implements FlexLexer {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\1\4\0\5\1\1\11\4\1\4\11\25\1\2\11"+
-    "\1\1\1\11\3\1\1\11\1\1\1\0\1\11\1\1"+
-    "\1\0\35\1\1\11\1\1\1\0\34\1\1\0\23\1"+
-    "\1\0\15\1\1\0\12\1\1\11\20\1";
+    "\1\1\1\11\3\1\1\11\2\1\1\11\1\1\1\0"+
+    "\35\1\1\11\1\1\1\0\34\1\1\0\23\1\1\0"+
+    "\15\1\1\0\12\1\1\11\20\1";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[175];
@@ -716,92 +716,97 @@ public class MiniMessageLexer implements FlexLexer {
             { return PLAIN_TEXT;
             }
           // fall through
-          case 19: break;
+          case 20: break;
           case 2:
             { return WHITE_SPACE;
             }
           // fall through
-          case 20: break;
+          case 21: break;
           case 3:
             { yybegin(TAG); return LT;
             }
           // fall through
-          case 21: break;
+          case 22: break;
           case 4:
             { return ESCAPE;
             }
           // fall through
-          case 22: break;
+          case 23: break;
           case 5:
             { return BAD_CHARACTER;
             }
           // fall through
-          case 23: break;
+          case 24: break;
           case 6:
             { return CUSTOM_TAG_NAME;
             }
           // fall through
-          case 24: break;
+          case 25: break;
           case 7:
             { return SLASH;
             }
           // fall through
-          case 25: break;
+          case 26: break;
           case 8:
             { yybegin(ARGUMENT_STATE); return COLON;
             }
           // fall through
-          case 26: break;
+          case 27: break;
           case 9:
             { return LT;
             }
           // fall through
-          case 27: break;
+          case 28: break;
           case 10:
             { yybegin(YYINITIAL); return GT;
             }
           // fall through
-          case 28: break;
+          case 29: break;
           case 11:
             { return TAG_NAME;
             }
           // fall through
-          case 29: break;
+          case 30: break;
           case 12:
             { yybegin(TAG); return ARGUMENT;
             }
           // fall through
-          case 30: break;
+          case 31: break;
           case 13:
             { yybegin(STRING_DOUBLE);
             }
           // fall through
-          case 31: break;
+          case 32: break;
           case 14:
             { yybegin(STRING_SINGLE);
             }
           // fall through
-          case 32: break;
+          case 33: break;
           case 15:
             { /* Consume string content */
             }
           // fall through
-          case 33: break;
+          case 34: break;
           case 16:
             { yybegin(TAG); return STRING;
             }
           // fall through
-          case 34: break;
-          case 17:
-            { return LEGACY_FORMATTING_CODE;
-            }
-          // fall through
           case 35: break;
-          case 18:
-            { /* Escaped quote, ignore */
+          case 17:
+            { yypushback(1); return PLAIN_TEXT;
             }
           // fall through
           case 36: break;
+          case 18:
+            { return LEGACY_FORMATTING_CODE;
+            }
+          // fall through
+          case 37: break;
+          case 19:
+            { /* Escaped quote, ignore */
+            }
+          // fall through
+          case 38: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
