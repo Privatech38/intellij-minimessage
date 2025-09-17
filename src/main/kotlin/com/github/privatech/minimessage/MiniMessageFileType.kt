@@ -1,6 +1,7 @@
 package com.github.privatech.minimessage
 
 import com.github.privatech.minimessage.MiniMessageParserDefinition
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.util.NlsContexts
 import com.intellij.openapi.util.NlsSafe
@@ -27,6 +28,6 @@ class MiniMessageFileType() : LanguageFileType(MiniMessageLanguage.INSTANCE) {
     }
 
     override fun getIcon(): Icon? {
-        return null
+        return AllIcons.FileTypes.Xhtml
     }
 }
