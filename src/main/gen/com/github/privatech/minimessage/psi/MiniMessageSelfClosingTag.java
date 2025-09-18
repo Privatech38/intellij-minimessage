@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface MiniMessageSelfClosingTag extends PsiElement {
 
   @NotNull
-  List<MiniMessageArgument> getArgumentList();
+  List<MiniMessageTagArgument> getTagArgumentList();
 
   @Nullable
   PsiElement getCustomTagName();

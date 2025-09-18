@@ -29,8 +29,8 @@ public class MiniMessageOpeningTagImpl extends ASTWrapperPsiElement implements M
 
   @Override
   @NotNull
-  public List<MiniMessageArgument> getArgumentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageArgument.class);
+  public List<MiniMessageTagArgument> getTagArgumentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MiniMessageTagArgument.class);
   }
 
   @Override

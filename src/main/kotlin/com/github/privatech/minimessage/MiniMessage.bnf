@@ -36,11 +36,11 @@ private content ::= (tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
 
 private tag ::= self_closing_tag | opening_tag | closing_tag
 
-self_closing_tag ::= LT tag_name argument * SLASH GT
-opening_tag    ::= LT tag_name argument * GT
+self_closing_tag ::= LT tag_name tag_argument * SLASH GT
+opening_tag    ::= LT tag_name tag_argument * GT
 closing_tag    ::= LT SLASH tag_name GT { pin=2 }
 
 private tag_name ::= TAG_NAME | CUSTOM_TAG_NAME
 
-argument ::= COLON argument_type { pin=1 }
+tag_argument ::= COLON argument_type { pin=1 }
 private argument_type ::= STRING | ARGUMENT
