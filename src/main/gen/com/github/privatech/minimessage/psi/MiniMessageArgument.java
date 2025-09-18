@@ -5,10 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface MiniMessageTagArgument extends PsiElement {
-
-  @Nullable
-  MiniMessageTagArgument getTagArgument();
+public interface MiniMessageArgument extends PsiElement {
 
   @Nullable
   PsiElement getArgument();

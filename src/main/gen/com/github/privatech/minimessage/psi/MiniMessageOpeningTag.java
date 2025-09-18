@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface MiniMessageOpeningTag extends PsiElement {
 
-  @Nullable
-  MiniMessageTagArgument getTagArgument();
+  @NotNull
+  List<MiniMessageArgument> getArgumentList();
 
   @Nullable
   PsiElement getCustomTagName();

@@ -11,26 +11,20 @@ import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.privatech.minimessage.psi.*;
 
-public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements MiniMessageTagArgument {
+public class MiniMessageArgumentImpl extends ASTWrapperPsiElement implements MiniMessageArgument {
 
-  public MiniMessageTagArgumentImpl(@NotNull ASTNode node) {
+  public MiniMessageArgumentImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MiniMessageVisitor visitor) {
-    visitor.visitTagArgument(this);
+    visitor.visitArgument(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MiniMessageVisitor) accept((MiniMessageVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public MiniMessageTagArgument getTagArgument() {
-    return findChildByClass(MiniMessageTagArgument.class);
   }
 
   @Override
