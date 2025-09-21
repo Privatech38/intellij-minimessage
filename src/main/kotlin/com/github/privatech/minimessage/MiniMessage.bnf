@@ -12,6 +12,8 @@
     elementTypeClass="com.github.privatech.minimessage.psi.MiniMessageElementType"
     tokenTypeClass="com.github.privatech.minimessage.psi.MiniMessageTokenType"
 
+    psiImplUtilClass="com.github.privatech.minimessage.psi.impl.MiniMessagePsiImplUtil"
+
     tokens=[
         COLON=":"
         LT="<"
@@ -41,5 +43,5 @@ closing_tag    ::= LT SLASH tag_name GT { pin=2 }
 
 private tag_name ::= TAG_NAME | CUSTOM_TAG_NAME
 
-tag_argument ::= COLON argument_type { pin=1 }
+tag_argument ::= COLON argument_type { pin=1 methods=[toString] }
 private argument_type ::= STRING | ARGUMENT

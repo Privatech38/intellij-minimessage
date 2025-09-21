@@ -39,4 +39,9 @@ public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements 
     return findChildByType(STRING);
   }
 
+  @Override
+  public @Nullable String toString() {
+    return MiniMessagePsiImplUtil.toString(this);
+  }
+
 }
