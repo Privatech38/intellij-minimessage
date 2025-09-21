@@ -10,7 +10,6 @@ public interface MiniMessageTypes {
 
   IElementType CLOSING_TAG = new MiniMessageElementType("CLOSING_TAG");
   IElementType OPENING_TAG = new MiniMessageElementType("OPENING_TAG");
-  IElementType SELF_CLOSING_TAG = new MiniMessageElementType("SELF_CLOSING_TAG");
   IElementType TAG_ARGUMENT = new MiniMessageElementType("TAG_ARGUMENT");
 
   IElementType ARGUMENT = new MiniMessageTokenType("ARGUMENT");
@@ -33,9 +32,6 @@ public interface MiniMessageTypes {
       }
       else if (type == OPENING_TAG) {
         return new MiniMessageOpeningTagImpl(node);
-      }
-      else if (type == SELF_CLOSING_TAG) {
-        return new MiniMessageSelfClosingTagImpl(node);
       }
       else if (type == TAG_ARGUMENT) {
         return new MiniMessageTagArgumentImpl(node);
