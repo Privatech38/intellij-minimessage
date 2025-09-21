@@ -9,6 +9,10 @@ class MiniMessagePsiImplUtil {
         fun toString(tagArgument: MiniMessageTagArgument): String? {
             return tagArgument.argument?.text ?: tagArgument.string?.text?.trim('"', '\'');
         }
+
+        @JvmStatic
+        fun getTextRange(tagArgument: MiniMessageTagArgument) =
+            tagArgument.argument?.textRange ?: tagArgument.string?.textRange ?: tagArgument.textRange
     }
 
 }
