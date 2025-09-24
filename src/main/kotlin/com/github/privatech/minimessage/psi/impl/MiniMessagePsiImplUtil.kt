@@ -14,11 +14,6 @@ class MiniMessagePsiImplUtil {
         @JvmStatic
         fun getTextRange(tagArgument: MiniMessageTagArgument) =
             tagArgument.argument?.textRange ?: tagArgument.string?.textRange ?: tagArgument.textRange
-
-        @JvmStatic
-        fun toAdventureArgument(tagArgument: MiniMessageTagArgument): Argument {
-            return Argument(toString(tagArgument) ?: "")
-        }
     }
 
 }

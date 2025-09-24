@@ -10,7 +10,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.privatech.minimessage.psi.*;
-import com.github.privatech.minimessage.validation.argument.Argument;
 import com.intellij.openapi.util.TextRange;
 
 public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements MiniMessageTagArgument {
@@ -49,11 +48,6 @@ public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements 
   @Override
   public TextRange getTextRange() {
     return MiniMessagePsiImplUtil.getTextRange(this);
-  }
-
-  @Override
-  public @NotNull Argument toAdventureArgument() {
-    return MiniMessagePsiImplUtil.toAdventureArgument(this);
   }
 
 }
