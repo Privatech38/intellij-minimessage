@@ -22,7 +22,7 @@
 * SOFTWARE.
 */
 
-package com.github.privatech.minimessage.validation.argument
+package com.github.privatech.minimessage.impl
 
 import net.kyori.adventure.pointer.Pointered
 import net.kyori.adventure.text.Component

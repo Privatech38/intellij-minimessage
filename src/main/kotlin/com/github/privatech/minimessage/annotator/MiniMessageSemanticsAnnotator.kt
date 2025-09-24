@@ -1,16 +1,13 @@
 package com.github.privatech.minimessage.annotator
 
 import com.github.privatech.minimessage.psi.MiniMessageOpeningTag
-import com.github.privatech.minimessage.psi.MiniMessageTypes
-import com.github.privatech.minimessage.validation.argument.ArgumentQueueImpl
-import com.github.privatech.minimessage.validation.argument.ContextImpl
-import com.intellij.codeInspection.ProblemHighlightType
+import com.github.privatech.minimessage.impl.ArgumentQueueImpl
+import com.github.privatech.minimessage.impl.ContextImpl
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
 import net.kyori.adventure.text.minimessage.Context
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.ParsingException
