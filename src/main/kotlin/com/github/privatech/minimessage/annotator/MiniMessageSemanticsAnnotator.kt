@@ -1,5 +1,6 @@
 package com.github.privatech.minimessage.annotator
 
+import com.github.privatech.minimessage.psi.MiniMessageOpeningTag
 import com.github.privatech.minimessage.psi.MiniMessageTypes
 import com.github.privatech.minimessage.validation.argument.ArgumentQueueImpl
 import com.github.privatech.minimessage.validation.argument.ContextImpl
@@ -25,46 +26,37 @@ class MiniMessageSemanticsAnnotator : Annotator {
     val MINIMESSAGE_INSTANCE: MiniMessage = MiniMessage.builder().tags(TagResolver.standard()).build()
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-//        if (element.node.elementType == MiniMessageTypes.LEGACY_FORMATTING_CODE)
-//            holder.newAnnotation(HighlightSeverity.ERROR, "Legacy formatting codes are deprecated " +
-//                    "and not allowed inside MiniMessage strings")
-//                .highlightType(ProblemHighlightType.LIKE_MARKED_FOR_REMOVAL)
-//                .range(element).create()
-        // Annotate standard tags
-//        if (element is MiniMessageOpeningTag) {
-//            val tagName = element.tagName?.text ?: return
-//            val validator = getValidator(tagName) ?: return
-//            validator.annotate(element, holder)
-//        }
         val context: Context = ContextImpl(
             false, false, null, element.containingFile.text,
             MINIMESSAGE_INSTANCE, null, TagResolver.standard(), null, null
         )
-        if (element is PsiFile) {
+        if (element is MiniMessageOpeningTag) {
             val resolver: TagResolver = TagResolver.standard()
             val tagNameChecker = Predicate { name: String? ->
                 val sanitized = TagProvider.sanitizePlaceholderName(name!!)
                 resolver.has(sanitized)
             }
             val tagProvider: TokenParser.TagProvider = TagProvider { name: String, args: MutableList<out Tag.Argument>, token: Token? ->
-                    try {
-                        return@TagProvider resolver.resolve(
-                            name,
-                            ArgumentQueueImpl(context, args),
-                            context
-                        )
-                    } catch (e: ParsingException) {
-                        holder.newAnnotation(HighlightSeverity.ERROR, e.detailMessage() ?: "Parsing exception ${e.message}")
-                            .range(TextRange(e.startIndex(), (e.endIndex()) + 1))
-                            .create()
-                        return@TagProvider null
-                    }
-                };
+                try {
+                    return@TagProvider resolver.resolve(
+                        name,
+                        ArgumentQueueImpl(context, args),
+                        context
+                    )
+                } catch (e: ParsingException) {
+                    holder.newAnnotation(HighlightSeverity.ERROR, e.detailMessage() ?: "Parsing exception ${e.message}")
+                        .range(if (e.startIndex() == ParsingException.LOCATION_UNKNOWN) element.tagName?.textRange ?:
+                        element.textRange else element.textRange.cutOut(TextRange(e.startIndex(), (e.endIndex()) + 1)))
+                        .create()
+                    return@TagProvider null
+                }
+            };
             try {
                 TokenParser.parse(tagProvider, tagNameChecker, element.text, element.text, false)
             } catch (e: ParsingException) {
                 holder.newAnnotation(HighlightSeverity.ERROR, e.detailMessage() ?: "Parsing exception ${e.message}")
-                    .range(TextRange(e.startIndex(), (e.endIndex()) + 1))
+                    .range(if (e.startIndex() == ParsingException.LOCATION_UNKNOWN) element.tagName?.textRange ?:
+                    element.textRange else TextRange(e.startIndex(), (e.endIndex()) + 1))
                     .create()
             }
         }
