@@ -4,6 +4,7 @@ package com.github.privatech.minimessage.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.github.privatech.minimessage.validation.argument.Argument;
 import com.intellij.openapi.util.TextRange;
 
 public interface MiniMessageTagArgument extends PsiElement {
@@ -15,5 +16,7 @@ public interface MiniMessageTagArgument extends PsiElement {
   PsiElement getString();
 
   TextRange getTextRange();
+
+  @NotNull Argument toAdventureArgument();
 
 }

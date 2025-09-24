@@ -1,12 +1,11 @@
 package com.github.privatech.minimessage.validation.argument
 
-import com.github.privatech.minimessage.psi.MiniMessageTagArgument
-import com.intellij.lang.annotation.AnnotationHolder
+import net.kyori.adventure.text.minimessage.tag.Tag
 
-abstract class Argument(override val requiresArg: Boolean, val name: String, override val arguments: Set<Argument>) : SequentualArgumentValidator {
+class Argument(val plainValue: String) : Tag.Argument {
 
-    abstract fun annotate(element: MiniMessageTagArgument, holder: AnnotationHolder)
-
-    abstract fun matches(argument: String): Boolean
+    override fun value(): String {
+        return plainValue
+    }
 
 }
