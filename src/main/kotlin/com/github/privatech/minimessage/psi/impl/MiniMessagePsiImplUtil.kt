@@ -1,7 +1,6 @@
 package com.github.privatech.minimessage.psi.impl
 
 import com.github.privatech.minimessage.psi.MiniMessageTagArgument
-import com.github.privatech.minimessage.validation.argument.Argument
 
 class MiniMessagePsiImplUtil {
 
