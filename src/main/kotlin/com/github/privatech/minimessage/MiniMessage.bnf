@@ -12,6 +12,8 @@
     elementTypeClass="com.github.privatech.minimessage.psi.MiniMessageElementType"
     tokenTypeClass="com.github.privatech.minimessage.psi.MiniMessageTokenType"
 
+    psiImplUtilClass="com.github.privatech.minimessage.psi.impl.MiniMessagePsiImplUtil"
+
     tokens=[
         COLON=":"
         LT="<"
@@ -34,13 +36,12 @@ root ::= content
 
 private content ::= (tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
 
-private tag ::= self_closing_tag | opening_tag | closing_tag
+private tag ::= opening_tag | closing_tag
 
-self_closing_tag ::= LT tag_name tag_argument? SLASH GT
-opening_tag    ::= LT tag_name tag_argument? GT
+opening_tag    ::= LT tag_name tag_argument * SLASH? GT // Can be self-closing, made like this for simplicity
 closing_tag    ::= LT SLASH tag_name GT { pin=2 }
 
 private tag_name ::= TAG_NAME | CUSTOM_TAG_NAME
 
-tag_argument ::= COLON argument_type tag_argument? { pin=1 }
+tag_argument ::= COLON argument_type { pin=1 methods=[toString getTextRange] }
 private argument_type ::= STRING | ARGUMENT

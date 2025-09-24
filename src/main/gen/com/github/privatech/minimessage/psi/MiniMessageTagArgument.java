@@ -4,16 +4,16 @@ package com.github.privatech.minimessage.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.openapi.util.TextRange;
 
 public interface MiniMessageTagArgument extends PsiElement {
-
-  @Nullable
-  MiniMessageTagArgument getTagArgument();
 
   @Nullable
   PsiElement getArgument();
 
   @Nullable
   PsiElement getString();
+
+  TextRange getTextRange();
 
 }

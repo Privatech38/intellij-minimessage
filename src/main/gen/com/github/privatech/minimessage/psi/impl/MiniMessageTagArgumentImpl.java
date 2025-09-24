@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.privatech.minimessage.psi.MiniMessageTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.privatech.minimessage.psi.*;
+import com.intellij.openapi.util.TextRange;
 
 public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements MiniMessageTagArgument {
 
@@ -29,12 +30,6 @@ public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public MiniMessageTagArgument getTagArgument() {
-    return findChildByClass(MiniMessageTagArgument.class);
-  }
-
-  @Override
-  @Nullable
   public PsiElement getArgument() {
     return findChildByType(ARGUMENT);
   }
@@ -43,6 +38,16 @@ public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements 
   @Nullable
   public PsiElement getString() {
     return findChildByType(STRING);
+  }
+
+  @Override
+  public @Nullable String toString() {
+    return MiniMessagePsiImplUtil.toString(this);
+  }
+
+  @Override
+  public TextRange getTextRange() {
+    return MiniMessagePsiImplUtil.getTextRange(this);
   }
 
 }
