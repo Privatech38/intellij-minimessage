@@ -14,6 +14,7 @@ import net.kyori.adventure.text.minimessage.ParsingException
 import net.kyori.adventure.text.minimessage.internal.parser.Token
 import net.kyori.adventure.text.minimessage.internal.parser.TokenParser
 import net.kyori.adventure.text.minimessage.internal.parser.TokenParser.TagProvider
+import net.kyori.adventure.text.minimessage.internal.parser.node.TagPart
 import net.kyori.adventure.text.minimessage.tag.Tag
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import java.util.function.Predicate
@@ -35,15 +36,28 @@ class MiniMessageSemanticsAnnotator : Annotator {
             }
             val tagProvider: TokenParser.TagProvider = TagProvider { name: String, args: MutableList<out Tag.Argument>, token: Token? ->
                 try {
-                    return@TagProvider resolver.resolve(
+                    val arguments = ArgumentQueueImpl(context, args)
+                    val tag = resolver.resolve(
                         name,
-                        ArgumentQueueImpl(context, args),
+                        arguments,
                         context
                     )
+                    while (arguments.hasNext()) {
+                        val arg = arguments.pop() as TagPart
+                        holder.newAnnotation(
+                            HighlightSeverity.WARNING,
+                            "Unused argument"
+                        ).range(
+                            if (arg.token().startIndex() == ParsingException.LOCATION_UNKNOWN) element.tagName?.textRange ?:
+                            element.textRange else
+                                element.textRange.cutOut(TextRange(arg.token().startIndex(), arg.token().endIndex()))
+                        ).create()
+                    }
+                    return@TagProvider tag
                 } catch (e: ParsingException) {
                     holder.newAnnotation(HighlightSeverity.ERROR, e.detailMessage() ?: "Parsing exception ${e.message}")
                         .range(if (e.startIndex() == ParsingException.LOCATION_UNKNOWN) element.tagName?.textRange ?:
-                        element.textRange else element.textRange.cutOut(TextRange(e.startIndex(), (e.endIndex()) + 1)))
+                        element.textRange else element.textRange.cutOut(TextRange(e.startIndex(), e.endIndex())))
                         .create()
                     return@TagProvider null
                 }
