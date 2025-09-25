@@ -24,7 +24,7 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="MiniMessage File"
+        <fileType name="MiniMessage"
                   implementationClass="com.github.privatech.minimessage.MiniMessageFileType"
                   fieldName="INSTANCE"
                   language="MiniMessage"
