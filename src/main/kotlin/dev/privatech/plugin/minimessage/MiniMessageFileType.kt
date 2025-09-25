@@ -15,7 +15,7 @@ class MiniMessageFileType() : LanguageFileType(MiniMessageLanguage.INSTANCE) {
     }
 
     override fun getName(): @NonNls String {
-        return "MiniMessage File"
+        return "MiniMessage"
     }
 
     override fun getDescription(): @NlsContexts.Label String {
