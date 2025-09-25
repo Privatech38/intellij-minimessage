@@ -25,18 +25,18 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="MiniMessage"
-                  implementationClass="com.github.privatech.minimessage.MiniMessageFileType"
+                  implementationClass="dev.privatech.plugin.minimessage.MiniMessageFileType"
                   fieldName="INSTANCE"
                   language="MiniMessage"
                   extensions="minimessage"/>
         <lang.parserDefinition language="MiniMessage"
-                                implementationClass="com.github.privatech.minimessage.MiniMessageParserDefinition"/>
+                                implementationClass="dev.privatech.plugin.minimessage.MiniMessageParserDefinition"/>
         <lang.syntaxHighlighterFactory language="MiniMessage"
-                                       implementationClass="com.github.privatech.minimessage.MiniMessageSyntaxHighlighterFactory"/>
-        <colorSettingsPage implementation="com.github.privatech.minimessage.MiniMessageColorSettingsPage"/>
+                                       implementationClass="dev.privatech.plugin.minimessage.MiniMessageSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="dev.privatech.plugin.minimessage.MiniMessageColorSettingsPage"/>
         <annotator language="MiniMessage"
-                     implementationClass="com.github.privatech.minimessage.annotator.MiniMessageSyntaxColorAnnotator"/>
+                     implementationClass="dev.privatech.plugin.minimessage.annotator.MiniMessageSyntaxColorAnnotator"/>
         <annotator language="MiniMessage"
-                        implementationClass="com.github.privatech.minimessage.annotator.MiniMessageSemanticsAnnotator"/>
+                        implementationClass="dev.privatech.plugin.minimessage.annotator.MiniMessageSemanticsAnnotator"/>
     </extensions>
 </idea-plugin>

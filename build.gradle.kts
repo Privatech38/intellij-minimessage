@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.intellij.platform") version "2.7.1"
 }
 
-group = "com.github.privatech"
+group = "dev.privatech.plugin"
 version = "0.3.0"
 
 repositories {
