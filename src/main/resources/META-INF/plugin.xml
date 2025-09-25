@@ -1,39 +1,28 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.github.privatech.minimessage</id>
-
-    <!-- Public plugin name should be written in Title Case.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>MiniMessage</name>
+    <id>dev.privatech.plugin.minimessage</id>
 
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="99482159+privatech38@users.noreply.github.com">Privatech</vendor>
+    <vendor email="contact@privatech.dev">Privatech</vendor>
+    <category>Languages</category>
 
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
     <html>
     <body>
         <p>Provides support for Kyori's <a href="https://docs.advntr.dev/minimessage/index.html">MiniMessage format</a>
-        in IntelliJ-based IDEs. The most widely used library for Minecraft text components.</p><br>
-        <p>Features include:</p>
+        in JetBrains IDEs.</p><br>
+        <h2>Features</h2>
         <ul>
             <li>Syntax highlighting</li>
-            <li>Code completion</li>
             <li>Error checking</li>
         </ul>
     </body>
     </html>
   ]]></description>
 
-    <!-- Product and plugin compatibility requirements.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.java</depends>
 
-    <!-- Extension points defined by the plugin.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="MiniMessage File"
                   implementationClass="com.github.privatech.minimessage.MiniMessageFileType"
