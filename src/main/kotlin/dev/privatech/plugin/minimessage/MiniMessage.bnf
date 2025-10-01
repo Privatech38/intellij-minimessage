@@ -25,16 +25,17 @@
         TAG_NAME
         CUSTOM_TAG_NAME
         ARGUMENT
-        STRING
         LEGACY_FORMATTING_CODE
         WHITE_SPACE
         ESCAPED_CHAR
+        STRING_TEXT
+        QUOTATION
     ]
 }
 
-root ::= content
+root ::= (tag | LEGACY_FORMATTING_CODE | text) *
 
-private content ::= (tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
+text ::= PLAIN_TEXT | ESCAPED_CHAR | STRING_TEXT
 
 private tag ::= opening_tag | closing_tag
 
@@ -44,4 +45,4 @@ closing_tag    ::= LT SLASH tag_name GT { pin=2 }
 private tag_name ::= TAG_NAME | CUSTOM_TAG_NAME
 
 tag_argument ::= COLON argument_type { pin=1 methods=[toString getTextRange] }
-private argument_type ::= STRING | ARGUMENT
+private argument_type ::= ARGUMENT | QUOTATION text * QUOTATION

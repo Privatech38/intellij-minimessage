@@ -65,7 +65,7 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
             MiniMessageTypes.COLON, MiniMessageTypes.SLASH, MiniMessageTypes.LT, MiniMessageTypes.GT -> TAG_KEYS
             MiniMessageTypes.TAG_NAME -> TAG_NAME_KEYS
             MiniMessageTypes.CUSTOM_TAG_NAME -> CUSTOM_TAG_NAME_KEYS
-            MiniMessageTypes.STRING -> STRING_KEYS
+            MiniMessageTypes.STRING_TEXT, MiniMessageTypes.QUOTATION -> STRING_KEYS
             MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
             else -> EMPTY_KEYS

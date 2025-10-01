@@ -7,6 +7,7 @@ import static dev.privatech.plugin.minimessage.psi.MiniMessageTypes.*;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
 import com.intellij.lang.LightPsiParser;
 
@@ -35,14 +36,39 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING | ARGUMENT
+  // ARGUMENT | QUOTATION text * QUOTATION
   static boolean argument_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "argument_type")) return false;
-    if (!nextTokenIs(b, "", ARGUMENT, STRING)) return false;
+    if (!nextTokenIs(b, "", ARGUMENT, QUOTATION)) return false;
     boolean r;
-    r = consumeToken(b, STRING);
-    if (!r) r = consumeToken(b, ARGUMENT);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ARGUMENT);
+    if (!r) r = argument_type_1(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // QUOTATION text * QUOTATION
+  private static boolean argument_type_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "argument_type_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, QUOTATION);
+    r = r && argument_type_1_1(b, l + 1);
+    r = r && consumeToken(b, QUOTATION);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // text *
+  private static boolean argument_type_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "argument_type_1_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!text(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "argument_type_1_1", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -58,28 +84,6 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
     r = p && consumeToken(b, GT) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
-  }
-
-  /* ********************************************************** */
-  // (tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT) *
-  static boolean content(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "content")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!content_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "content", c)) break;
-    }
-    return true;
-  }
-
-  // tag | LEGACY_FORMATTING_CODE | PLAIN_TEXT
-  private static boolean content_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "content_0")) return false;
-    boolean r;
-    r = tag(b, l + 1);
-    if (!r) r = consumeToken(b, LEGACY_FORMATTING_CODE);
-    if (!r) r = consumeToken(b, PLAIN_TEXT);
-    return r;
   }
 
   /* ********************************************************** */
@@ -117,9 +121,25 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // content
+  // (tag | LEGACY_FORMATTING_CODE | text) *
   static boolean root(PsiBuilder b, int l) {
-    return content(b, l + 1);
+    if (!recursion_guard_(b, l, "root")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!root_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "root", c)) break;
+    }
+    return true;
+  }
+
+  // tag | LEGACY_FORMATTING_CODE | text
+  private static boolean root_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "root_0")) return false;
+    boolean r;
+    r = tag(b, l + 1);
+    if (!r) r = consumeToken(b, LEGACY_FORMATTING_CODE);
+    if (!r) r = text(b, l + 1);
+    return r;
   }
 
   /* ********************************************************** */
@@ -155,6 +175,19 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
     boolean r;
     r = consumeToken(b, TAG_NAME);
     if (!r) r = consumeToken(b, CUSTOM_TAG_NAME);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PLAIN_TEXT | ESCAPED_CHAR | STRING_TEXT
+  public static boolean text(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "text")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TEXT, "<text>");
+    r = consumeToken(b, PLAIN_TEXT);
+    if (!r) r = consumeToken(b, ESCAPED_CHAR);
+    if (!r) r = consumeToken(b, STRING_TEXT);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

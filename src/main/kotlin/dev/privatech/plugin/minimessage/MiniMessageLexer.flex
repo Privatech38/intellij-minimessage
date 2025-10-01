@@ -4,6 +4,7 @@ import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
+import static dev.privatech.plugin.minimessage.psi.MiniMessageTypes.*;
 
 %%
 
@@ -37,7 +38,7 @@ GradientTag=gradient|rainbow|transition
 MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
 
 CustomTagName=[!?#]?[a-z0-9_-]+
-Argument=[^\\/:>]+
+Argument=[^/:>\s]+
 
 EscapedChar=\\.
 
@@ -49,7 +50,8 @@ EscapedChar=\\.
     {PlaintLT}            { return PLAIN_TEXT; }
     "<"                   { yybegin(TAG); return LT; }
     {MultipleLT}          { yypushback(1); return PLAIN_TEXT; }
-    "\\"                  { return ESCAPE; }
+    {EscapedChar}         { return ESCAPED_CHAR; }
+    "\\"                  { return PLAIN_TEXT; }
     {LegacyFormattingCode} { return LEGACY_FORMATTING_CODE; }
     {PlainText}           { return PLAIN_TEXT; }
 }
@@ -66,21 +68,23 @@ EscapedChar=\\.
 }
 
 <ARGUMENT_STATE> {
-    \'                    { yybegin(STRING_SINGLE); }
-    \"                    { yybegin(STRING_DOUBLE); }
+    \'                    { yybegin(STRING_SINGLE); return QUOTATION; }
+    \"                    { yybegin(STRING_DOUBLE); return QUOTATION; }
     {Argument}            { yybegin(TAG); return ARGUMENT; }
 }
 
 <STRING_DOUBLE> {
-    \"                    { yybegin(TAG); return STRING; }
-    \\\"                  { /* Escaped quote, ignore */ }
-    [^\"\n\r]+            { /* Consume string content */ }
+    \"                    { yybegin(TAG); return QUOTATION; }
+    {EscapedChar}         { return ESCAPED_CHAR; }
+    \\                    { return STRING_TEXT; }
+    [^\"\\]+              { return STRING_TEXT; }
 }
 
 <STRING_SINGLE> {
-    \'                    { yybegin(TAG); return STRING; }
-    \\\'                  { /* Escaped quote, ignore */ }
-    [^'\n\r]+             { /* Consume string content */ }
+    \'                    { yybegin(TAG); return QUOTATION; }
+    {EscapedChar}         { return ESCAPED_CHAR; }
+    \\                    { return STRING_TEXT; }
+    [^'\\]+               { return STRING_TEXT; }
 }
 
 [^] { return BAD_CHARACTER; }

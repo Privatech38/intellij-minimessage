@@ -11,14 +11,14 @@ import static dev.privatech.plugin.minimessage.psi.MiniMessageTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.privatech.plugin.minimessage.psi.*;
 
-public class MiniMessageClosingTagImpl extends ASTWrapperPsiElement implements MiniMessageClosingTag {
+public class MiniMessageTextImpl extends ASTWrapperPsiElement implements MiniMessageText {
 
-  public MiniMessageClosingTagImpl(@NotNull ASTNode node) {
+  public MiniMessageTextImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MiniMessageVisitor visitor) {
-    visitor.visitClosingTag(this);
+    visitor.visitText(this);
   }
 
   @Override
@@ -29,14 +29,20 @@ public class MiniMessageClosingTagImpl extends ASTWrapperPsiElement implements M
 
   @Override
   @Nullable
-  public PsiElement getCustomTagName() {
-    return findChildByType(CUSTOM_TAG_NAME);
+  public PsiElement getEscapedChar() {
+    return findChildByType(ESCAPED_CHAR);
   }
 
   @Override
   @Nullable
-  public PsiElement getTagName() {
-    return findChildByType(TAG_NAME);
+  public PsiElement getPlainText() {
+    return findChildByType(PLAIN_TEXT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringText() {
+    return findChildByType(STRING_TEXT);
   }
 
 }

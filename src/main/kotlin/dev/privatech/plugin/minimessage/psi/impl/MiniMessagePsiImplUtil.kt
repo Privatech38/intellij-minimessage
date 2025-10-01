@@ -6,14 +6,21 @@ import com.intellij.openapi.util.TextRange
 class MiniMessagePsiImplUtil {
 
     companion object {
+
+        /**
+         * Transforms an argument to a raw string
+         */
         @JvmStatic
         fun toString(tagArgument: MiniMessageTagArgument): String? {
-            return tagArgument.argument?.text ?: tagArgument.string?.text?.trim('"', '\'')
+            return tagArgument.text.trim('"', '\'')
         }
 
         @JvmStatic
         fun getTextRange(tagArgument: MiniMessageTagArgument): TextRange =
-            tagArgument.argument?.textRange ?: tagArgument.string?.textRange ?: tagArgument.textRange
+            if (tagArgument.text.startsWith('"') || tagArgument.text.startsWith('\''))
+                TextRange(1, tagArgument.text.length - 2)
+            else
+                tagArgument.textRange
     }
 
 }
