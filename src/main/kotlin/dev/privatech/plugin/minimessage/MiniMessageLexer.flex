@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage;
 
+import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
@@ -24,7 +25,7 @@ import static dev.privatech.plugin.minimessage.psi.MiniMessageTypes.*;
 EOL=\R
 WhiteSpace=\s+
 
-PlainText=[^<§]*|§[^0-9a-fk-or]
+PlainText=[^<§\\]*|§[^0-9a-fk-or]
 PlaintLT=<+(\s+|[^/#?!a-z0-9_\-<]|>)
 MultipleLT=<+
 LegacyFormattingCode=§[0-9a-fk-or]
@@ -47,13 +48,12 @@ EscapedChar=\\.
 %%
 <YYINITIAL> {
     {WhiteSpace}          { return WHITE_SPACE; }
-    {PlaintLT}            { return PLAIN_TEXT; }
     "<"                   { yybegin(TAG); return LT; }
     {MultipleLT}          { yypushback(1); return PLAIN_TEXT; }
-    {EscapedChar}         { return ESCAPED_CHAR; }
-    "\\"                  { return PLAIN_TEXT; }
+    \\[<\\n]              { return ESCAPED_CHAR; }
     {LegacyFormattingCode} { return LEGACY_FORMATTING_CODE; }
-    {PlainText}           { return PLAIN_TEXT; }
+    {PlainText} | {PlaintLT} | \\[^<\\n]?
+                          { return PLAIN_TEXT; }
 }
 
 <TAG> {
@@ -75,16 +75,14 @@ EscapedChar=\\.
 
 <STRING_DOUBLE> {
     \"                    { yybegin(TAG); return QUOTATION; }
-    {EscapedChar}         { return ESCAPED_CHAR; }
-    \\                    { return STRING_TEXT; }
-    [^\"\\]+              { return STRING_TEXT; }
+    \\[\"n\\]             { return ESCAPED_CHAR; }
+    [^\"\\]+|\\[^\"n\\]?  { return STRING_TEXT; }
 }
 
 <STRING_SINGLE> {
     \'                    { yybegin(TAG); return QUOTATION; }
-    {EscapedChar}         { return ESCAPED_CHAR; }
-    \\                    { return STRING_TEXT; }
-    [^'\\]+               { return STRING_TEXT; }
+    \\[\"n\\]             { return ESCAPED_CHAR; }
+    [^'\\]+|\\[^'n\\]?    { return STRING_TEXT; }
 }
 
 [^] { return BAD_CHARACTER; }
