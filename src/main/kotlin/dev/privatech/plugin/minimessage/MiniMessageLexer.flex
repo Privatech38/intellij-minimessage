@@ -41,8 +41,6 @@ MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
 CustomTagName=[!?#]?[a-z0-9_-]+
 Argument=[^\"/:>\s][^/:>\s]+
 
-EscapedChar=\\.
-
 %state TAG, ARGUMENT_STATE, STRING_DOUBLE, STRING_SINGLE
 
 %%
