@@ -39,7 +39,7 @@ GradientTag=gradient|rainbow|transition
 MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
 
 CustomTagName=[!?#]?[a-z0-9_-]+
-Argument=[^\"/:>\s][^/:>\s]+
+Argument=[^\"'/:>\s][^/:>\s]*
 
 %state TAG, ARGUMENT_STATE, STRING_DOUBLE, STRING_SINGLE
 
@@ -79,7 +79,7 @@ Argument=[^\"/:>\s][^/:>\s]+
 
 <STRING_SINGLE> {
     \'                    { yybegin(TAG); return QUOTATION; }
-    \\[\"n\\]             { return ESCAPED_CHAR; }
+    \\['n\\]             { return ESCAPED_CHAR; }
     [^'\\]+|\\[^'n\\]?    { return STRING_TEXT; }
 }
 
