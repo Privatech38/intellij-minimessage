@@ -23,6 +23,7 @@ dependencies {
         create("IC", "2025.1")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
         bundledPlugin("com.intellij.java")
+        bundledPlugin("org.intellij.intelliLang")
     }
     implementation(platform("net.kyori:adventure-bom:4.24.0"))
     implementation("net.kyori:adventure-api")
