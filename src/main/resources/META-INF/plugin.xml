@@ -23,6 +23,8 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.java</depends>
 
+    <depends optional="true" config-file="MiniMessage-injections.xml">org.intellij.intelliLang</depends>
+
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="MiniMessage"
                   implementationClass="dev.privatech.plugin.minimessage.MiniMessageFileType"

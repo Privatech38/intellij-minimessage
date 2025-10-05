@@ -4,7 +4,6 @@ package dev.privatech.plugin.minimessage.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import com.intellij.openapi.util.TextRange;
 
 public interface MiniMessageTagArgument extends PsiElement {
 
@@ -13,7 +12,5 @@ public interface MiniMessageTagArgument extends PsiElement {
 
   @Nullable
   PsiElement getArgument();
-
-  @NotNull TextRange getTextRange();
 
 }

@@ -19,7 +19,7 @@ class MiniMessageFileType() : LanguageFileType(MiniMessageLanguage.INSTANCE) {
     }
 
     override fun getDescription(): @NlsContexts.Label String {
-        return "MiniMessage file type for Minecraft chat formatting"
+        return "MiniMessage format"
     }
 
     override fun getDefaultExtension(): @NlsSafe String {
