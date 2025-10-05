@@ -13,4 +13,16 @@
         <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("deserializeToTree").withParameters("java.lang.String", "net.kyori.adventure.text.minimessage.tag.resolver.TagResolver").definedInClass("net.kyori.adventure.text.minimessage.MiniMessage"))]]></place>
         <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("deserializeToTree").withParameters("java.lang.String", "net.kyori.adventure.text.minimessage.tag.resolver.TagResolver...").definedInClass("net.kyori.adventure.text.minimessage.MiniMessage"))]]></place>
     </injection>
+    <injection language="MiniMessage" injector-id="java">
+        <display-name>CommandSender (org.bukkit.command)</display-name>
+        <single-file value="false" />
+        <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("sendRichMessage").withParameters("java.lang.String").definedInClass("org.bukkit.command.CommandSender"))]]></place>
+        <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("sendRichMessage").withParameters("java.lang.String", "net.kyori.adventure.text.minimessage.tag.resolver.TagResolver...").definedInClass("org.bukkit.command.CommandSender"))]]></place>
+    </injection>
+    <injection language="MiniMessage" injector-id="java">
+        <display-name>Server (org.bukkit)</display-name>
+        <single-file value="false" />
+        <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("sendRichMessage").withParameters("java.lang.String").definedInClass("org.bukkit.Server"))]]></place>
+        <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("sendRichMessage").withParameters("java.lang.String", "net.kyori.adventure.text.minimessage.tag.resolver.TagResolver...").definedInClass("org.bukkit.Server"))]]></place>
+    </injection>
 </LanguageInjectionConfiguration>
