@@ -19,6 +19,10 @@ public class MiniMessageVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitText(@NotNull MiniMessageText o) {
+    visitPsiElement(o);
+  }
+
   public void visitPsiElement(@NotNull PsiElement o) {
     visitElement(o);
   }

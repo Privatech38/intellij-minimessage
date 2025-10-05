@@ -11,17 +11,19 @@ public interface MiniMessageTypes {
   IElementType CLOSING_TAG = new MiniMessageElementType("CLOSING_TAG");
   IElementType OPENING_TAG = new MiniMessageElementType("OPENING_TAG");
   IElementType TAG_ARGUMENT = new MiniMessageElementType("TAG_ARGUMENT");
+  IElementType TEXT = new MiniMessageElementType("TEXT");
 
   IElementType ARGUMENT = new MiniMessageTokenType("ARGUMENT");
   IElementType COLON = new MiniMessageTokenType(":");
   IElementType CUSTOM_TAG_NAME = new MiniMessageTokenType("CUSTOM_TAG_NAME");
-  IElementType ESCAPE = new MiniMessageTokenType("\\");
+  IElementType ESCAPED_CHAR = new MiniMessageTokenType("ESCAPED_CHAR");
   IElementType GT = new MiniMessageTokenType(">");
   IElementType LEGACY_FORMATTING_CODE = new MiniMessageTokenType("LEGACY_FORMATTING_CODE");
   IElementType LT = new MiniMessageTokenType("<");
   IElementType PLAIN_TEXT = new MiniMessageTokenType("PLAIN_TEXT");
+  IElementType QUOTATION = new MiniMessageTokenType("QUOTATION");
   IElementType SLASH = new MiniMessageTokenType("/");
-  IElementType STRING = new MiniMessageTokenType("STRING");
+  IElementType STRING_TEXT = new MiniMessageTokenType("STRING_TEXT");
   IElementType TAG_NAME = new MiniMessageTokenType("TAG_NAME");
 
   class Factory {
@@ -35,6 +37,9 @@ public interface MiniMessageTypes {
       }
       else if (type == TAG_ARGUMENT) {
         return new MiniMessageTagArgumentImpl(node);
+      }
+      else if (type == TEXT) {
+        return new MiniMessageTextImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

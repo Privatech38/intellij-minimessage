@@ -1,9 +1,11 @@
 package dev.privatech.plugin.minimessage;
 
+import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
+import static dev.privatech.plugin.minimessage.psi.MiniMessageTypes.*;
 
 %%
 
@@ -23,7 +25,7 @@ import static com.intellij.psi.TokenType.WHITE_SPACE;
 EOL=\R
 WhiteSpace=\s+
 
-PlainText=[^<§]*|§[^0-9a-fk-or]
+PlainText=[^<§\\]*|§[^0-9a-fk-or]
 PlaintLT=<+(\s+|[^/#?!a-z0-9_\-<]|>)
 MultipleLT=<+
 LegacyFormattingCode=§[0-9a-fk-or]
@@ -37,19 +39,19 @@ GradientTag=gradient|rainbow|transition
 MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
 
 CustomTagName=[!?#]?[a-z0-9_-]+
-Argument=[^\'\":>]+
+Argument=[^\"'/:>\s][^/:>\s]*
 
 %state TAG, ARGUMENT_STATE, STRING_DOUBLE, STRING_SINGLE
 
 %%
 <YYINITIAL> {
     {WhiteSpace}          { return WHITE_SPACE; }
-    {PlaintLT}            { return PLAIN_TEXT; }
     "<"                   { yybegin(TAG); return LT; }
     {MultipleLT}          { yypushback(1); return PLAIN_TEXT; }
-    "\\"                  { return ESCAPE; }
+    \\[<\\n]              { return ESCAPED_CHAR; }
     {LegacyFormattingCode} { return LEGACY_FORMATTING_CODE; }
-    {PlainText}           { return PLAIN_TEXT; }
+    {PlainText} | {PlaintLT} | \\[^<\\n]?
+                          { return PLAIN_TEXT; }
 }
 
 <TAG> {
@@ -64,21 +66,21 @@ Argument=[^\'\":>]+
 }
 
 <ARGUMENT_STATE> {
-    \'                    { yybegin(STRING_SINGLE); }
-    \"                    { yybegin(STRING_DOUBLE); }
+    \'                    { yybegin(STRING_SINGLE); return QUOTATION; }
+    \"                    { yybegin(STRING_DOUBLE); return QUOTATION; }
     {Argument}            { yybegin(TAG); return ARGUMENT; }
 }
 
 <STRING_DOUBLE> {
-    \"                    { yybegin(TAG); return STRING; }
-    \\\"                  { /* Escaped quote, ignore */ }
-    [^\"\n\r]+            { /* Consume string content */ }
+    \"                    { yybegin(TAG); return QUOTATION; }
+    \\[\"n\\]             { return ESCAPED_CHAR; }
+    [^\"\\]+|\\[^\"n\\]?  { return STRING_TEXT; }
 }
 
 <STRING_SINGLE> {
-    \'                    { yybegin(TAG); return STRING; }
-    \\\'                  { /* Escaped quote, ignore */ }
-    [^'\n\r]+             { /* Consume string content */ }
+    \'                    { yybegin(TAG); return QUOTATION; }
+    \\['n\\]             { return ESCAPED_CHAR; }
+    [^'\\]+|\\[^'n\\]?    { return STRING_TEXT; }
 }
 
 [^] { return BAD_CHARACTER; }

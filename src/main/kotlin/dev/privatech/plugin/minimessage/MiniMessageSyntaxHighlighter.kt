@@ -2,6 +2,7 @@ package dev.privatech.plugin.minimessage
 
 import dev.privatech.plugin.minimessage.psi.MiniMessageTypes
 import com.intellij.lexer.Lexer
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.XmlHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -31,6 +32,9 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
         val ARGUMENT: TextAttributesKey =
             createTextAttributesKey("MINIMESSAGE_ARGUMENT", XmlHighlighterColors.HTML_ATTRIBUTE_NAME)
         @JvmField
+        val ESCAPED_CHARACTER: TextAttributesKey =
+            createTextAttributesKey("ESCAPED_CHARACTER", DefaultLanguageHighlighterColors.VALID_STRING_ESCAPE)
+        @JvmField
         val BAD_CHARACTER: TextAttributesKey =
             createTextAttributesKey("MINIMESSAGE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
 
@@ -51,6 +55,8 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
         @JvmField
         val ARGUMENT_KEYS: Array<TextAttributesKey> = arrayOf(TAG, ARGUMENT)
         @JvmField
+        val ESCAPED_CHARACTER_KEYS: Array<TextAttributesKey> = arrayOf(ESCAPED_CHARACTER)
+        @JvmField
         val EMPTY_KEYS: Array<TextAttributesKey> = emptyArray()
     }
 
@@ -65,7 +71,8 @@ class MiniMessageSyntaxHighlighter : SyntaxHighlighterBase() {
             MiniMessageTypes.COLON, MiniMessageTypes.SLASH, MiniMessageTypes.LT, MiniMessageTypes.GT -> TAG_KEYS
             MiniMessageTypes.TAG_NAME -> TAG_NAME_KEYS
             MiniMessageTypes.CUSTOM_TAG_NAME -> CUSTOM_TAG_NAME_KEYS
-            MiniMessageTypes.STRING -> STRING_KEYS
+            MiniMessageTypes.STRING_TEXT, MiniMessageTypes.QUOTATION -> STRING_KEYS
+            MiniMessageTypes.ESCAPED_CHAR -> ESCAPED_CHARACTER_KEYS
             MiniMessageTypes.ARGUMENT -> ARGUMENT_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
             else -> EMPTY_KEYS
