@@ -1,0 +1,9 @@
+<#aaaaaa:arg>some content inside tags <<<<</test> some content outside tags §a§l legacy §z
+<red>Hello!</red><hover:show_text:"test\n">
+
+<b><outcome_title></b>
+<i><map_name><map_difficulty></i>
+
+Gold earned: <gold><gold_earned></gold> Exp earned: <green><exp_earned></green><rating_diff>
+Last wave: <aqua><waves></aqua> Time lived: <yellow><time_lived> minute<choice:'s':''></yellow>
+<gray><i><hover:show_text:'UTC time'><start_date:'dd.MM.yyyy'> <start_time:'HH:mm'></hover></i></gray>
