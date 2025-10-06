@@ -9,7 +9,7 @@
     <description><![CDATA[
     <html lang="en-US">
     <body>
-        <p>Adds support for Kyori's <a href="https://docs.advntr.dev/minimessage/index.html">MiniMessage format</a>
+        <p>Adds support for Kyori's <a href="https://docs.papermc.io/adventure/minimessage/">MiniMessage format</a>
         in JetBrains IDEs.</p><br>
         <h2>Features</h2>
         <ul>
