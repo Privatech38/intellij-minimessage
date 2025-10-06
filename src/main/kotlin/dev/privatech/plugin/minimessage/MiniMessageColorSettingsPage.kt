@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage
 
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighter
 import com.intellij.openapi.options.colors.AttributesDescriptor
@@ -19,11 +20,12 @@ class MiniMessageColorSettingsPage : ColorSettingsPage {
         AttributesDescriptor("Tag//String", MiniMessageSyntaxHighlighter.STRING),
         AttributesDescriptor("Tag//Argument", MiniMessageSyntaxHighlighter.ARGUMENT),
         AttributesDescriptor("Bad character", MiniMessageSyntaxHighlighter.BAD_CHARACTER),
+        AttributesDescriptor("Escape sequence", MiniMessageSyntaxHighlighter.ESCAPED_CHARACTER),
         AttributesDescriptor("Legacy format", MiniMessageSyntaxHighlighter.LEGACY_FORMAT)
     )
 
     override fun getIcon(): Icon? {
-        return null
+        return AllIcons.FileTypes.Xhtml
     }
 
     override fun getHighlighter(): SyntaxHighlighter {
@@ -33,8 +35,9 @@ class MiniMessageColorSettingsPage : ColorSettingsPage {
     override fun getDemoText(): @NonNls String {
         return """
             <red>This is red</red>
-            <hover:show_text:'Hello!'>Hover over me!</hover>
+            <hover:show_text:'Hello!\nWelcome.'>Hover over me!</hover>
             My name is <name>.
+            It is true that 1\<2.
             §a§llegacy §rformatted text
         """.trimIndent()
     }
