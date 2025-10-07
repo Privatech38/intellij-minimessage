@@ -44,7 +44,5 @@ class ColorTagValidator : TagValidator() {
             "dark_grey" to NamedTextColor.DARK_GRAY,
             "grey" to NamedTextColor.GRAY
         )
-
-        val INSTANCE: ColorTagValidator = ColorTagValidator()
     }
 }

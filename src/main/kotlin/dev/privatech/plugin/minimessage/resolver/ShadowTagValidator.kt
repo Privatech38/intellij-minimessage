@@ -48,8 +48,4 @@ class ShadowTagValidator : TagValidator() {
         return tagName == "shadow" || tagName == "!shadow"
     }
 
-    companion object {
-        val INSTANCE: ShadowTagValidator = ShadowTagValidator()
-    }
-
 }
