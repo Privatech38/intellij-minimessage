@@ -37,5 +37,8 @@ class ColorTagValidator : TagValidator() {
             "dark_grey" to NamedTextColor.DARK_GRAY,
             "grey" to NamedTextColor.GRAY
         )
+
+        @JvmField
+        val INSTANCE: ColorTagValidator = ColorTagValidator()
     }
 }

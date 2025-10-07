@@ -11,4 +11,11 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
 
     abstract fun has(tagName: String): Boolean
 
+    companion object {
+        @JvmField
+        val STANDARD_VALIDATORS: Set<TagValidator> = setOf(
+            ColorTagValidator.INSTANCE
+        )
+    }
+
 }
