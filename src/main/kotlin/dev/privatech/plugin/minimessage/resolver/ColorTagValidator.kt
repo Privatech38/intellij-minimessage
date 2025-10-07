@@ -19,7 +19,7 @@ class ColorTagValidator : TagValidator() {
             return
         }
         val trimmed = colorArg.trimmedArgument
-        if (NamedTextColor.NAMES.value(trimmed) == null && !trimmed.matches(Regex("#[0-9a-fA-F]{6}")) // Hex color code)
+        if (NamedTextColor.NAMES.value(trimmed) == null && !trimmed.matches(Regex("#[0-9a-fA-F]{6}"))
             && !COLOR_ALIASES.containsKey(trimmed)
         ) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Unknown color: '$trimmed'").range(colorArg.normalizeTextRange()).create()
@@ -30,7 +30,7 @@ class ColorTagValidator : TagValidator() {
         return NamedTextColor.NAMES.value(tagName) != null
             || isColorOrAbbreviation(tagName)
             || COLOR_ALIASES.containsKey(tagName)
-            || tagName.matches(Regex("#[0-9a-fA-F]{6}")) // Hex color code
+            || tagName.matches(Regex("#[0-9a-fA-F]{6}"))
 
     }
 
@@ -39,12 +39,12 @@ class ColorTagValidator : TagValidator() {
     }
 
     companion object {
-        private val COLOR_ALIASES: Map<String, TextColor> = mapOf(
+        @JvmField
+        val COLOR_ALIASES: Map<String, TextColor> = mapOf(
             "dark_grey" to NamedTextColor.DARK_GRAY,
             "grey" to NamedTextColor.GRAY
         )
 
-        @JvmField
         val INSTANCE: ColorTagValidator = ColorTagValidator()
     }
 }

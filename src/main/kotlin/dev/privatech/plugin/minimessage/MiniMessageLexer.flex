@@ -30,7 +30,7 @@ PlaintLT=<+(\s+|[^/#?!a-z0-9_\-<]|>)
 MultipleLT=<+
 LegacyFormattingCode=§[0-9a-fk-or]
 // Known tag names from MiniMessage
-ColorTag=black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|grey|dark_gray|dark_grey|blue|green|aqua|red|light_purple|yellow|white|color|colour|c|shadow|#[0-9a-fA-F]{6}
+ColorTag=black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|grey|dark_gray|dark_grey|blue|green|aqua|red|light_purple|yellow|white|color|colour|c|\!?shadow|#[0-9a-fA-F]{6}
 DecorationTag=bold|b|italic|i|em|underlined|u|strikethrough|st|obfuscated|obf|reset
 InteractiveTag=click|hover|key
 TranslatableTag=lang|tr|translate|lang_or|tr_or|translate_or

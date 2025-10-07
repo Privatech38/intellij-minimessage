@@ -14,7 +14,8 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
     companion object {
         @JvmField
         val STANDARD_VALIDATORS: Set<TagValidator> = setOf(
-            ColorTagValidator.INSTANCE
+            ColorTagValidator.INSTANCE,
+            ShadowTagValidator.INSTANCE
         )
     }
 
