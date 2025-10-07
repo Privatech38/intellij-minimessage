@@ -18,6 +18,12 @@ class ColorTagValidator : TagValidator() {
             holder.newAnnotation(HighlightSeverity.ERROR, "Missing color argument").range(tagName).create()
             return
         }
+        val trimmed = colorArg.trimmedArgument
+        if (NamedTextColor.NAMES.value(trimmed) == null && !trimmed.matches(Regex("#[0-9a-fA-F]{6}")) // Hex color code)
+            && !COLOR_ALIASES.containsKey(trimmed)
+        ) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Unknown color: '$trimmed'").range(colorArg.normalizeTextRange()).create()
+        }
     }
 
     override fun has(tagName: String): Boolean {
