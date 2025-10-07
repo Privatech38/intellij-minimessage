@@ -11,15 +11,16 @@ class MiniMessagePsiImplUtil {
          * Transforms an argument to a raw string
          */
         @JvmStatic
-        fun toString(tagArgument: MiniMessageTagArgument): String? {
-            return tagArgument.text.trim('"', '\'')
+        fun getTrimmedArgument(tagArgument: MiniMessageTagArgument): String {
+            return tagArgument.text.substringAfter(':').trim('"', '\'')
         }
 
         @JvmStatic
-        fun normalizeTextRange(tagArgument: MiniMessageTagArgument): TextRange = if (tagArgument.textRange.length == 1)
-            tagArgument.textRange
-         else
-            TextRange(tagArgument.textRange.startOffset + 1, tagArgument.textRange.endOffset)
+        fun normalizeTextRange(tagArgument: MiniMessageTagArgument): TextRange =
+            if (tagArgument.textRange.length == 1)
+                tagArgument.textRange
+             else
+                TextRange(tagArgument.textRange.startOffset + 1, tagArgument.textRange.endOffset)
     }
 
 }
