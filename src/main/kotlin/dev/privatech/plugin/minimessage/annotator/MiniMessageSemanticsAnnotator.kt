@@ -21,7 +21,7 @@ class MiniMessageSemanticsAnnotator : Annotator {
         validator.validate(tagName, arguments, holder)
         if (arguments.isNotEmpty()) {
             for (argument in arguments) {
-                holder.newAnnotation(HighlightSeverity.WARNING, "Unused tag argument").range(argument).create()
+                holder.newAnnotation(HighlightSeverity.WARNING, "Unused tag argument").range(argument.normalizeTextRange()).create()
             }
         }
         if (!validator.autoCloseable && element.lastChild.prevSibling.node.elementType == MiniMessageTypes.SLASH) {
