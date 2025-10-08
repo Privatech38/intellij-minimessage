@@ -21,7 +21,8 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
             KeybindTagValidator(),
             TranslatableTagValidator(),
             InsertionTagValidator(),
-            RainbowTagValidator()
+            RainbowTagValidator(),
+            GradientTagValidator()
         )
 
         /**
