@@ -19,18 +19,14 @@ class ColorTagValidator : TagValidator() {
             return
         }
         val trimmed = colorArg.trimmedArgument
-        if (NamedTextColor.NAMES.value(trimmed) == null && !trimmed.matches(Regex("#[0-9a-fA-F]{6}"))
-            && !COLOR_ALIASES.containsKey(trimmed)
-        ) {
+        if (!isColor(trimmed)) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Unknown color: '$trimmed'").range(colorArg.normalizeTextRange()).create()
         }
     }
 
     override fun has(tagName: String): Boolean {
-        return NamedTextColor.NAMES.value(tagName) != null
+        return isColor(tagName)
             || isColorOrAbbreviation(tagName)
-            || COLOR_ALIASES.containsKey(tagName)
-            || tagName.matches(Regex("#[0-9a-fA-F]{6}"))
 
     }
 
