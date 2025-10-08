@@ -1,9 +1,8 @@
-package dev.privatech.plugin.minimessage.resolver
+package dev.privatech.plugin.minimessage.tag.validator
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.psi.PsiElement
 import dev.privatech.plugin.minimessage.psi.MiniMessageTagArgument
-import dev.privatech.plugin.minimessage.resolver.ColorTagValidator.Companion.COLOR_ALIASES
 import net.kyori.adventure.text.format.NamedTextColor
 import java.util.*
 
@@ -38,7 +37,7 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
         @JvmStatic
         fun isColor(value: String): Boolean {
             return NamedTextColor.NAMES.value(value) != null
-                    || COLOR_ALIASES.containsKey(value)
+                    || ColorTagValidator.Companion.COLOR_ALIASES.containsKey(value)
                     || value.matches(Regex("#[0-9a-fA-F]{6}"))
         }
     }

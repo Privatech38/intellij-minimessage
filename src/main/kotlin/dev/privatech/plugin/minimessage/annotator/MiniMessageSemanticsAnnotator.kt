@@ -6,7 +6,7 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import dev.privatech.plugin.minimessage.psi.MiniMessageOpeningTag
 import dev.privatech.plugin.minimessage.psi.MiniMessageTypes
-import dev.privatech.plugin.minimessage.resolver.TagValidator
+import dev.privatech.plugin.minimessage.tag.validator.TagValidator
 import java.util.*
 
 class MiniMessageSemanticsAnnotator : Annotator {

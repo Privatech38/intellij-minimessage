@@ -1,4 +1,4 @@
-package dev.privatech.plugin.minimessage.resolver
+package dev.privatech.plugin.minimessage.tag.validator
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
