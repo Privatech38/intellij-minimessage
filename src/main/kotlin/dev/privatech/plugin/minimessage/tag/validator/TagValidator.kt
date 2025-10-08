@@ -19,7 +19,8 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
             ClickTagValidator(),
             HoverTagValidator(),
             KeybindTagValidator(),
-            TranslatableTagValidator()
+            TranslatableTagValidator(),
+            InsertionTagValidator(),
         )
 
         /**
