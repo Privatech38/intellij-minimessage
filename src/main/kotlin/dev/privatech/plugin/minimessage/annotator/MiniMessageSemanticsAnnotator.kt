@@ -6,6 +6,7 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import dev.privatech.plugin.minimessage.psi.MiniMessageOpeningTag
 import dev.privatech.plugin.minimessage.psi.MiniMessageTypes
+import dev.privatech.plugin.minimessage.tag.validator.ArgumentQueue
 import dev.privatech.plugin.minimessage.tag.validator.TagValidator
 import java.util.*
 
@@ -17,7 +18,7 @@ class MiniMessageSemanticsAnnotator : Annotator {
         }
         val tagName = element.tagName ?: return
         val validator: TagValidator = TagValidator.STANDARD_VALIDATORS.firstOrNull { validator -> validator.has(tagName.text) } ?: return
-        val arguments = LinkedList(element.tagArgumentList)
+        val arguments = ArgumentQueue(holder, element.tagArgumentList)
         validator.validate(tagName, arguments, holder)
         if (arguments.isNotEmpty()) {
             for (argument in arguments) {

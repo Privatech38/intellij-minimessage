@@ -3,22 +3,14 @@ package dev.privatech.plugin.minimessage.tag.validator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
-import dev.privatech.plugin.minimessage.psi.MiniMessageTagArgument
-import java.util.LinkedList
 
 class KeybindTagValidator : TagValidator(true) {
     override fun validate(
         tagName: PsiElement,
-        arguments: LinkedList<MiniMessageTagArgument>,
+        arguments: ArgumentQueue,
         holder: AnnotationHolder
     ) {
-        if (arguments.isEmpty()) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "The 'key' tag requires a keybind identifier argument")
-                .range(tagName)
-                .create()
-            return
-        }
-        val arg = arguments.pop()
+        val arg = arguments.popOr(tagName, "The 'key' tag requires a keybind identifier argument") ?: return
         val trimmedKey = arg.trimmedArgument
         if (!Regex("^key\\.[a-zA-Z]+$").matches(trimmedKey)) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Invalid keybind identifier: '$trimmedKey'")

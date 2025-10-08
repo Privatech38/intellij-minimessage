@@ -3,26 +3,19 @@ package dev.privatech.plugin.minimessage.tag.validator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
-import dev.privatech.plugin.minimessage.psi.MiniMessageTagArgument
 import net.kyori.adventure.text.format.NamedTextColor
-import java.util.LinkedList
 
 class ShadowTagValidator : TagValidator() {
 
     override fun validate(
         tagName: PsiElement,
-        arguments: LinkedList<MiniMessageTagArgument>,
+        arguments: ArgumentQueue,
         holder: AnnotationHolder
     ) {
         if (tagName.text == "!shadow") {
             return
         }
-        val colorArg = arguments.pollFirst()
-        if (colorArg == null) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Missing color argument")
-                .range(tagName).create()
-            return
-        }
+        val colorArg = arguments.popOr(tagName, "The 'shadow' tag requires a color argument") ?: return
         val trimmedColor = colorArg.trimmedArgument
         if (NamedTextColor.NAMES.value(trimmedColor) == null && !trimmedColor.matches(Regex("#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})"))
             && !ColorTagValidator.Companion.COLOR_ALIASES.containsKey(trimmedColor)

@@ -7,14 +7,14 @@ import java.util.LinkedList
 
 class ArgumentQueue(val holder: AnnotationHolder, arguments: Collection<MiniMessageTagArgument>) : LinkedList<MiniMessageTagArgument>(arguments) {
 
-    fun popOr(element: PsiElement, errorMessage: String): String? {
+    fun popOr(element: PsiElement, errorMessage: String): MiniMessageTagArgument? {
         if (this.isEmpty()) {
             holder.newAnnotation(com.intellij.lang.annotation.HighlightSeverity.ERROR, errorMessage)
                 .range(if (element is MiniMessageTagArgument) element.normalizeTextRange() else element.textRange)
                 .create()
             return null
         }
-        return this.pop().trimmedArgument
+        return this.pop()
     }
 
 }

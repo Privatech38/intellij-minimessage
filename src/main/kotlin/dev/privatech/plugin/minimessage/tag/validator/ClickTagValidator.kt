@@ -4,36 +4,24 @@ import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import com.intellij.util.io.URLUtil
-import dev.privatech.plugin.minimessage.psi.MiniMessageTagArgument
 import net.kyori.adventure.text.event.ClickEvent
 import java.nio.file.InvalidPathException
 import java.nio.file.Paths
-import java.util.LinkedList
 
 class ClickTagValidator : TagValidator() {
     override fun validate(
         tagName: PsiElement,
-        arguments: LinkedList<MiniMessageTagArgument>,
+        arguments: ArgumentQueue,
         holder: AnnotationHolder
     ) {
-        if (arguments.isEmpty()) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Missing click action argument")
-                .range(tagName).create()
-            return
-        }
-        val actionArg = arguments.pop()
+        val actionArg = arguments.popOr(tagName, "The 'click' tag requires an action argument") ?: return
         val action = actionArg.trimmedArgument
         if (action.uppercase() !in ClickEvent.Action.entries.map(ClickEvent.Action::name)) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Unknown click action: '$action'")
                 .range(actionArg.normalizeTextRange()).create()
             return
         }
-        if (arguments.isEmpty()) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Missing click value argument")
-                .range(actionArg).create()
-            return
-        }
-        val valueArg = arguments.pop()
+        val valueArg = arguments.popOr(actionArg, "Missing click value argument") ?: return
         val value = valueArg.trimmedArgument
         when (ClickEvent.Action.valueOf(action.uppercase())) {
             ClickEvent.Action.OPEN_URL -> {

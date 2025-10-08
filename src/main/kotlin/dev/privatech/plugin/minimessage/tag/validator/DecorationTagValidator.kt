@@ -3,13 +3,11 @@ package dev.privatech.plugin.minimessage.tag.validator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
-import dev.privatech.plugin.minimessage.psi.MiniMessageTagArgument
-import java.util.LinkedList
 
 class DecorationTagValidator : TagValidator() {
     override fun validate(
         tagName: PsiElement,
-        arguments: LinkedList<MiniMessageTagArgument>,
+        arguments: ArgumentQueue,
         holder: AnnotationHolder
     ) {
         if (tagName.text.startsWith('!')) {
