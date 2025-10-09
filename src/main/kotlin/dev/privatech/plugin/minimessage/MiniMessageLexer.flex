@@ -69,6 +69,7 @@ Argument=[^\"'/:>\s][^/:>\s]*
     \'                    { yybegin(STRING_SINGLE); return QUOTATION; }
     \"                    { yybegin(STRING_DOUBLE); return QUOTATION; }
     {Argument}            { yybegin(TAG); return ARGUMENT; }
+    [:>/]                 { yypushback(1); yybegin(TAG); return ARGUMENT; }
 }
 
 <STRING_DOUBLE> {
