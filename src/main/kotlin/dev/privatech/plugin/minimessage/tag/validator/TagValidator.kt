@@ -26,6 +26,7 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
             FontTagValidator(),
             SelectorTagValidator(),
             ScoreTagValidator(),
+            NBTTagValidator()
         )
 
         /**
@@ -33,6 +34,13 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
          */
         @JvmField
         val RESOURCE_LOCATION_REGEX = Regex("^([a-z0-9-._]+:[a-z0-9-._/]+|[a-z0-9-._/]+)$")
+
+        /**
+         * Regex pattern to match valid Minecraft selectors.
+         * Matches patterns like `@p`, `@a[distance=..5]`, `@r`, `@e[type=Zombie]`, etc.
+         */
+        @JvmField
+        val SELECTOR_REGEX = Regex("@[pnraes](\\[.*])?$")
 
         /**
          * Checks if the given value is a valid color name, alias, or hex code.

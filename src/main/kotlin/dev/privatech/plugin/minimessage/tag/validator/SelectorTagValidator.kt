@@ -13,7 +13,7 @@ class SelectorTagValidator : TagValidator(true) {
     ) {
         val selector = arguments.popOr(tagName, "The Selector tag requires a selector argument") ?: return
         val trimmedSelector = selector.trimmedArgument
-        if (!Regex("@[pnraes](\\[.*])?$").matches(trimmedSelector)) {
+        if (!SELECTOR_REGEX.matches(trimmedSelector)) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Invalid selector: '$trimmedSelector'")
                 .range(selector.normalizeTextRange())
                 .create()
