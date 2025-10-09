@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static dev.privatech.plugin.minimessage.psi.MiniMessageTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.privatech.plugin.minimessage.psi.*;
+import com.intellij.openapi.util.TextRange;
 
 public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements MiniMessageTagArgument {
 
@@ -40,8 +41,13 @@ public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  public @Nullable String toString() {
-    return MiniMessagePsiImplUtil.toString(this);
+  public @NotNull String getTrimmedArgument() {
+    return MiniMessagePsiImplUtil.getTrimmedArgument(this);
+  }
+
+  @Override
+  public @NotNull TextRange normalizeTextRange() {
+    return MiniMessagePsiImplUtil.normalizeTextRange(this);
   }
 
 }

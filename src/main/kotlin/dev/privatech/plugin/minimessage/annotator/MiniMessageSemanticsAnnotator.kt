@@ -1,75 +1,33 @@
 package dev.privatech.plugin.minimessage.annotator
 
-import dev.privatech.plugin.minimessage.psi.MiniMessageOpeningTag
-import dev.privatech.plugin.minimessage.impl.ArgumentQueueImpl
-import dev.privatech.plugin.minimessage.impl.ContextImpl
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
-import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import net.kyori.adventure.text.minimessage.Context
-import net.kyori.adventure.text.minimessage.MiniMessage
-import net.kyori.adventure.text.minimessage.ParsingException
-import net.kyori.adventure.text.minimessage.internal.parser.Token
-import net.kyori.adventure.text.minimessage.internal.parser.TokenParser
-import net.kyori.adventure.text.minimessage.internal.parser.TokenParser.TagProvider
-import net.kyori.adventure.text.minimessage.internal.parser.node.TagPart
-import net.kyori.adventure.text.minimessage.tag.Tag
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
-import java.util.function.Predicate
+import dev.privatech.plugin.minimessage.psi.MiniMessageOpeningTag
+import dev.privatech.plugin.minimessage.psi.MiniMessageTypes
+import dev.privatech.plugin.minimessage.tag.validator.ArgumentQueue
+import dev.privatech.plugin.minimessage.tag.validator.TagValidator
+import java.util.*
 
 class MiniMessageSemanticsAnnotator : Annotator {
 
-    val MINIMESSAGE_INSTANCE: MiniMessage = MiniMessage.builder().tags(TagResolver.standard()).build()
-
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        val context: Context = ContextImpl(
-            false, false, null, element.containingFile.text,
-            MINIMESSAGE_INSTANCE, null, TagResolver.standard(), null, null
-        )
-        if (element is MiniMessageOpeningTag) {
-            val resolver: TagResolver = TagResolver.standard()
-            val tagNameChecker = Predicate { name: String? ->
-                val sanitized = TagProvider.sanitizePlaceholderName(name!!)
-                resolver.has(sanitized)
+        if (element !is MiniMessageOpeningTag) {
+            return
+        }
+        val tagName = element.tagName ?: return
+        val validator: TagValidator = TagValidator.STANDARD_VALIDATORS.firstOrNull { validator -> validator.has(tagName.text) } ?: return
+        val arguments = ArgumentQueue(holder, element.tagArgumentList)
+        validator.validate(tagName, arguments, holder)
+        if (arguments.isNotEmpty()) {
+            for (argument in arguments) {
+                holder.newAnnotation(HighlightSeverity.WARNING, "Unused tag argument").range(argument.normalizeTextRange()).create()
             }
-            val tagProvider: TagProvider = TagProvider { name: String, args: MutableList<out Tag.Argument>, token: Token? ->
-                try {
-                    val arguments = ArgumentQueueImpl(context, args)
-                    val tag = resolver.resolve(
-                        name,
-                        arguments,
-                        context
-                    )
-                    while (arguments.hasNext()) {
-                        val arg = arguments.pop() as TagPart
-                        holder.newAnnotation(
-                            HighlightSeverity.WARNING,
-                            "Unused argument"
-                        ).range(
-                            if (arg.token().startIndex() == ParsingException.LOCATION_UNKNOWN) element.tagName?.textRange ?:
-                            element.textRange else
-                                element.textRange.cutOut(TextRange(arg.token().startIndex(), arg.token().endIndex()))
-                        ).create()
-                    }
-                    return@TagProvider tag
-                } catch (e: ParsingException) {
-                    holder.newAnnotation(HighlightSeverity.ERROR, e.detailMessage() ?: "Parsing exception ${e.message}")
-                        .range(if (e.startIndex() == ParsingException.LOCATION_UNKNOWN) element.tagName?.textRange ?:
-                        element.textRange else element.textRange.cutOut(TextRange(e.startIndex(), e.endIndex())))
-                        .create()
-                    return@TagProvider null
-                }
-            };
-            try {
-                TokenParser.parse(tagProvider, tagNameChecker, element.text, element.text, false)
-            } catch (e: ParsingException) {
-                holder.newAnnotation(HighlightSeverity.ERROR, e.detailMessage() ?: "Parsing exception ${e.message}")
-                    .range(if (e.startIndex() == ParsingException.LOCATION_UNKNOWN) element.tagName?.textRange ?:
-                    element.textRange else TextRange(e.startIndex(), (e.endIndex()) + 1))
-                    .create()
-            }
+        }
+        if (!validator.autoCloseable && element.lastChild.prevSibling.node.elementType == MiniMessageTypes.SLASH) {
+            holder.newAnnotation(HighlightSeverity.WARNING, "Tag has no effect, because it is self-closing")
+                .range(element.lastChild.prevSibling).create()
         }
     }
 
