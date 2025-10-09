@@ -13,7 +13,7 @@ class SpriteTagValidator : TagValidator(true) {
         val atlasOrSprite = arguments.popOr(tagName, "The Sprite tag requires an atlas or sprite argument") ?: return
         val trimmed = atlasOrSprite.trimmedArgument
         if (arguments.isEmpty()) {
-            if (!Regex("[a-z0-9-._/]+").matches(trimmed)) {
+            if (!Regex("[a-zA-Z0-9-._/]+").matches(trimmed)) {
                 holder.newAnnotation(
                     HighlightSeverity.ERROR,
                     "Invalid name for sprite: '$trimmed'"
@@ -32,7 +32,7 @@ class SpriteTagValidator : TagValidator(true) {
                     .range(atlasOrSprite.normalizeTextRange())
                     .create()
             }
-            if (!Regex("[a-z0-9-._/]+").matches(spriteTrimmed)) {
+            if (!Regex("[a-zA-Z0-9-._/]+").matches(spriteTrimmed)) {
                 holder.newAnnotation(
                     HighlightSeverity.ERROR,
                     "Invalid name for sprite: '$spriteTrimmed'"

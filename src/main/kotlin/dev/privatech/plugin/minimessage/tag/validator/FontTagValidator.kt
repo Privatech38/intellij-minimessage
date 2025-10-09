@@ -20,7 +20,7 @@ class FontTagValidator : TagValidator() {
                     .range(valueOrNamespace.normalizeTextRange())
                     .create()
             }
-            if (!Regex("[a-z0-9-._/]+").matches(trimmedPath)) {
+            if (!Regex("[a-zA-Z0-9-._/]+").matches(trimmedPath)) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Invalid font path: '$trimmedPath'")
                     .range(path.normalizeTextRange())
                     .create()
