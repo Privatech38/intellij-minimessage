@@ -25,6 +25,7 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
             GradientTagValidator(),
             FontTagValidator(),
             SelectorTagValidator(),
+            ScoreTagValidator(),
         )
 
         /**
