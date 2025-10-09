@@ -37,6 +37,7 @@ TranslatableTag=lang|tr|translate|lang_or|tr_or|translate_or
 InsertTag=insertion
 GradientTag=gradient|rainbow|transition
 MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
+ObjectTag=sprite|head
 
 CustomTagName=[!?#]?[a-z0-9_-]+
 Argument=[^\"'/:>\s][^/:>\s]*
@@ -56,7 +57,7 @@ Argument=[^\"'/:>\s][^/:>\s]*
 
 <TAG> {
     {WhiteSpace}          { return WHITE_SPACE; }
-    {ColorTag} | {DecorationTag} | {InteractiveTag} | {TranslatableTag} | {InsertTag} | {GradientTag} | {MiscTag}
+    {ColorTag} | {DecorationTag} | {InteractiveTag} | {TranslatableTag} | {InsertTag} | {GradientTag} | {MiscTag} | {ObjectTag}
                           { return TAG_NAME; }
     {CustomTagName}       { return CUSTOM_TAG_NAME; }
     "/"                   { return SLASH; }
