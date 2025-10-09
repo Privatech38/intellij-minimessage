@@ -12,7 +12,7 @@ class KeybindTagValidator : TagValidator(true) {
     ) {
         val arg = arguments.popOr(tagName, "The 'key' tag requires a keybind identifier argument") ?: return
         val trimmedKey = arg.trimmedArgument
-        if (!Regex("^key\\.[a-zA-Z]+$").matches(trimmedKey)) {
+        if (!Regex("^key\\.[a-zA-Z0-9]+$").matches(trimmedKey)) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Invalid keybind identifier: '$trimmedKey'")
                 .range(arg.normalizeTextRange())
                 .create()
