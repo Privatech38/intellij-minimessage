@@ -3,7 +3,7 @@ package dev.privatech.plugin.minimessage.tag.validator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.psi.PsiElement
 
-class ScoreTagValidator : TagValidator() {
+class ScoreTagValidator : TagValidator(true) {
     override fun validate(
         tagName: PsiElement,
         arguments: ArgumentQueue,
