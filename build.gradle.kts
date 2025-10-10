@@ -1,9 +1,11 @@
+import org.jetbrains.changelog.Changelog
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "2.1.0"
     id("org.jetbrains.intellij.platform") version "2.9.0"
+    id("org.jetbrains.changelog") version "2.4.0"
 }
 
 group = "dev.privatech.plugin"
@@ -35,10 +37,6 @@ intellijPlatform {
         ideaVersion {
             sinceBuild = "251"
         }
-
-        changeNotes = """
-      Initial version
-    """.trimIndent()
     }
 }
 
@@ -59,4 +57,18 @@ tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
     }
+    patchPluginXml {
+        changeNotes = provider {
+            changelog.renderItem(
+                changelog.getUnreleased()
+                    .withHeader(false)
+                    .withEmptySections(false),
+                Changelog.OutputType.HTML
+            )
+        }
+    }
+}
+
+changelog {
+    repositoryUrl = "https://github.com/Privatech38/intellij-minimessage"
 }
