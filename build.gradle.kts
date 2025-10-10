@@ -1,4 +1,5 @@
 import org.jetbrains.changelog.Changelog
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -38,6 +39,7 @@ intellijPlatform {
             sinceBuild = "251"
         }
     }
+    pluginVerification.ides.recommended()
 }
 
 sourceSets {
