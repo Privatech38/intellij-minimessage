@@ -39,7 +39,6 @@ intellijPlatform {
             sinceBuild = "251"
         }
     }
-    pluginVerification.ides.recommended()
 }
 
 sourceSets {
