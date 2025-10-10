@@ -35,12 +35,6 @@ public class MiniMessageTagArgumentImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @Nullable
-  public PsiElement getArgument() {
-    return findChildByType(ARGUMENT);
-  }
-
-  @Override
   public @NotNull String getTrimmedArgument() {
     return MiniMessagePsiImplUtil.getTrimmedArgument(this);
   }

@@ -40,10 +40,12 @@ MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
 ObjectTag=sprite|head
 
 CustomTagName=[!?#]?[a-z0-9_-]+
-Argument=[^\"':>\s][^:>\s]*
-ArgumentWithTrailingSlash=[^\"':>\s][^:>\s]*\/>|\/>
+Argument=[^:>\\]+
+ArgumentWithTrailingSlash=[^:>\\]*\/>
+ArgumentStart=[^\"':>]
+ArgumentEscape=\\[n\\]
 
-%state TAG, ARGUMENT_STATE, STRING_DOUBLE, STRING_SINGLE
+%state TAG, ARGUMENT_START_STATE, ARGUMENT_STATE,  STRING_DOUBLE, STRING_SINGLE
 
 %%
 <YYINITIAL> {
@@ -62,17 +64,25 @@ ArgumentWithTrailingSlash=[^\"':>\s][^:>\s]*\/>|\/>
                           { return TAG_NAME; }
     {CustomTagName}       { return CUSTOM_TAG_NAME; }
     "/"                   { return SLASH; }
-    ":"                   { yybegin(ARGUMENT_STATE); return COLON; }
+    ":"                   { yybegin(ARGUMENT_START_STATE); return COLON; }
     ">"                   { yybegin(YYINITIAL); return GT; }
     "<"                   { return LT; }
 }
 
-<ARGUMENT_STATE> {
+<ARGUMENT_START_STATE> {
     \'                    { yybegin(STRING_SINGLE); return QUOTATION; }
     \"                    { yybegin(STRING_DOUBLE); return QUOTATION; }
-    {ArgumentWithTrailingSlash} { yypushback(2); yybegin(TAG); return ARGUMENT; }
-    {Argument}            { yybegin(TAG); return ARGUMENT; }
+    {ArgumentStart}       { yybegin(ARGUMENT_STATE); return ARGUMENT; }
+    {ArgumentEscape}      { yybegin(ARGUMENT_STATE); return ESCAPED_CHAR; }
     [:>]                  { yypushback(1); yybegin(TAG); return ARGUMENT; }
+    \/>                   { yypushback(2); yybegin(TAG); return ARGUMENT; }
+}
+
+<ARGUMENT_STATE> {
+    {ArgumentWithTrailingSlash}|\\\/> { yypushback(2); yybegin(TAG); return ARGUMENT; }
+    {ArgumentEscape}     { return ESCAPED_CHAR; }
+    [:>]                 { yypushback(1); yybegin(TAG); return ARGUMENT; }
+    {Argument}|\\[^n\\:>]? { return ARGUMENT; }
 }
 
 <STRING_DOUBLE> {
@@ -83,7 +93,7 @@ ArgumentWithTrailingSlash=[^\"':>\s][^:>\s]*\/>|\/>
 
 <STRING_SINGLE> {
     \'                    { yybegin(TAG); return QUOTATION; }
-    \\['n\\]             { return ESCAPED_CHAR; }
+    \\['n\\]              { return ESCAPED_CHAR; }
     [^'\\]+|\\[^'n\\]?    { return STRING_TEXT; }
 }
 

@@ -36,14 +36,28 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ARGUMENT | QUOTATION text * QUOTATION
+  // text + | QUOTATION text * QUOTATION
   static boolean argument_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "argument_type")) return false;
-    if (!nextTokenIs(b, "", ARGUMENT, QUOTATION)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, ARGUMENT);
+    r = argument_type_0(b, l + 1);
     if (!r) r = argument_type_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // text +
+  private static boolean argument_type_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "argument_type_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = text(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!text(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "argument_type_0", c)) break;
+    }
     exit_section_(b, m, null, r);
     return r;
   }
@@ -179,7 +193,7 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PLAIN_TEXT | ESCAPED_CHAR | STRING_TEXT
+  // PLAIN_TEXT | ESCAPED_CHAR | STRING_TEXT | ARGUMENT
   public static boolean text(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "text")) return false;
     boolean r;
@@ -187,6 +201,7 @@ public class MiniMessageParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, PLAIN_TEXT);
     if (!r) r = consumeToken(b, ESCAPED_CHAR);
     if (!r) r = consumeToken(b, STRING_TEXT);
+    if (!r) r = consumeToken(b, ARGUMENT);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

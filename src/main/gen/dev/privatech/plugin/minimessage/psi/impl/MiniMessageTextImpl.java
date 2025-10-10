@@ -29,6 +29,12 @@ public class MiniMessageTextImpl extends ASTWrapperPsiElement implements MiniMes
 
   @Override
   @Nullable
+  public PsiElement getArgument() {
+    return findChildByType(ARGUMENT);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getEscapedChar() {
     return findChildByType(ESCAPED_CHAR);
   }
