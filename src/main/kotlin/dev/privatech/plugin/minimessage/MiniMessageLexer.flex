@@ -40,8 +40,8 @@ MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
 ObjectTag=sprite|head
 
 CustomTagName=[!?#]?[a-z0-9_-]+
-Argument=[^:>\\]+
-ArgumentWithTrailingSlash=[^:>\\]*\/>
+Argument=[^:<>\\]+
+ArgumentWithTrailingSlash=[^:<>\\]*\/>
 ArgumentStart=[^\"':>]
 ArgumentEscape=\\[n\\]
 
@@ -70,6 +70,7 @@ ArgumentEscape=\\[n\\]
 }
 
 <ARGUMENT_START_STATE> {
+    \<                    { yybegin(TAG); return LT; }
     \'                    { yybegin(STRING_SINGLE); return QUOTATION; }
     \"                    { yybegin(STRING_DOUBLE); return QUOTATION; }
     {ArgumentStart}       { yybegin(ARGUMENT_STATE); return ARGUMENT; }
@@ -79,10 +80,11 @@ ArgumentEscape=\\[n\\]
 }
 
 <ARGUMENT_STATE> {
+    \<                    { yybegin(TAG); return LT; }
     {ArgumentWithTrailingSlash}|\\\/> { yypushback(2); yybegin(TAG); return ARGUMENT; }
     {ArgumentEscape}     { return ESCAPED_CHAR; }
     [:>]                 { yypushback(1); yybegin(TAG); return ARGUMENT; }
-    {Argument}|\\[^n\\:>]? { return ARGUMENT; }
+    {Argument}|\\[^n\\:<>]? { return ARGUMENT; }
 }
 
 <STRING_DOUBLE> {
