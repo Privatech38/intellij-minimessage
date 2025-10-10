@@ -11,9 +11,6 @@ public interface MiniMessageTagArgument extends PsiElement {
   @NotNull
   List<MiniMessageText> getTextList();
 
-  @Nullable
-  PsiElement getArgument();
-
   @NotNull String getTrimmedArgument();
 
   @NotNull TextRange normalizeTextRange();
