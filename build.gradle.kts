@@ -40,7 +40,7 @@ intellijPlatform {
         }
     }
     pluginVerification.ides {
-        create(IntelliJPlatformType.IntellijIdea, "2025.1")
+        create("IC", "2025.1")
     }
 }
 
