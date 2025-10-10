@@ -19,9 +19,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Set Patch notes
-        run: ./gradlew patchPluginXml -PchangeNotes=${{ github.event.release.body }}
-
       - name: Build with Gradle
         run: ./gradlew buildPlugin
 

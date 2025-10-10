@@ -60,7 +60,7 @@ tasks {
     patchPluginXml {
         changeNotes = provider {
             changelog.renderItem(
-                changelog.getUnreleased()
+                (changelog.getOrNull(project.version.toString()) ?: changelog.getUnreleased())
                     .withHeader(false)
                     .withEmptySections(false),
                 Changelog.OutputType.HTML
