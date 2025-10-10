@@ -7,6 +7,7 @@
   - Build on push to main or PR
   - Publish plugin to marketplace on release
 - Custom tag validators
+- Changelog plugin for keeping changelog up to date
 
 ### Changed
 
