@@ -27,6 +27,7 @@ WhiteSpace=\s+
 
 PlainText=[^<§\\]*|§[^0-9a-fk-or]
 PlaintLT=<+(\s+|[^/#?!a-z0-9_\-<]|>)
+UnfinishedTag=<[!?#]?[a-z0-9_-]+(\:(\".*\"|\'.*\'|[^><]*))*<
 MultipleLT=<+
 LegacyFormattingCode=§[0-9a-fk-or]
 // Known tag names from MiniMessage
@@ -51,7 +52,7 @@ ArgumentEscape=\\[n\\]
 <YYINITIAL> {
     {WhiteSpace}          { return WHITE_SPACE; }
     "<"                   { yybegin(TAG); return LT; }
-    {MultipleLT}          { yypushback(1); return PLAIN_TEXT; }
+    {MultipleLT} | {UnfinishedTag} { yypushback(1); return PLAIN_TEXT; }
     \\[<\\n]              { return ESCAPED_CHAR; }
     {LegacyFormattingCode} { return LEGACY_FORMATTING_CODE; }
     {PlainText} | {PlaintLT} | \\[^<\\n]?
