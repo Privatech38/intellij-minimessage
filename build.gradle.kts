@@ -43,12 +43,12 @@ intellijPlatform {
         create("IC", "2025.1")
     }
     signing {
-        certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN")
-        privateKey = providers.environmentVariable("PRIVATE_KEY")
-        password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
+        certificateChain.set(providers.environmentVariable("CERTIFICATE_CHAIN"))
+        privateKey.set(providers.environmentVariable("PRIVATE_KEY"))
+        password.set(providers.environmentVariable("PRIVATE_KEY_PASSWORD"))
     }
     publishing {
-        token = providers.environmentVariable("PUBLISH_TOKEN")
+        token.set(providers.environmentVariable("PUBLISH_TOKEN"))
     }
 }
 
