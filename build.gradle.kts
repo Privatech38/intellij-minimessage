@@ -42,6 +42,14 @@ intellijPlatform {
     pluginVerification.ides {
         create("IC", "2025.1")
     }
+    signing {
+        certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN")
+        privateKey = providers.environmentVariable("PRIVATE_KEY")
+        password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
+    }
+    publishing {
+        token = providers.environmentVariable("PUBLISH_TOKEN")
+    }
 }
 
 sourceSets {
@@ -70,6 +78,9 @@ tasks {
                 Changelog.OutputType.HTML
             )
         }
+    }
+    publishPlugin {
+        dependsOn(patchChangelog)
     }
 }
 
