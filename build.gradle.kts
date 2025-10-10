@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "dev.privatech.plugin"
-version = "0.5.1"
+version = "0.6.0"
 
 repositories {
     mavenCentral()
@@ -39,7 +39,9 @@ intellijPlatform {
             sinceBuild = "251"
         }
     }
-    pluginVerification.ides.recommended()
+    pluginVerification.ides {
+        create(IntelliJPlatformType.IntellijIdea, "2025.1")
+    }
 }
 
 sourceSets {
