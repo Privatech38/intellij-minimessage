@@ -40,7 +40,8 @@ MiscTag=font|newline|br|selector|sel|score|nbt|data|pride
 ObjectTag=sprite|head
 
 CustomTagName=[!?#]?[a-z0-9_-]+
-Argument=[^\"'/:>\s][^/:>\s]*
+Argument=[^\"':>\s][^:>\s]*
+ArgumentWithTrailingSlash=[^\"':>\s][^:>\s]*\/>|\/>
 
 %state TAG, ARGUMENT_STATE, STRING_DOUBLE, STRING_SINGLE
 
@@ -69,8 +70,9 @@ Argument=[^\"'/:>\s][^/:>\s]*
 <ARGUMENT_STATE> {
     \'                    { yybegin(STRING_SINGLE); return QUOTATION; }
     \"                    { yybegin(STRING_DOUBLE); return QUOTATION; }
+    {ArgumentWithTrailingSlash} { yypushback(2); yybegin(TAG); return ARGUMENT; }
     {Argument}            { yybegin(TAG); return ARGUMENT; }
-    [:>/]                 { yypushback(1); yybegin(TAG); return ARGUMENT; }
+    [:>]                  { yypushback(1); yybegin(TAG); return ARGUMENT; }
 }
 
 <STRING_DOUBLE> {
