@@ -2,7 +2,6 @@ package dev.privatech.plugin.minimessage.psi.impl
 
 import com.intellij.openapi.util.TextRange
 import dev.privatech.plugin.minimessage.psi.MiniMessageTagArgument
-import dev.privatech.plugin.minimessage.psi.MiniMessageTypes
 
 class MiniMessagePsiImplUtil {
 
