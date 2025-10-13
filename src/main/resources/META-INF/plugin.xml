@@ -14,7 +14,7 @@
         <h2>Features</h2>
         <ul>
             <li>Syntax highlighting</li>
-            <li>Error checking</li>
+            <li>Code analysis</li>
         </ul>
         <br>
         <p>Report bugs and request features on <a href="https://github.com/Privatech38/intellij-minimessage/issues">GitHub Issues</a>.</p>

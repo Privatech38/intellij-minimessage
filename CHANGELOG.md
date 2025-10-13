@@ -5,6 +5,7 @@
 ### Added
 
 ### Changed
+- Updated features list in description
 
 ### Deprecated
 
