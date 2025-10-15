@@ -43,6 +43,11 @@
         <annotator language="MiniMessage"
                         implementationClass="dev.privatech.plugin.minimessage.annotator.MiniMessageSemanticsAnnotator"/>
 
+        <languageInjectionContributor
+                language="JAVA"
+                implementationClass="dev.privatech.plugin.minimessage.annotator.JavaLanguageInjectionContributor"
+        />
+
         <dependencySupport coordinate="net.kyori:adventure-text-minimessage" kind="java" displayName="MiniMessage"/>
         <dependencySupport coordinate="io.papermc.paper:paper-api" kind="java" displayName="Paper"/>
         <dependencySupport coordinate="com.velocitypowered:velocity-api" kind="java" displayName="Velocity"/>
