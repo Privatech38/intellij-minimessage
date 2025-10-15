@@ -3,12 +3,8 @@
 ## [Unreleased]
 
 ### Added
-- `dependencySupport` extensions to suggest plugin to users using the specified dependencies
-- Injection support for methods in MiniMessage class inherited from ComponentSerializer
 
 ### Changed
-- Updated features list in description
-- Update platform
 
 ### Deprecated
 
@@ -17,6 +13,18 @@
 ### Fixed
 
 ### Security
+
+## [0.6.1] - 2025-10-15
+
+### Added
+
+- `dependencySupport` extensions to suggest plugin to users using the specified dependencies
+- Injection support for methods in MiniMessage class inherited from ComponentSerializer
+
+### Changed
+
+- Updated features list in description
+- Update platform
 
 ## [0.6.0] - 2025-10-10
 
@@ -39,5 +47,6 @@
 - Plain arguments not allowing whitespace
 - Plain arguments not allowing empty strings
 
-[Unreleased]: https://github.com/Privatech38/intellij-minimessage/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/Privatech38/intellij-minimessage/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/Privatech38/intellij-minimessage/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/Privatech38/intellij-minimessage/commits/v0.6.0
