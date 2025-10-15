@@ -4,9 +4,11 @@
 
 ### Added
 - `dependencySupport` extensions to suggest plugin to users using the specified dependencies
+- Injection support for methods in MiniMessage class inherited from ComponentSerializer
 
 ### Changed
 - Updated features list in description
+- Update platform
 
 ### Deprecated
 
