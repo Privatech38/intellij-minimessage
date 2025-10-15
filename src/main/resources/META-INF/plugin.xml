@@ -42,5 +42,10 @@
                      implementationClass="dev.privatech.plugin.minimessage.annotator.MiniMessageSyntaxColorAnnotator"/>
         <annotator language="MiniMessage"
                         implementationClass="dev.privatech.plugin.minimessage.annotator.MiniMessageSemanticsAnnotator"/>
+
+        <dependencySupport coordinate="net.kyori:adventure-text-minimessage" kind="java" displayName="MiniMessage"/>
+        <dependencySupport coordinate="io.papermc.paper:paper-api" kind="java" displayName="Paper"/>
+        <dependencySupport coordinate="com.velocitypowered:velocity-api" kind="java" displayName="Velocity"/>
+        <dependencySupport coordinate="org.spongepowered:spongeapi" kind="java" displayName="Sponge"/>
     </extensions>
 </idea-plugin>

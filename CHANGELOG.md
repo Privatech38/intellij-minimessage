@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `dependencySupport` extensions to suggest plugin to users using the specified dependencies
 
 ### Changed
 - Updated features list in description
