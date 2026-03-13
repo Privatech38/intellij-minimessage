@@ -73,7 +73,7 @@ ArgumentEscape=\\[n\\]
     \<                    { yybegin(TAG); return LT; }
     \'                    { yybegin(STRING_SINGLE); return QUOTATION; }
     \"                    { yybegin(STRING_DOUBLE); return QUOTATION; }
-    {ArgumentStart}       { yybegin(ARGUMENT_STATE); return ARGUMENT; }
+    {ArgumentStart}       { yypushback(1); yybegin(ARGUMENT_STATE); }
     {ArgumentEscape}      { yybegin(ARGUMENT_STATE); return ESCAPED_CHAR; }
     [:>]                  { yypushback(1); yybegin(TAG); return ARGUMENT; }
     \/>                   { yypushback(2); yybegin(TAG); return ARGUMENT; }

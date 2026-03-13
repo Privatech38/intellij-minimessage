@@ -785,7 +785,7 @@ public class MiniMessageLexer implements FlexLexer {
           // fall through
           case 32: break;
           case 11:
-            { yybegin(ARGUMENT_STATE); return ARGUMENT;
+            { yypushback(1); yybegin(ARGUMENT_STATE);
             }
           // fall through
           case 33: break;

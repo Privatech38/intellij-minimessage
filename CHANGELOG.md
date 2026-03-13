@@ -11,6 +11,8 @@
 ### Removed
 
 ### Fixed
+- Argument lexer creating a token for the first character instead of the entire argument text.
+  <br>*This should make using Ctrl+W cleaner.*
 
 ### Security
 - Updated Gradle to 9.4.0
