@@ -4,9 +4,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "2.1.0"
-    id("org.jetbrains.intellij.platform") version "2.10.0"
-    id("org.jetbrains.changelog") version "2.4.0"
+    id("org.jetbrains.kotlin.jvm") version "2.3.10"
+    id("org.jetbrains.intellij.platform") version "2.13.0"
+    id("org.jetbrains.changelog") version "2.5.0"
 }
 
 group = "dev.privatech.plugin"
@@ -28,7 +28,7 @@ dependencies {
         bundledPlugin("com.intellij.java")
         bundledPlugin("org.intellij.intelliLang")
     }
-    implementation(platform("net.kyori:adventure-bom:4.24.0"))
+    implementation(platform("net.kyori:adventure-bom:4.26.1"))
     implementation("net.kyori:adventure-api")
     implementation("net.kyori:adventure-text-minimessage")
 }
