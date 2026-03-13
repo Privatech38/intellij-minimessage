@@ -13,6 +13,7 @@
 ### Fixed
 
 ### Security
+- Updated Gradle to 9.4.0
 
 ## [0.6.1] - 2025-10-15
 
