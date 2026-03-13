@@ -7,7 +7,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  - package-evosystem: "github-actions"
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
