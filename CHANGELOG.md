@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Parser tests
 
 ### Changed
 
