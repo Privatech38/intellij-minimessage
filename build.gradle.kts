@@ -1,5 +1,5 @@
 import org.jetbrains.changelog.Changelog
-import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -24,13 +24,16 @@ repositories {
 dependencies {
     intellijPlatform {
         create("IC", "2025.1")
-        testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
+        testFramework(TestFrameworkType.Platform)
+        testFramework(TestFrameworkType.Plugin.Java)
         bundledPlugin("com.intellij.java")
         bundledPlugin("org.intellij.intelliLang")
     }
     implementation(platform("net.kyori:adventure-bom:4.26.1"))
     implementation("net.kyori:adventure-api")
     implementation("net.kyori:adventure-text-minimessage")
+
+    testImplementation("junit:junit:4.13.2")
 }
 
 intellijPlatform {
