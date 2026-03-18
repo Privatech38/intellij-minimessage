@@ -1,0 +1,48 @@
+plain text
+
+<red>colored</red> and <blue>more</blue>
+
+<bold><italic>nested</italic></bold>
+
+Escapes: \<red>not a tag\</red> \\ \<\> \</\>
+
+Custom tag: <custom_tag>text</custom_tag>
+
+Attribute no quotes: <font:uniform>text</font>
+
+Attribute with colon payload: <click:run_command:/say hello>click me</click>
+
+Quoted attribute: <click:run_command:"/say hello world">click</click>
+
+Tag that starts with lots of <: <<<<<<<<red>
+
+Tag with extra whitespace: <red   >spacey</red>
+
+Adjacent tags: <red>A</red><blue>B</blue><green>C</green>
+
+Empty content: <red></red>
+
+Self-like tag (if your grammar has it): <reset>
+
+Newlines:
+<red>line1
+line2</red>
+
+Literal angle brackets: 1 < 2 and 3 > 2
+
+Mismatched nesting: <red><blue>X</red></blue>
+
+Deep nesting stress:
+<bold><italic><underlined><strikethrough>stress</strikethrough></underlined></italic></bold>
+
+Gradient-ish:
+<gradient:red:blue>Hello</gradient>
+
+Hex color:
+<#12abEF>hex</#12abEF>
+
+Unicode / surrogate pairs:
+Hello—世界—🙂—𝄞
+
+Lots of text (performance):
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa <red>bbbbbbbbbbbb</red> ccccccccccccccccccccccccccccccccccccccccccccccccccc
