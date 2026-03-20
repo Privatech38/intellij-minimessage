@@ -15,4 +15,10 @@ class InsertionTagValidator : TagValidator() {
     override fun has(tagName: String): Boolean {
         return tagName == "insert"
     }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    companion object {
+        private val TAG_NAMES = setOf("insert")
+    }
 }

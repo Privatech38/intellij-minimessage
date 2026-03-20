@@ -80,4 +80,10 @@ class HoverTagValidator : TagValidator() {
     override fun has(tagName: String): Boolean {
         return tagName == "hover"
     }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    companion object {
+        private val TAG_NAMES = setOf("hover")
+    }
 }

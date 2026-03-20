@@ -38,6 +38,8 @@ class PrideTagValidator : TagValidator() {
         return tagName == "pride"
     }
 
+    override fun tags(): Set<String> = PRIDE_FLAGS
+
     companion object {
         private val PRIDE_FLAGS = setOf(
             "pride", "progress", "trans", "bi", "pan", "nb", "lesbian", "ace", "agender",
