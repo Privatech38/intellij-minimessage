@@ -3,6 +3,7 @@ package dev.privatech.plugin.minimessage.tag.validator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
+import kotlinx.collections.immutable.immutableSetOf
 
 class SpriteTagValidator : TagValidator(true) {
     override fun validate(
@@ -45,5 +46,11 @@ class SpriteTagValidator : TagValidator(true) {
 
     override fun has(tagName: String): Boolean {
         return tagName == "sprite"
+    }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    companion object {
+        private val TAG_NAMES = setOf("sprite")
     }
 }

@@ -26,6 +26,10 @@ class FallbackTagValidator : TagValidator(true) {
         return tagName in TAG_NAMES
     }
 
+    override fun tags(): Set<String> {
+        return TAG_NAMES
+    }
+
     companion object {
         private val TAG_NAMES = setOf("lang_or", "tr_or", "translate_or")
     }
