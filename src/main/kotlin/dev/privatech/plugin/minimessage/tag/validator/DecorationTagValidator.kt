@@ -3,6 +3,7 @@ package dev.privatech.plugin.minimessage.tag.validator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
+import org.intellij.markdown.parser.markerblocks.providers.HtmlBlockProvider.Companion.TAG_NAMES
 
 class DecorationTagValidator : TagValidator() {
     override fun validate(
@@ -24,5 +25,15 @@ class DecorationTagValidator : TagValidator() {
 
     override fun has(tagName: String): Boolean {
         return tagName.matches(Regex("!?(bold|b|italic|i|em|underlined|u|strikethrough|st|obfuscated|obf|reset)"))
+    }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    companion object {
+        private val TAG_NAMES = setOf(
+            "bold", "b", "italic", "i", "em",
+            "underlined", "u", "strikethrough", "st",
+            "obfuscated", "obf", "reset"
+        )
     }
 }

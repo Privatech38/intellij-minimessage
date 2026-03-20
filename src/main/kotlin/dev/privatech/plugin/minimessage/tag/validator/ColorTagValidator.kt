@@ -28,7 +28,12 @@ class ColorTagValidator : TagValidator() {
         return tagName == "color" || tagName == "colour" || tagName == "c"
     }
 
+    override fun tags(): Set<String> = TAG_NAMES
+
     companion object {
+
+        private val TAG_NAMES = setOf("color", "colour", "c", "dark_grey", "grey").plus(NamedTextColor.NAMES.keys())
+
         @JvmField
         val COLOR_ALIASES: Map<String, TextColor> = mapOf(
             "dark_grey" to NamedTextColor.DARK_GRAY,

@@ -10,6 +10,11 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
 
     abstract fun has(tagName: String): Boolean
 
+    /**
+     * Returns the available static tag names for this tag.
+     */
+    abstract fun tags(): Set<String>
+
     companion object {
         @JvmField
         val STANDARD_VALIDATORS: Set<TagValidator> = setOf(

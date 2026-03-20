@@ -25,5 +25,10 @@ class SelectorTagValidator : TagValidator(true) {
         return tagName == "selector" || tagName == "sel"
     }
 
+    override fun tags(): Set<String> = TAG_NAMES
+
+    companion object{
+        private val TAG_NAMES = setOf("selector", "sel")
+    }
 
 }

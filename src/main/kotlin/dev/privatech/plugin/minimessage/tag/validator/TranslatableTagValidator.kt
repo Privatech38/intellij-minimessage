@@ -24,6 +24,10 @@ class TranslatableTagValidator : TagValidator(true) {
         return tagName in TAG_NAMES
     }
 
+    override fun tags(): Set<String> {
+        return TAG_NAMES
+    }
+
     companion object {
         private val TAG_NAMES = setOf("lang", "tr", "translate")
     }

@@ -66,4 +66,10 @@ class ClickTagValidator : TagValidator() {
     override fun has(tagName: String): Boolean {
         return tagName == "click"
     }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    companion object {
+        private val TAG_NAMES = setOf("click")
+    }
 }

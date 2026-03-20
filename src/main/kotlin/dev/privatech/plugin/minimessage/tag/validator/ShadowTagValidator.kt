@@ -40,4 +40,10 @@ class ShadowTagValidator : TagValidator() {
         return tagName == "shadow" || tagName == "!shadow"
     }
 
+    override fun tags(): Set<String> = TAG_NAMES
+
+    companion object{
+        private val TAG_NAMES = setOf("shadow")
+    }
+
 }
