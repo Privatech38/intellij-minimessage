@@ -3,7 +3,6 @@ package dev.privatech.plugin.minimessage.tag.validator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
-import kotlinx.collections.immutable.immutableSetOf
 
 class SpriteTagValidator : TagValidator(true) {
     override fun validate(
