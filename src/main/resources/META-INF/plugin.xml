@@ -53,6 +53,7 @@
 
         <completion.contributor language="MiniMessage"
                                 implementationClass="dev.privatech.plugin.minimessage.completion.MiniMessageCompletionContributor"/>
+        <typedHandler implementation="dev.privatech.plugin.minimessage.completion.MiniMessageCompletionTypedHandler"/>
 
         <dependencySupport coordinate="net.kyori:adventure-text-minimessage" kind="java" displayName="MiniMessage"/>
         <dependencySupport coordinate="io.papermc.paper:paper-api" kind="java" displayName="Paper"/>

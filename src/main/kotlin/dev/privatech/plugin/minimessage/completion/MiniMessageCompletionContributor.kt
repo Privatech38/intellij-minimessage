@@ -11,6 +11,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
+import dev.privatech.plugin.minimessage.psi.MiniMessageTypes
 import dev.privatech.plugin.minimessage.tag.validator.TagValidator
 
 class MiniMessageCompletionContributor : CompletionContributor() {
@@ -18,7 +19,9 @@ class MiniMessageCompletionContributor : CompletionContributor() {
     init {
         extend(
             CompletionType.BASIC,
-            PlatformPatterns.psiElement(),
+            PlatformPatterns.psiElement().afterLeaf(
+                PlatformPatterns.psiElement(MiniMessageTypes.LT)
+            ),
             object : CompletionProvider<CompletionParameters>() {
                 override fun addCompletions(
                     parameters: CompletionParameters,
