@@ -16,21 +16,22 @@ class ClickTagValidator : TagValidator() {
     ) {
         val actionArg = arguments.popOr(tagName, "The 'click' tag requires an action argument") ?: return
         val action = actionArg.trimmedArgument
-        if (action.uppercase() !in ClickEvent.Action.entries.map(ClickEvent.Action::name)) {
+
+        if (action.uppercase() !in ClickEvent.Action.NAMES.keys()) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Unknown click action: '$action'")
                 .range(actionArg.normalizeTextRange()).create()
             return
         }
         val valueArg = arguments.popOr(actionArg, "Missing click value argument") ?: return
         val value = valueArg.trimmedArgument
-        when (ClickEvent.Action.valueOf(action.uppercase())) {
-            ClickEvent.Action.OPEN_URL -> {
+        when (ClickEvent.Action.NAMES.value(action.uppercase())) {
+            is ClickEvent.Action.OpenUrl -> {
                 if (!URLUtil.URL_PATTERN.matcher(value).matches()) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Invalid URL: '$value'")
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
-            ClickEvent.Action.OPEN_FILE -> {
+            is ClickEvent.Action.OpenFile -> {
                 try {
                     Paths.get(value)
                 } catch (_: InvalidPathException) {
@@ -38,28 +39,30 @@ class ClickTagValidator : TagValidator() {
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
-            ClickEvent.Action.RUN_COMMAND -> {}
-            ClickEvent.Action.SUGGEST_COMMAND -> {}
-            ClickEvent.Action.CHANGE_PAGE -> {
+            is ClickEvent.Action.RunCommand -> {}
+            is ClickEvent.Action.SuggestCommand -> {}
+            is ClickEvent.Action.ChangePage -> {
                 val page = value.toIntOrNull()
                 if (page == null || page < 0) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Page must be a positive integer")
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
-            ClickEvent.Action.COPY_TO_CLIPBOARD -> {}
-            ClickEvent.Action.SHOW_DIALOG -> {
+            is ClickEvent.Action.CopyToClipboard -> {}
+            is ClickEvent.Action.ShowDialog -> {
                 if (!value.startsWith('{') && !RESOURCE_LOCATION_REGEX.matches(value)) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Invalid resource location: '$value'")
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
-            ClickEvent.Action.CUSTOM -> {
+            is ClickEvent.Action.Custom -> {
                 if (!RESOURCE_LOCATION_REGEX.matches(value)) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Invalid resource location: '$value'")
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
+
+            null -> return
         }
     }
 
