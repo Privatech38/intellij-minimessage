@@ -19,16 +19,15 @@ class MiniMessageCompletionContributor : CompletionContributor() {
     init {
         extend(
             CompletionType.BASIC,
-            PlatformPatterns.psiElement().afterLeaf(
-                PlatformPatterns.psiElement(MiniMessageTypes.LT)
-            ),
+            PlatformPatterns.psiElement().withElementType(MiniMessageTypes.PLAIN_TEXT),
             object : CompletionProvider<CompletionParameters>() {
                 override fun addCompletions(
                     parameters: CompletionParameters,
                     context: ProcessingContext,
                     result: CompletionResultSet
                 ) {
-                    result.addAllElements(LOOKUP_ELEMENTS)
+                    if (parameters.originalFile.textToCharArray()[parameters.offset - 1] == '<')
+                        result.addAllElements(LOOKUP_ELEMENTS)
                 }
             }
         )
