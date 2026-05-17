@@ -29,7 +29,7 @@ dependencies {
         bundledPlugin("com.intellij.java")
         bundledPlugin("org.intellij.intelliLang")
     }
-    implementation(platform("net.kyori:adventure-bom:4.26.1"))
+    implementation(platform("net.kyori:adventure-bom:5.0.1"))
     implementation("net.kyori:adventure-api")
     implementation("net.kyori:adventure-text-minimessage")
 
