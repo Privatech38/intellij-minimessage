@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -41,9 +42,17 @@ class ShadowTagValidator : TagValidator() {
     }
 
     override fun tags(): Set<String> = TAG_NAMES
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
 
     companion object{
         private val TAG_NAMES = setOf("shadow")
+        private val TAG_LOOKUPS = listOf(
+            LookupElementBuilder.create("shadow")
+                .withTypeText("Shadow")
+                .withTailText(":_colorNameOrHex_:[alpha_as_float]", true)
+        )
     }
 
 }

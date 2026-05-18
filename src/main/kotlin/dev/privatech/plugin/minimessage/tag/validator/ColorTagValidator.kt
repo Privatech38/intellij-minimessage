@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -14,13 +15,14 @@ class ColorTagValidator : TagValidator() {
         val colorArg = arguments.popOr(tagName, "The 'color' tag requires a color argument") ?: return
         val trimmed = colorArg.trimmedArgument
         if (!isColor(trimmed)) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Unknown color: '$trimmed'").range(colorArg.normalizeTextRange()).create()
+            holder.newAnnotation(HighlightSeverity.ERROR, "Unknown color: '$trimmed'")
+                .range(colorArg.normalizeTextRange()).create()
         }
     }
 
     override fun has(tagName: String): Boolean {
         return isColor(tagName)
-            || isColorOrAbbreviation(tagName)
+                || isColorOrAbbreviation(tagName)
 
     }
 
@@ -29,6 +31,10 @@ class ColorTagValidator : TagValidator() {
     }
 
     override fun tags(): Set<String> = TAG_NAMES
+
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
 
     companion object {
 
@@ -39,5 +45,11 @@ class ColorTagValidator : TagValidator() {
             "dark_grey" to NamedTextColor.DARK_GRAY,
             "grey" to NamedTextColor.GRAY
         )
+
+        val TAG_LOOKUPS = NamedTextColor.NAMES.keys().plus(COLOR_ALIASES.keys)
+            .map { LookupElementBuilder.create(it).withTypeText("Color") }
+            .plus(listOf("color", "colour", "c").map {
+                LookupElementBuilder.create(it).withTypeText("Color").withTailText(":_colorNameOrHex_")
+            })
     }
 }

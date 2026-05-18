@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -28,7 +29,16 @@ class TranslatableTagValidator : TagValidator(true) {
         return TAG_NAMES
     }
 
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
+
     companion object {
         private val TAG_NAMES = setOf("lang", "tr", "translate")
+        private val TAG_LOOKUPS = TAG_NAMES.map {
+            LookupElementBuilder.create(it)
+                .withTypeText("Translatable")
+                .withTailText(":_key_:_value_...", true)
+        }
     }
 }

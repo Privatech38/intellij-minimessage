@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -38,13 +39,23 @@ class PrideTagValidator : TagValidator() {
         return tagName == "pride"
     }
 
-    override fun tags(): Set<String> = PRIDE_FLAGS
+    override fun tags(): Set<String> = TAG_NAMES
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
 
     companion object {
+        private val TAG_NAMES = setOf("pride")
         private val PRIDE_FLAGS = setOf(
             "pride", "progress", "trans", "bi", "pan", "nb", "lesbian", "ace", "agender",
             "demisexual", "genderqueer", "genderfluid", "intersex", "aro", "baker", "philly",
             "queer", "gay", "bigender", "demigender"
         )
+
+        private val TAG_LOOKUPS = TAG_NAMES.map {
+            LookupElementBuilder.create(it)
+                .withTypeText("Pride")
+                .withTailText("[:flag|phase]", true)
+        }
     }
 }
