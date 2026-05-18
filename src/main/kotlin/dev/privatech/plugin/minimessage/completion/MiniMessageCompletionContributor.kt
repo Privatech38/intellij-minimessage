@@ -49,9 +49,8 @@ val INSERT_HANDLER = InsertHandler<LookupElement> { insertionContext, _ ->
     insertionContext.editor.caretModel.moveToOffset(tailOffset + 1)
 }
 
-val LOOKUP_ELEMENTS = TagValidator.STANDARD_VALIDATORS.flatMap(TagValidator::tags)
+val LOOKUP_ELEMENTS = TagValidator.STANDARD_VALIDATORS.flatMap(TagValidator::tagLookupElements)
     .map {
-        LookupElementBuilder.create(it)
-            .withIcon(AllIcons.Nodes.Tag)
+        it.withIcon(AllIcons.Nodes.Tag)
             .withInsertHandler(INSERT_HANDLER)
     }
