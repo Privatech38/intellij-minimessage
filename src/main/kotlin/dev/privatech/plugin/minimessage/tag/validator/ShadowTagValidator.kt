@@ -47,12 +47,12 @@ class ShadowTagValidator : TagValidator() {
     }
 
     companion object{
-        private val TAG_NAMES = setOf("shadow")
-        private val TAG_LOOKUPS = listOf(
-            LookupElementBuilder.create("shadow")
+        private val TAG_NAMES = setOf("shadow", "!shadow")
+        private val TAG_LOOKUPS = TAG_NAMES.map {
+            LookupElementBuilder.create(it)
                 .withTypeText("Shadow")
                 .withTailText(":_colorNameOrHex_:[alpha_as_float]", true)
-        )
+        }
     }
 
 }
