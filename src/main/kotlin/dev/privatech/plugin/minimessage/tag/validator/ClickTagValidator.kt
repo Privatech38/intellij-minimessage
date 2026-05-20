@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -31,6 +32,7 @@ class ClickTagValidator : TagValidator() {
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
+
             is ClickEvent.Action.OpenFile -> {
                 try {
                     Paths.get(value)
@@ -39,6 +41,7 @@ class ClickTagValidator : TagValidator() {
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
+
             is ClickEvent.Action.RunCommand -> {}
             is ClickEvent.Action.SuggestCommand -> {}
             is ClickEvent.Action.ChangePage -> {
@@ -48,6 +51,7 @@ class ClickTagValidator : TagValidator() {
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
+
             is ClickEvent.Action.CopyToClipboard -> {}
             is ClickEvent.Action.ShowDialog -> {
                 if (!value.startsWith('{') && !RESOURCE_LOCATION_REGEX.matches(value)) {
@@ -55,6 +59,7 @@ class ClickTagValidator : TagValidator() {
                         .range(valueArg.normalizeTextRange()).create()
                 }
             }
+
             is ClickEvent.Action.Custom -> {
                 if (!RESOURCE_LOCATION_REGEX.matches(value)) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Invalid resource location: '$value'")
@@ -68,5 +73,20 @@ class ClickTagValidator : TagValidator() {
 
     override fun has(tagName: String): Boolean {
         return tagName == "click"
+    }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
+
+    companion object {
+        private val TAG_NAMES = setOf("click")
+        private val TAG_LOOKUPS = listOf(
+            LookupElementBuilder.create("click")
+                .withTailText(":_action_:_value_", true)
+                .withTypeText("Click")
+        )
     }
 }

@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -26,7 +27,16 @@ class FallbackTagValidator : TagValidator(true) {
         return tagName in TAG_NAMES
     }
 
+    override fun tags(): Set<String> {
+        return TAG_NAMES
+    }
+
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
+
     companion object {
         private val TAG_NAMES = setOf("lang_or", "tr_or", "translate_or")
+        private val TAG_LOOKUPS = TAG_NAMES.map { LookupElementBuilder.create(it).withTypeText("Fallback") }
     }
 }

@@ -1,18 +1,19 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import java.util.UUID
 
 class HoverTagValidator : TagValidator() {
-    
+
     enum class HoverAction {
         SHOW_TEXT,
         SHOW_ITEM,
         SHOW_ENTITY;
     }
-    
+
     override fun validate(
         tagName: PsiElement,
         arguments: ArgumentQueue,
@@ -32,8 +33,11 @@ class HoverTagValidator : TagValidator() {
             HoverAction.SHOW_TEXT -> {
                 arguments.popOr(actionArg, "The 'show_text' action requires a MiniMessage content argument") ?: return
             }
+
             HoverAction.SHOW_ITEM -> {
-                val keyArg = arguments.popOr(actionArg, "The 'show_item' action requires an item resource location argument") ?: return
+                val keyArg =
+                    arguments.popOr(actionArg, "The 'show_item' action requires an item resource location argument")
+                        ?: return
                 val keyTrimmed = keyArg.trimmedArgument
                 if (!RESOURCE_LOCATION_REGEX.matches(keyTrimmed)) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Invalid item resource location: '$keyTrimmed'")
@@ -47,16 +51,23 @@ class HoverTagValidator : TagValidator() {
                 val countTrimmed = countArg.trimmedArgument
                 val count = countTrimmed.toIntOrNull()
                 if (count == null || count < 1) {
-                    holder.newAnnotation(HighlightSeverity.ERROR, "Item count must be a positive integer, found: '${countTrimmed}'")
+                    holder.newAnnotation(
+                        HighlightSeverity.ERROR,
+                        "Item count must be a positive integer, found: '${countTrimmed}'"
+                    )
                         .range(countArg.normalizeTextRange())
                         .create()
                 }
                 // Further validation for NBT data can be added here if needed
                 arguments.pollFirst()
             }
+
             HoverAction.SHOW_ENTITY -> {
-                val key = arguments.popOr(tagName, "The 'show_entity' action requires an entity resource location argument") ?: return
-                val uuid = arguments.popOr(tagName, "The 'show_entity' action requires an entity UUID argument") ?: return
+                val key =
+                    arguments.popOr(tagName, "The 'show_entity' action requires an entity resource location argument")
+                        ?: return
+                val uuid =
+                    arguments.popOr(tagName, "The 'show_entity' action requires an entity UUID argument") ?: return
                 val keyTrimmed = key.trimmedArgument
                 if (!RESOURCE_LOCATION_REGEX.matches(keyTrimmed)) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Invalid entity resource location: '$keyTrimmed'")
@@ -74,10 +85,22 @@ class HoverTagValidator : TagValidator() {
                 arguments.pollFirst()
             }
         }
-        
+
     }
 
     override fun has(tagName: String): Boolean {
         return tagName == "hover"
+    }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
+
+    companion object {
+        private val TAG_NAMES = setOf("hover")
+        private val TAG_LOOKUPS =
+            TAG_NAMES.map { LookupElementBuilder.create(it).withTypeText("Hover").withTailText(":_action_:_value_") }
     }
 }

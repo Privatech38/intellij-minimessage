@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -25,7 +26,10 @@ class GradientTagValidator : TagValidator() {
                     val phase = trimmedArg.toFloatOrNull()
                     if (phase != null) {
                         if (phase < -1 || phase > 1) {
-                            holder.newAnnotation(HighlightSeverity.ERROR, "Phase argument must be between -1 and 1: '$trimmedArg'")
+                            holder.newAnnotation(
+                                HighlightSeverity.ERROR,
+                                "Phase argument must be between -1 and 1: '$trimmedArg'"
+                            )
                                 .range(arg.normalizeTextRange())
                                 .create()
                         }
@@ -41,6 +45,20 @@ class GradientTagValidator : TagValidator() {
 
     override fun has(tagName: String): Boolean {
         return tagName == "gradient" || tagName == "transition"
+    }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
+
+    companion object {
+        private val TAG_NAMES = setOf("gradient", "transition")
+        private val TAG_LOOKUPS = listOf(
+            LookupElementBuilder.create("gradient").withTypeText("Gradient"),
+            LookupElementBuilder.create("transition").withTypeText("Transition")
+        ).map { it.withTailText("[:color]...[:phase]") }
     }
 
 }

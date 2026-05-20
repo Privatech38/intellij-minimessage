@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -27,8 +28,10 @@ class HeadTagValidator : TagValidator(true) {
             val outerLayer = arguments.pop()
             val trimmedOuterLayer = outerLayer.trimmedArgument
             if (trimmedOuterLayer !in setOf("true", "on", "off", "false")) {
-                holder.newAnnotation(HighlightSeverity.WARNING, "Can not parse outer layer value: '$trimmedOuterLayer'. " +
-                        "State will not be set. Valid values are: true, on, false, off")
+                holder.newAnnotation(
+                    HighlightSeverity.WARNING, "Can not parse outer layer value: '$trimmedOuterLayer'. " +
+                            "State will not be set. Valid values are: true, on, false, off"
+                )
                     .range(outerLayer.normalizeTextRange())
                     .create()
             }
@@ -37,6 +40,19 @@ class HeadTagValidator : TagValidator(true) {
 
     override fun has(tagName: String): Boolean {
         return tagName == "head"
+    }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
+
+    companion object {
+        private val TAG_NAMES = setOf("head")
+        private val TAG_LOOKUPS = TAG_NAMES.map {
+            LookupElementBuilder.create(it).withTypeText("Head").withTailText(":name|uuid|texture[:outer_layer]")
+        }
     }
 
 
