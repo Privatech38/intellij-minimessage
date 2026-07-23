@@ -2,21 +2,20 @@
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-07-23
+
 ### Added
+
 - Completion contributor for MiniMessage tags (*AKA tab completion*)
 - Parser tests
 
-### Changed
-
-### Deprecated
-
-### Removed
-
 ### Fixed
+
 - Argument lexer creating a token for the first character instead of the entire argument text.
   <br>*This should make using Ctrl+W cleaner.*
 
 ### Security
+
 - Upgraded to Gradle v9
 - Upgraded to Adventure v5
 - Verify against latest IntelliJ Platform SDK
@@ -54,6 +53,7 @@
 - Plain arguments not allowing whitespace
 - Plain arguments not allowing empty strings
 
-[Unreleased]: https://github.com/Privatech38/intellij-minimessage/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/Privatech38/intellij-minimessage/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/Privatech38/intellij-minimessage/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/Privatech38/intellij-minimessage/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/Privatech38/intellij-minimessage/commits/v0.6.0
