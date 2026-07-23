@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Completion contributor for MiniMessage tags (*AKA tab completion*)
 - Parser tests
 
 ### Changed
@@ -16,7 +17,8 @@
   <br>*This should make using Ctrl+W cleaner.*
 
 ### Security
-- Updated Gradle to 9.4.0
+- Upgraded to Gradle v9
+- Upgraded to Adventure v5
 
 ## [0.6.1] - 2025-10-15
 
