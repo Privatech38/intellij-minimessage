@@ -46,7 +46,6 @@ jobs:
   verify:
     name: Verify Plugin
     needs: build
-    if: ${{ always() && !cancelled() && needs.build.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -75,7 +74,6 @@ jobs:
   releaseDraft:
     name: Release Draft
     if: github.event_name != 'pull_request'
-    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
