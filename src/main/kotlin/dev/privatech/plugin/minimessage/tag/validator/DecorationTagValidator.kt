@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
@@ -23,6 +24,33 @@ class DecorationTagValidator : TagValidator() {
     }
 
     override fun has(tagName: String): Boolean {
-        return tagName.matches(Regex("!?(bold|b|italic|i|em|underlined|u|strikethrough|st|obfuscated|obf|reset)"))
+        return tagName in TAG_NAMES
+    }
+
+    override fun tags(): Set<String> = TAG_NAMES
+
+    override fun tagLookupElements(): Iterable<LookupElementBuilder> {
+        return TAG_LOOKUPS
+    }
+
+    companion object {
+        private val BASE_TAG_NAMES = setOf(
+            "bold", "b", "italic", "i", "em",
+            "underlined", "u", "strikethrough", "st",
+            "obfuscated", "obf", "reset"
+        )
+
+        private val INVERTED_TAG_NAMES = BASE_TAG_NAMES.map { "!$it" }
+
+        private val TAG_NAMES: Set<String> = BASE_TAG_NAMES + INVERTED_TAG_NAMES
+
+        private val TAG_LOOKUPS = BASE_TAG_NAMES.map {
+            LookupElementBuilder.create(it)
+                .withTailText("[:false]", true)
+                .withTypeText("Decoration")
+        } + INVERTED_TAG_NAMES.map {
+            LookupElementBuilder.create(it)
+                .withTypeText("Decoration")
+        }
     }
 }

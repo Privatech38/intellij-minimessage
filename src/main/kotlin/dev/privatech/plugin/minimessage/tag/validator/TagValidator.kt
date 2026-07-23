@@ -1,5 +1,6 @@
 package dev.privatech.plugin.minimessage.tag.validator
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.psi.PsiElement
 import net.kyori.adventure.text.format.NamedTextColor
@@ -9,6 +10,16 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
     abstract fun validate(tagName: PsiElement, arguments: ArgumentQueue, holder: AnnotationHolder)
 
     abstract fun has(tagName: String): Boolean
+
+    /**
+     * Returns the available static tag names for this tag.
+     */
+    abstract fun tags(): Set<String>
+
+    /**
+     * Returns the available lookup element builders.
+     */
+    abstract fun tagLookupElements(): Iterable<LookupElementBuilder>
 
     companion object {
         @JvmField
