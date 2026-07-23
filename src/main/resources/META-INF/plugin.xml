@@ -14,6 +14,7 @@
         <h2>Features</h2>
         <ul>
             <li>Syntax highlighting</li>
+            <li>Code completion</li>
             <li>Code analysis</li>
         </ul>
         <br>

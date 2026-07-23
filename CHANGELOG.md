@@ -19,6 +19,7 @@
 ### Security
 - Upgraded to Gradle v9
 - Upgraded to Adventure v5
+- Verify against latest IntelliJ Platform SDK
 
 ## [0.6.1] - 2025-10-15
 
