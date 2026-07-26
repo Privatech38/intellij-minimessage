@@ -3,7 +3,7 @@ on:
   release:
     types: [prereleased, released]
 jobs:
-  releasse:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
