@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Click tag validator reporting errors on valid action types
+
 ## [0.7.0] - 2026-07-23
 
 ### Added

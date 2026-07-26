@@ -18,14 +18,14 @@ class ClickTagValidator : TagValidator() {
         val actionArg = arguments.popOr(tagName, "The 'click' tag requires an action argument") ?: return
         val action = actionArg.trimmedArgument
 
-        if (action.uppercase() !in ClickEvent.Action.NAMES.keys()) {
+        if (action !in ClickEvent.Action.NAMES.keys()) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Unknown click action: '$action'")
                 .range(actionArg.normalizeTextRange()).create()
             return
         }
         val valueArg = arguments.popOr(actionArg, "Missing click value argument") ?: return
         val value = valueArg.trimmedArgument
-        when (ClickEvent.Action.NAMES.value(action.uppercase())) {
+        when (ClickEvent.Action.NAMES.value(action)) {
             is ClickEvent.Action.OpenUrl -> {
                 if (!URLUtil.URL_PATTERN.matcher(value).matches()) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Invalid URL: '$value'")
