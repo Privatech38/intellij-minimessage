@@ -36,4 +36,37 @@ class MiniMessageSlashTypedHandlerTest : BasePlatformTestCase() {
 
         myFixture.checkResult("<key:key.jump/> </")
     }
+
+    fun testSkipClosingIfInsideOpeningTag() {
+        myFixture.configureByText(MiniMessageFileType.INSTANCE, "<red>Hello</red> <<caret>red>")
+
+        myFixture.type("/")
+
+        myFixture.checkResult("<red>Hello</red> </red>")
+    }
+
+    // Autocloseable tests
+    fun testAutoCloseable() {
+        myFixture.configureByText(MiniMessageFileType.INSTANCE, "<<caret>head>")
+
+        myFixture.type("/")
+
+        myFixture.checkResult("<head/>")
+    }
+
+    fun testNoAutoFillAutoCloseable() {
+        myFixture.configureByText(MiniMessageFileType.INSTANCE, "<head> <<caret>")
+
+        myFixture.type("/")
+
+        myFixture.checkResult("<head> </")
+    }
+
+    fun testAlreadyClosedAutoCloseable() {
+        myFixture.configureByText(MiniMessageFileType.INSTANCE, "<<caret>head/>")
+
+        myFixture.type("/")
+
+        myFixture.checkResult("</head/>")
+    }
 }

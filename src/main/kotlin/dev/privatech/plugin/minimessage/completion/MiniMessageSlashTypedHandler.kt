@@ -2,6 +2,7 @@ package dev.privatech.plugin.minimessage.completion
 
 import com.intellij.codeInsight.editorActions.TypedHandlerDelegate
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.ScrollType
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDocumentManager
@@ -27,6 +28,21 @@ class MiniMessageSlashTypedHandler : TypedHandlerDelegate() {
 
         PsiDocumentManager.getInstance(project).commitDocument(document)
         val psiFile = PsiDocumentManager.getInstance(project).getPsiFile(document) ?: return Result.CONTINUE
+
+        // Check if opening tag
+        val element = psiFile.findElementAt(offset)?.parent
+        if (element is MiniMessageOpeningTag) {
+            if (element.lastChild?.prevSibling?.node?.elementType == MiniMessageTypes.SLASH) {
+                return Result.CONTINUE
+            }
+            val tagName = element.tagName?.text
+            if (tagName != null && TagValidator.isAutoCloseable(tagName)) {
+                editor.caretModel.moveToOffset(element.lastChild.textOffset)
+                editor.scrollingModel.scrollToCaret(ScrollType.RELATIVE)
+            }
+            return Result.CONTINUE
+        }
+
         val tagName = findReachableOpeningTagName(psiFile, offset) ?: return Result.CONTINUE
 
         document.insertString(offset, "/$tagName>")
