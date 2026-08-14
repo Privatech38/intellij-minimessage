@@ -42,6 +42,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Build with Gradle
+        if: ${{ github.event_name != 'pull_request' }}
+        run: ./gradlew --configuration-cache verifyPlugin
+
+      - name: Build with Gradle (Pull Request)
+        if: ${{ github.event_name == 'pull_request' }}
         run: ./gradlew verifyPlugin
 
       # Collect Plugin Verifier Result
