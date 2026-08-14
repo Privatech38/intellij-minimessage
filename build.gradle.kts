@@ -93,6 +93,9 @@ tasks {
     publishPlugin {
         dependsOn(patchChangelog)
     }
+    buildPlugin {
+        dependsOn(test)
+    }
 }
 
 changelog {
