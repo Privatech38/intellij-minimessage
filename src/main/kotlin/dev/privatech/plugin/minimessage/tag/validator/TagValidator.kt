@@ -68,6 +68,16 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
                     || ColorTagValidator.Companion.COLOR_ALIASES.containsKey(value)
                     || value.matches(Regex("#[0-9a-fA-F]{6}"))
         }
+
+        /**
+         * Returns a boolean if a given tag name  can be auto closed.
+         * @param tagName the tag name.
+         * @return true if auto-closeable, false otherwise.
+         */
+        @JvmStatic
+        fun isAutoCloseable(tagName: String): Boolean {
+            return STANDARD_VALIDATORS.any { validator -> validator.has(tagName) && validator.autoCloseable }
+        }
     }
 
 }

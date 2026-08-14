@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Auto complete closing tags when typing a `/` after a `<` character (doesn't auto complete if inside an opening tag and has special behaviour for auto-closing tags)
+
 ## [0.7.1] - 2026-08-14
 
 ### Fixed
