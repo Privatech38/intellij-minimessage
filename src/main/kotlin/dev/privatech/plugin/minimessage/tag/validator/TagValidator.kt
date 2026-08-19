@@ -70,7 +70,7 @@ abstract class TagValidator(val autoCloseable: Boolean = false) {
         }
 
         /**
-         * Returns a boolean if a given tag name  can be auto closed.
+         * Returns a boolean if a given tag name can be auto closed.
          * @param tagName the tag name.
          * @return true if auto-closeable, false otherwise.
          */
